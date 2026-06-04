@@ -2,10 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>インターン初期登録 | マインド診断</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 
     :root {
       --red:    #e94560;
@@ -91,8 +93,11 @@
       text-align: left; font-family: inherit; color: var(--text);
       transition: background .18s, border-color .18s, transform .18s;
       font-size: 0.93rem; line-height: 1.55;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: none; user-select: none;
     }
     .option:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); transform: translateX(3px); }
+    .option:active { background: rgba(233,69,96,0.2); border-color: rgba(233,69,96,0.5); }
     .option .key {
       flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px;
       background: rgba(255,255,255,0.08); border: 1px solid var(--border);
@@ -151,6 +156,8 @@
       color: var(--muted); font-family: inherit;
       font-size: 0.83rem; cursor: pointer;
       transition: all .2s;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: none; user-select: none;
     }
     .tab-btn.active {
       background: rgba(124,58,237,0.2);
@@ -263,8 +270,11 @@
       color: #fff; border: none; padding: 14px 40px;
       border-radius: 30px; font-size: 1rem; cursor: pointer;
       transition: transform .2s, box-shadow .2s; font-family: inherit; font-weight: bold;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: none; user-select: none;
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,69,96,.35); }
+    .btn:active { transform: scale(0.97); }
 
     @media (max-width: 520px) {
       .card { padding: 24px; }
