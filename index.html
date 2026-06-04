@@ -303,7 +303,7 @@
       <div class="pillar"><div class="num">🪞</div><div class="title">自己認識・強み</div><div class="label">Q6</div></div>
       <div class="pillar"><div class="num">🚀</div><div class="title">インターンへの期待</div><div class="label">Q7</div></div>
     </div>
-    <button class="btn" onclick="startQuiz()">診断をはじめる</button>
+    <button class="btn" id="btn-start">診断をはじめる</button>
   </div>
 
   <!-- ══════════ QUIZ ══════════ -->
@@ -336,15 +336,15 @@
         <h2>あなたへの成長アドバイス</h2>
       </div>
       <div class="feedback-tabs">
-        <button class="tab-btn active" onclick="switchTab('mind', this)">🧠 マインド成長</button>
-        <button class="tab-btn" onclick="switchTab('task', this)">✅ 行動タスク</button>
+        <button class="tab-btn active" id="tab-btn-mind" data-tab="mind">🧠 マインド成長</button>
+        <button class="tab-btn" id="tab-btn-task" data-tab="task">✅ 行動タスク</button>
       </div>
       <div id="tab-mind" class="tab-panel active"></div>
       <div id="tab-task" class="tab-panel"></div>
     </div>
 
     <div class="mgt-note" id="r-note"></div>
-    <button class="btn" onclick="restart()">もう一度診断する</button>
+    <button class="btn" id="btn-restart">もう一度診断する</button>
   </div>
 
 </div>
@@ -665,6 +665,21 @@ const diffLabels = {easy:{label:"やりやすい",color:"#10b981"},normal:{label
 let cur = 0;
 let scores = {achieve:0,empathy:0,logic:0,steady:0};
 
+function addTapListener(el, fn) {
+  if (!el) return;
+  var touched = false;
+  el.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    touched = true;
+    fn(e);
+    setTimeout(function(){ touched = false; }, 500);
+  }, { passive: false });
+  el.addEventListener('click', function(e) {
+    if (touched) return;
+    fn(e);
+  });
+}
+
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -687,7 +702,7 @@ function render() {
     const btn = document.createElement('button');
     btn.className = 'option';
     btn.innerHTML = `<span class="key">${opt.key}</span><span class="body">${opt.text}${opt.sub?`<div class="sub">${opt.sub}</div>`:''}</span>`;
-    btn.onclick = () => pick(opt.scores);
+    addTapListener(btn, () => pick(opt.scores));
     optsEl.appendChild(btn);
   });
 }
@@ -797,6 +812,15 @@ function restart() {
   scores = {achieve:0,empathy:0,logic:0,steady:0};
   show('start');
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  addTapListener(document.getElementById('btn-start'), function() { startQuiz(); });
+  addTapListener(document.getElementById('btn-restart'), function() { restart(); });
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    addTapListener(btn, function() { switchTab(btn.dataset.tab, btn); });
+  });
+});
 </script>
 </body>
 </html>
