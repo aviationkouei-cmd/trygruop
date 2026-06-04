@@ -30,16 +30,10 @@
       color: var(--text);
     }
 
-    .wrap {
-      width: 100%;
-      max-width: 680px;
-    }
-
-    /* ── SCREEN UTILS ── */
+    .wrap { width: 100%; max-width: 720px; }
     .screen { display: none; }
     .screen.active { display: block; }
 
-    /* ── CARD ── */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -76,198 +70,209 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
-      font-size: 0.85rem;
     }
     .pillar .num { font-size: 1.3rem; margin-bottom: 4px; }
     .pillar .label { color: var(--muted); font-size: 0.78rem; }
     .pillar .title { font-weight: bold; font-size: 0.88rem; }
 
     /* ── PROGRESS ── */
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .progress-label { font-size: 0.8rem; color: var(--muted); }
-    .progress-bar {
-      height: 4px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 2px;
-      margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--red), var(--yellow));
-      border-radius: 2px;
-      transition: width 0.4s cubic-bezier(.4,0,.2,1);
-    }
+    .progress-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-bottom: 32px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--red), var(--yellow)); border-radius: 2px; transition: width 0.4s cubic-bezier(.4,0,.2,1); }
 
     /* ── QUESTION ── */
-    .q-category {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-    }
-    .q-text {
-      font-size: 1.15rem;
-      font-weight: bold;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
+    .q-category { display: inline-block; font-size: 0.72rem; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+    .q-text { font-size: 1.15rem; font-weight: bold; line-height: 1.6; margin-bottom: 24px; }
     .options { display: flex; flex-direction: column; gap: 10px; }
     .option {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 18px;
-      cursor: pointer;
-      text-align: left;
-      font-family: inherit;
-      color: var(--text);
-      transition: background 0.18s, border-color 0.18s, transform 0.18s;
-      font-size: 0.93rem;
-      line-height: 1.55;
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 18px; cursor: pointer;
+      text-align: left; font-family: inherit; color: var(--text);
+      transition: background .18s, border-color .18s, transform .18s;
+      font-size: 0.93rem; line-height: 1.55;
     }
-    .option:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.25);
-      transform: translateX(3px);
-    }
+    .option:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); transform: translateX(3px); }
     .option .key {
-      flex-shrink: 0;
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.78rem;
-      font-weight: bold;
-      color: var(--muted);
-      margin-top: 1px;
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px;
+      background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: bold; color: var(--muted); margin-top: 1px;
     }
-    .option .body .sub {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
+    .option .body .sub { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
 
     /* ── RESULT ── */
     #result { text-align: center; }
     .result-hero {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.8rem;
-      margin: 0 auto 20px;
+      width: 90px; height: 90px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem; margin: 0 auto 20px;
     }
     .result-type-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
     .result-name { font-size: 1.9rem; font-weight: bold; margin-bottom: 8px; }
     .result-catch { font-size: 0.95rem; color: var(--muted); margin-bottom: 24px; }
-
     .result-desc {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: left;
-      line-height: 1.85;
-      color: #cbd5e1;
-      font-size: 0.93rem;
-      margin-bottom: 20px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; text-align: left;
+      line-height: 1.85; color: #cbd5e1; font-size: 0.93rem; margin-bottom: 20px;
     }
-
     .tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
-    .tag {
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      border: 1px solid;
-    }
+    .tag { padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; border: 1px solid; }
 
-    /* radar-like axis bars */
-    .axes { margin-bottom: 24px; }
-    .axes h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; text-align: left; }
+    /* score bars */
+    .axes { margin-bottom: 28px; }
+    .axes-title { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; text-align: left; font-weight: bold; }
     .axis-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
     .axis-name { font-size: 0.82rem; width: 110px; flex-shrink: 0; text-align: right; color: #cbd5e1; }
-    .axis-track {
-      flex: 1;
-      height: 8px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .axis-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.8s cubic-bezier(.4,0,.2,1);
-    }
-    .axis-val { font-size: 0.78rem; color: var(--muted); width: 30px; text-align: left; }
+    .axis-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    .axis-fill { height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+    .axis-val { font-size: 0.78rem; color: var(--muted); width: 34px; text-align: left; }
 
-    .sw-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 28px;
+    /* ── AI FEEDBACK SECTION ── */
+    .ai-feedback-wrap { margin-bottom: 28px; }
+    .ai-feedback-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
     }
-    .sw-box {
+    .ai-badge {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #fff; font-size: 0.72rem; font-weight: bold;
+      padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em;
+    }
+    .ai-feedback-header h2 { font-size: 1rem; }
+
+    .feedback-tabs {
+      display: flex; gap: 8px; margin-bottom: 16px;
+    }
+    .tab-btn {
+      flex: 1; padding: 10px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-family: inherit;
+      font-size: 0.83rem; cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn.active {
+      background: rgba(124,58,237,0.2);
+      border-color: rgba(124,58,237,0.5);
+      color: #c4b5fd;
+      font-weight: bold;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* MIND GROWTH */
+    .mind-section { margin-bottom: 16px; }
+    .mind-card {
+      background: rgba(124,58,237,0.07);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 14px;
+      padding: 18px 20px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .mind-card-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .mind-card-icon { font-size: 1.3rem; }
+    .mind-card-title { font-size: 0.9rem; font-weight: bold; color: #c4b5fd; }
+    .mind-card-body { font-size: 0.87rem; line-height: 1.8; color: #cbd5e1; }
+    .mind-card-body strong { color: #e2e8f0; }
+    .mind-quote {
+      background: rgba(255,255,255,0.04);
+      border-left: 3px solid #7c3aed;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 0.83rem;
+      color: #a78bfa;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ACTION TASKS */
+    .task-week {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 16px;
-      text-align: left;
+      overflow: hidden;
+      margin-bottom: 12px;
     }
-    .sw-box h4 { font-size: 0.82rem; margin-bottom: 10px; }
-    .sw-box ul { list-style: none; }
-    .sw-box li { font-size: 0.82rem; color: #cbd5e1; padding: 3px 0; padding-left: 14px; position: relative; }
-    .sw-box li::before { content: "▸"; position: absolute; left: 0; color: var(--muted); font-size: 0.7rem; top: 4px; }
+    .task-week-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .week-badge {
+      font-size: 0.72rem; font-weight: bold;
+      padding: 3px 10px; border-radius: 20px; border: 1px solid;
+    }
+    .task-week-title { font-size: 0.88rem; font-weight: bold; }
+    .task-list { list-style: none; padding: 0; }
+    .task-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.85rem; line-height: 1.6; color: #cbd5e1;
+    }
+    .task-item:last-child { border-bottom: none; }
+    .task-check {
+      flex-shrink: 0; width: 18px; height: 18px;
+      border-radius: 5px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: transparent;
+      transition: all .2s;
+    }
+    .task-check.done {
+      background: #10b981;
+      border-color: #10b981;
+      color: #fff;
+    }
+    .task-body strong { color: #e2e8f0; display: block; margin-bottom: 2px; }
+    .task-body .why { font-size: 0.78rem; color: var(--muted); }
+    .task-difficulty {
+      flex-shrink: 0; font-size: 0.7rem;
+      padding: 2px 8px; border-radius: 20px; margin-top: 3px;
+      border: 1px solid;
+    }
 
-    .note {
+    /* mgt note */
+    .mgt-note {
       background: rgba(59,130,246,0.08);
       border: 1px solid rgba(59,130,246,0.25);
       border-radius: 12px;
       padding: 16px 18px;
-      font-size: 0.83rem;
-      color: #93c5fd;
-      line-height: 1.7;
-      text-align: left;
-      margin-bottom: 28px;
+      font-size: 0.83rem; color: #93c5fd;
+      line-height: 1.7; text-align: left; margin-bottom: 28px;
     }
 
-    /* ── BTN ── */
+    /* sw grid */
+    .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+    .sw-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: left; }
+    .sw-box h4 { font-size: 0.82rem; margin-bottom: 10px; }
+    .sw-box ul { list-style: none; }
+    .sw-box li { font-size: 0.82rem; color: #cbd5e1; padding: 3px 0 3px 14px; position: relative; }
+    .sw-box li::before { content: "▸"; position: absolute; left: 0; color: var(--muted); font-size: 0.7rem; top: 4px; }
+
     .btn {
       background: linear-gradient(135deg, var(--red), #c0392b);
-      color: #fff;
-      border: none;
-      padding: 14px 40px;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      font-family: inherit;
-      font-weight: bold;
+      color: #fff; border: none; padding: 14px 40px;
+      border-radius: 30px; font-size: 1rem; cursor: pointer;
+      transition: transform .2s, box-shadow .2s; font-family: inherit; font-weight: bold;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,69,96,0.35); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,69,96,.35); }
 
     @media (max-width: 520px) {
       .card { padding: 24px; }
-      .pillars { grid-template-columns: 1fr; }
-      .sw-grid { grid-template-columns: 1fr; }
+      .pillars, .sw-grid { grid-template-columns: 1fr; }
       .result-name { font-size: 1.5rem; }
       .axis-name { width: 80px; font-size: 0.75rem; }
+      .feedback-tabs { flex-direction: column; }
     }
   </style>
 </head>
@@ -279,10 +284,7 @@
     <div class="start-icon">🧭</div>
     <div class="start-eyebrow">インターン 初期登録診断</div>
     <h1>あなたのマインドを<br>可視化しよう</h1>
-    <p>
-      7つの質問に答えるだけで、あなたの<strong>モチベーションの軸・行動スタイル・コミュニケーション傾向</strong>を診断します。<br>
-      この結果はマネジメントやチーム配属の参考データにも活用されます。
-    </p>
+    <p>7つの質問に答えるだけで、あなたの<strong>モチベーションの軸・行動スタイル・コミュニケーション傾向</strong>を診断。AIがあなた専用の成長フィードバックと行動タスクを提示します。</p>
     <div class="pillars">
       <div class="pillar"><div class="num">🔥</div><div class="title">モチベーション源泉</div><div class="label">Q1</div></div>
       <div class="pillar"><div class="num">💪</div><div class="title">レジリエンス・改善力</div><div class="label">Q2</div></div>
@@ -317,94 +319,102 @@
     <div class="tags" id="r-tags"></div>
     <div class="axes" id="r-axes"></div>
     <div class="sw-grid" id="r-sw"></div>
-    <div class="note" id="r-note"></div>
+
+    <!-- AI フィードバック -->
+    <div class="ai-feedback-wrap">
+      <div class="ai-feedback-header">
+        <span class="ai-badge">✦ AI フィードバック</span>
+        <h2>あなたへの成長アドバイス</h2>
+      </div>
+      <div class="feedback-tabs">
+        <button class="tab-btn active" onclick="switchTab('mind', this)">🧠 マインド成長</button>
+        <button class="tab-btn" onclick="switchTab('task', this)">✅ 行動タスク</button>
+      </div>
+      <div id="tab-mind" class="tab-panel active" id="tab-mind"></div>
+      <div id="tab-task" class="tab-panel" id="tab-task"></div>
+    </div>
+
+    <div class="mgt-note" id="r-note"></div>
     <button class="btn" onclick="restart()">もう一度診断する</button>
   </div>
 
 </div>
 <script>
-/* ───────────── QUESTIONS ───────────── */
+/* ── QUESTIONS ── */
 const Qs = [
   {
-    category: "Q1 ｜ モチベーションの源泉",
-    catColor: "#e94560",
-    text: "あなたが最も「モチベーションが上がる」と感じる瞬間はどれですか？",
-    options: [
-      { key:"A", text:"目標を達成したり、人より高い成果を出して評価されたとき", sub:"成果・競争軸", scores:{achieve:3,empathy:0,logic:0,steady:0} },
-      { key:"B", text:"顧客やチームのメンバーから「ありがとう」と感謝されたとき", sub:"貢献・対人軸", scores:{achieve:0,empathy:3,logic:0,steady:0} },
-      { key:"C", text:"新しい知識やスキルを身に付け、自分の成長を実感できたとき", sub:"自己成長軸", scores:{achieve:1,empathy:0,logic:2,steady:1} },
-      { key:"D", text:"計画通りに物事を進め、ミスなくやり遂げたとき", sub:"プロセス・安定軸", scores:{achieve:0,empathy:1,logic:1,steady:3} },
+    category:"Q1 ｜ モチベーションの源泉", catColor:"#e94560",
+    text:"あなたが最も「モチベーションが上がる」と感じる瞬間はどれですか？",
+    options:[
+      {key:"A",text:"目標を達成したり、人より高い成果を出して評価されたとき",sub:"成果・競争軸",scores:{achieve:3,empathy:0,logic:0,steady:0}},
+      {key:"B",text:"顧客やチームのメンバーから「ありがとう」と感謝されたとき",sub:"貢献・対人軸",scores:{achieve:0,empathy:3,logic:0,steady:0}},
+      {key:"C",text:"新しい知識やスキルを身に付け、自分の成長を実感できたとき",sub:"自己成長軸",scores:{achieve:1,empathy:0,logic:2,steady:1}},
+      {key:"D",text:"計画通りに物事を進め、ミスなくやり遂げたとき",sub:"プロセス・安定軸",scores:{achieve:0,empathy:1,logic:1,steady:3}},
     ]
   },
   {
-    category: "Q2 ｜ 壁にぶつかったときの行動",
-    catColor: "#f59e0b",
-    text: "高い目標に対して、思うように成果が出ないとき、最初に取る行動は？",
-    options: [
-      { key:"A", text:"とにかく行動量（打席数）を増やして、確率論で突破しようとする", sub:"行動量型", scores:{achieve:3,empathy:0,logic:0,steady:1} },
-      { key:"B", text:"なぜ成果が出ないのか、これまでのプロセスを分析して改善策を考える", sub:"思考・分析型", scores:{achieve:1,empathy:0,logic:3,steady:1} },
-      { key:"C", text:"成果が出ている先輩や上司にすぐに相談し、アドバイスを仰ぐ", sub:"素直さ・巻き込み型", scores:{achieve:1,empathy:2,logic:1,steady:0} },
-      { key:"D", text:"一度気持ちをリフレッシュさせ、モチベーションを立て直してから再開する", sub:"メンタルコントロール型", scores:{achieve:0,empathy:1,logic:0,steady:3} },
+    category:"Q2 ｜ 壁にぶつかったときの行動", catColor:"#f59e0b",
+    text:"高い目標に対して、思うように成果が出ないとき、最初に取る行動は？",
+    options:[
+      {key:"A",text:"とにかく行動量（打席数）を増やして、確率論で突破しようとする",sub:"行動量型",scores:{achieve:3,empathy:0,logic:0,steady:1}},
+      {key:"B",text:"なぜ成果が出ないのか、これまでのプロセスを分析して改善策を考える",sub:"思考・分析型",scores:{achieve:1,empathy:0,logic:3,steady:1}},
+      {key:"C",text:"成果が出ている先輩や上司にすぐに相談し、アドバイスを仰ぐ",sub:"素直さ・巻き込み型",scores:{achieve:1,empathy:2,logic:1,steady:0}},
+      {key:"D",text:"一度気持ちをリフレッシュさせ、モチベーションを立て直してから再開する",sub:"メンタルコントロール型",scores:{achieve:0,empathy:1,logic:0,steady:3}},
     ]
   },
   {
-    category: "Q3 ｜ コミュニケーションスタイル",
-    catColor: "#10b981",
-    text: "初対面の人と話すとき、あなたはどのような立ち回りをすることが多いですか？",
-    options: [
-      { key:"A", text:"自分から積極的に話題を提供し、場の雰囲気を盛り上げる", sub:"開拓・リード型", scores:{achieve:3,empathy:1,logic:0,steady:0} },
-      { key:"B", text:"相手の話をじっくり聞き、相手が話しやすい空気を作る", sub:"傾聴・ヒアリング型", scores:{achieve:0,empathy:3,logic:1,steady:1} },
-      { key:"C", text:"相手のプロフィールや共通点を事前にリサーチし、戦略的に話す", sub:"準備・ロジカル型", scores:{achieve:1,empathy:0,logic:3,steady:1} },
-      { key:"D", text:"相手のテンションや好みに自然と自分を合わせる", sub:"適応・調和型", scores:{achieve:0,empathy:2,logic:0,steady:3} },
+    category:"Q3 ｜ コミュニケーションスタイル", catColor:"#10b981",
+    text:"初対面の人と話すとき、あなたはどのような立ち回りをすることが多いですか？",
+    options:[
+      {key:"A",text:"自分から積極的に話題を提供し、場の雰囲気を盛り上げる",sub:"開拓・リード型",scores:{achieve:3,empathy:1,logic:0,steady:0}},
+      {key:"B",text:"相手の話をじっくり聞き、相手が話しやすい空気を作る",sub:"傾聴・ヒアリング型",scores:{achieve:0,empathy:3,logic:1,steady:1}},
+      {key:"C",text:"相手のプロフィールや共通点を事前にリサーチし、戦略的に話す",sub:"準備・ロジカル型",scores:{achieve:1,empathy:0,logic:3,steady:1}},
+      {key:"D",text:"相手のテンションや好みに自然と自分を合わせる",sub:"適応・調和型",scores:{achieve:0,empathy:2,logic:0,steady:3}},
     ]
   },
   {
-    category: "Q4 ｜ 目標へのコミットメント",
-    catColor: "#e94560",
-    text: "自分で決めた目標（または与えられた目標）に対するあなたのスタンスは？",
-    options: [
-      { key:"A", text:"何が何でも達成する。未達成で終わることは絶対に避けたい", sub:"執着度：高", scores:{achieve:3,empathy:0,logic:0,steady:1} },
-      { key:"B", text:"高めの目標を設定し、たとえ未達成でもプロセスで得られるものがあれば良い", sub:"プロセス重視", scores:{achieve:1,empathy:1,logic:2,steady:0} },
-      { key:"C", text:"確実に達成できる現実的な目標を立て、着実にクリアしていきたい", sub:"堅実重視", scores:{achieve:0,empathy:0,logic:1,steady:3} },
-      { key:"D", text:"目標の数字よりも、自分が納得して楽しく取り組めるかを重視したい", sub:"納得感重視", scores:{achieve:0,empathy:3,logic:0,steady:1} },
+    category:"Q4 ｜ 目標へのコミットメント", catColor:"#e94560",
+    text:"自分で決めた目標（または与えられた目標）に対するあなたのスタンスは？",
+    options:[
+      {key:"A",text:"何が何でも達成する。未達成で終わることは絶対に避けたい",sub:"執着度：高",scores:{achieve:3,empathy:0,logic:0,steady:1}},
+      {key:"B",text:"高めの目標を設定し、たとえ未達成でもプロセスで得られるものがあれば良い",sub:"プロセス重視",scores:{achieve:1,empathy:1,logic:2,steady:0}},
+      {key:"C",text:"確実に達成できる現実的な目標を立て、着実にクリアしていきたい",sub:"堅実重視",scores:{achieve:0,empathy:0,logic:1,steady:3}},
+      {key:"D",text:"目標の数字よりも、自分が納得して楽しく取り組めるかを重視したい",sub:"納得感重視",scores:{achieve:0,empathy:3,logic:0,steady:1}},
     ]
   },
   {
-    category: "Q5 ｜ 変化への対応力",
-    catColor: "#3b82f6",
-    text: "ルールや環境が急に変更されたり、新しい挑戦を求められたとき、どう感じますか？",
-    options: [
-      { key:"A", text:"チャンスだと捉え、ワクワクしてすぐに新しい環境に飛び込む", sub:"イノベーター型", scores:{achieve:3,empathy:1,logic:0,steady:0} },
-      { key:"B", text:"変更の理由や背景を納得できれば、前向きに対応する", sub:"納得連動型", scores:{achieve:1,empathy:1,logic:2,steady:1} },
-      { key:"C", text:"少し不安や抵抗を感じるが、周囲の出方を見ながら徐々に適応する", sub:"慎重型", scores:{achieve:0,empathy:2,logic:1,steady:2} },
-      { key:"D", text:"これまでのやり方にこだわりがあり、変えることに対してストレスを感じやすい", sub:"保守型", scores:{achieve:0,empathy:0,logic:0,steady:3} },
+    category:"Q5 ｜ 変化への対応力", catColor:"#3b82f6",
+    text:"ルールや環境が急に変更されたり、新しい挑戦を求められたとき、どう感じますか？",
+    options:[
+      {key:"A",text:"チャンスだと捉え、ワクワクしてすぐに新しい環境に飛び込む",sub:"イノベーター型",scores:{achieve:3,empathy:1,logic:0,steady:0}},
+      {key:"B",text:"変更の理由や背景を納得できれば、前向きに対応する",sub:"納得連動型",scores:{achieve:1,empathy:1,logic:2,steady:1}},
+      {key:"C",text:"少し不安や抵抗を感じるが、周囲の出方を見ながら徐々に適応する",sub:"慎重型",scores:{achieve:0,empathy:2,logic:1,steady:2}},
+      {key:"D",text:"これまでのやり方にこだわりがあり、変えることに対してストレスを感じやすい",sub:"保守型",scores:{achieve:0,empathy:0,logic:0,steady:3}},
     ]
   },
   {
-    category: "Q6 ｜ 自己認識・現時点の強み",
-    catColor: "#10b981",
-    text: "周囲の友人から、あなたはどのような人だと言われることが多いですか？",
-    options: [
-      { key:"A", text:"「行動力がある」「エネルギーに溢れている」「負けず嫌い」", sub:"突破力", scores:{achieve:3,empathy:0,logic:0,steady:0} },
-      { key:"B", text:"「話しやすい」「相談に乗ってくれる」「気が利く」", sub:"共感力", scores:{achieve:0,empathy:3,logic:0,steady:1} },
-      { key:"C", text:"「頭が良い」「計画性がある」「落ち着いている」", sub:"論理力", scores:{achieve:0,empathy:0,logic:3,steady:1} },
-      { key:"D", text:"「真面目」「コツコツやり抜く」「信頼できる」", sub:"継続力", scores:{achieve:0,empathy:1,logic:1,steady:3} },
+    category:"Q6 ｜ 自己認識・現時点の強み", catColor:"#10b981",
+    text:"周囲の友人から、あなたはどのような人だと言われることが多いですか？",
+    options:[
+      {key:"A",text:"「行動力がある」「エネルギーに溢れている」「負けず嫌い」",sub:"突破力",scores:{achieve:3,empathy:0,logic:0,steady:0}},
+      {key:"B",text:"「話しやすい」「相談に乗ってくれる」「気が利く」",sub:"共感力",scores:{achieve:0,empathy:3,logic:0,steady:1}},
+      {key:"C",text:"「頭が良い」「計画性がある」「落ち着いている」",sub:"論理力",scores:{achieve:0,empathy:0,logic:3,steady:1}},
+      {key:"D",text:"「真面目」「コツコツやり抜く」「信頼できる」",sub:"継続力",scores:{achieve:0,empathy:1,logic:1,steady:3}},
     ]
   },
   {
-    category: "Q7 ｜ インターンへの期待",
-    catColor: "#f59e0b",
-    text: "今回のインターンを通じて、あなたが「最も得たいもの」は何ですか？",
-    options: [
-      { key:"A", text:"同世代に圧倒的な差をつける「ビジネス戦闘力（稼ぐ力・営業力）」", sub:"", scores:{achieve:3,empathy:0,logic:1,steady:0} },
-      { key:"B", text:"将来起業したり、組織をマネジメントしたりするための「経営・リーダー視点」", sub:"", scores:{achieve:2,empathy:1,logic:2,steady:0} },
-      { key:"C", text:"就活や将来のキャリアで自信を持って語れる「目に見える実績・データ」", sub:"", scores:{achieve:1,empathy:0,logic:2,steady:2} },
-      { key:"D", text:"尊敬できる仲間や、社会人の先輩との「質の高いネットワーク（人脈）」", sub:"", scores:{achieve:0,empathy:3,logic:0,steady:1} },
+    category:"Q7 ｜ インターンへの期待", catColor:"#f59e0b",
+    text:"今回のインターンを通じて、あなたが「最も得たいもの」は何ですか？",
+    options:[
+      {key:"A",text:"同世代に圧倒的な差をつける「ビジネス戦闘力（稼ぐ力・営業力）」",sub:"",scores:{achieve:3,empathy:0,logic:1,steady:0}},
+      {key:"B",text:"将来起業したり、組織をマネジメントしたりするための「経営・リーダー視点」",sub:"",scores:{achieve:2,empathy:1,logic:2,steady:0}},
+      {key:"C",text:"就活や将来のキャリアで自信を持って語れる「目に見える実績・データ」",sub:"",scores:{achieve:1,empathy:0,logic:2,steady:2}},
+      {key:"D",text:"尊敬できる仲間や、社会人の先輩との「質の高いネットワーク（人脈）」",sub:"",scores:{achieve:0,empathy:3,logic:0,steady:1}},
     ]
   },
 ];
 
-/* ───────────── TYPES ───────────── */
+/* ── TYPES ── */
 const Types = {
   achieve: {
     badge:"🔥", color:"#e94560",
@@ -415,8 +425,55 @@ const Types = {
     tags:["行動力","負けず嫌い","新規開拓","高コミット"],
     strengths:["圧倒的な行動量と突破力","プレッシャーへの高い耐性","強いクロージング力","自己目標管理力"],
     growth:["プロセス・質の軽視に注意","チームワークへの意識を高める","長期的な関係構築も重要","焦りから来る判断ミスに注意"],
-    mgtNote:"「数字で認める」フィードバックが最も刺さります。ランキングや社内競争の仕組みを活用してモチベートを。",
+    mgtNote:"💡 「数字で認める」フィードバックが最も刺さります。ランキングや社内競争の仕組みを活用してモチベートを。成果を出した直後の承認タイミングを逃さないことが鍵です。",
+    mindFeedback: [
+      {
+        icon:"⚡",title:"「量」だけでなく「質」を意識するマインドへ",
+        body:"あなたの最大の武器は圧倒的な行動量です。しかし、<strong>「なぜこのアプローチが刺さらないのか？」</strong>を一瞬立ち止まって考える習慣を加えることで、行動の精度が劇的に上がります。ハンターは「早く走ること」だけでなく、「正しい方向に走ること」を学ぶと、真のトップセールスになれます。",
+        quote:"「行動量は信頼の証。でも、考える10秒が1時間の無駄を消す。」"
+      },
+      {
+        icon:"🧘",title:"「負けを認める強さ」がレベルアップの鍵",
+        body:"負けず嫌いという性質は、あなたの最強の燃料でありながら、時に<strong>「認めたくない」という感情が改善の邪魔をすることがあります。</strong>失敗を「恥」ではなく「データ」として捉えるマインドシフトを意識してください。うまくいかなかったアプローチを即座に記録し、「次の仮説」に変換する癖をつけましょう。",
+        quote:"「悔しさをエネルギーにするのがあなた。悔しさを学びにするのが次のあなた。」"
+      },
+      {
+        icon:"🤝",title:"チームを巻き込む力を意識的に育てる",
+        body:"一匹狼で動けるのはあなたの強みですが、<strong>「周囲を巻き込んで大きな成果を出す」体験を積むことが、これからのキャリアで不可欠になります。</strong>自分の成功体験を仲間に教えることを習慣化してください。人に伝えることで、あなた自身の言語化能力と影響力が飛躍的に高まります。",
+        quote:"「一人で100を取るより、チームで1000を取れる人になれ。」"
+      },
+    ],
+    taskWeeks: [
+      {
+        week:"Week 1", color:"#e94560", borderColor:"rgba(233,69,96,0.3)",
+        title:"行動と振り返りの基盤をつくる",
+        tasks:[
+          {title:"1日の行動ログを書く（アポ数・会話内容・反応）",why:"量だけでなく「何が当たったか」を蓄積する習慣づくり",hard:"easy"},
+          {title:"断られた件数を記録し「断られ理由TOP3」を分析する",why:"恐怖の対象を数値化することで感情的な落ち込みを防ぐ",hard:"normal"},
+          {title:"今週最も成果が出た先輩1人に「何が違うか」をヒアリングする",why:"行動量だけでなく「質の差」を客観視するきっかけをつくる",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 2", color:"#f59e0b", borderColor:"rgba(245,158,11,0.3)",
+        title:"質を高める思考習慣を身につける",
+        tasks:[
+          {title:"商談前に「この顧客が一番困っていることは何か」を3つ書く",why:"自分視点の売り込みから、顧客視点の提案への切り替え練習",hard:"normal"},
+          {title:"自分の1週間の行動を振り返り「やめること・続けること・変えること」を書く",why:"PDCAを言語化することで改善サイクルの精度を上げる",hard:"normal"},
+          {title:"チームメンバーに「今週助かったこと」を一言伝える",why:"共感・感謝の表現を意識的に練習し、チーム内の信頼を高める",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 3-4", color:"#10b981", borderColor:"rgba(16,185,129,0.3)",
+        title:"影響範囲を広げる行動にチャレンジ",
+        tasks:[
+          {title:"自分が試して効果があったアプローチをチームに共有する（5分でOK）",why:"言語化と共有を通じてリーダーシップを発揮し始める",hard:"hard"},
+          {title:"1件「最も難しそうな案件」に自ら志願して挑戦する",why:"恐怖に向かっていく経験が自信と適応力を加速させる",hard:"hard"},
+          {title:"上司・先輩に「自分の改善したいポイント」を伝えてフィードバックをもらう",why:"素直に弱みをさらけ出せる人が最速で成長できる",hard:"normal"},
+        ]
+      },
+    ]
   },
+
   empathy: {
     badge:"🤝", color:"#10b981",
     typeLabel:"タイプ B",
@@ -426,8 +483,55 @@ const Types = {
     tags:["傾聴力","共感力","信頼構築","チームの潤滑油"],
     strengths:["深い傾聴・ヒアリング力","自然な紹介・リピート獲得","チームの心理的安全を高める","顧客の本音を引き出す力"],
     growth:["短期ノルマへのプレッシャーに注意","数値目標への意識を高める","断られることへの耐性を養う","新規開拓のスピード感を身につける"],
-    mgtNote:"「感謝を伝える」「チームへの貢献を可視化する」フィードバックが効果的。数字より影響力で動機づけを。",
+    mgtNote:"💡 「感謝を伝える」「チームへの貢献を可視化する」フィードバックが効果的。数字より影響力・つながりで動機づけを。感謝の言葉は「できるだけすぐ・具体的に」伝えることが重要です。",
+    mindFeedback: [
+      {
+        icon:"💪",title:"「好かれる営業」から「結果を出す営業」へのシフト",
+        body:"あなたの「人に喜んでもらいたい」という動機は本物の強みです。ただし、<strong>「嫌われたくない」という感情がクロージングや提案の踏み込みを邪魔することがあります。</strong>「断ることは顧客への不親切」と捉え直してください。本当に良い提案ならば、背中を押すことも「貢献」の一形態です。",
+        quote:"「優しさは、時に勇気を持って背中を押すことでもある。」"
+      },
+      {
+        icon:"🎯",title:"数字を「手段」として好きになる練習",
+        body:"あなたにとって数字はモチベーションの源ではないかもしれません。しかし、<strong>数字は「自分が貢献できた証拠」として読み替えることができます。</strong>「今週3人の顧客の役に立てた＝3件の受注」という思考回路を育ててください。数字を人の顔に変換して管理する独自の記録方法を試してみましょう。",
+        quote:"「数字の裏に、笑顔がある。それを忘れなければ、数字は怖くない。」"
+      },
+      {
+        icon:"🔥",title:"「誰かのために」の軸を持ちながら自分の目標も持つ",
+        body:"他者のために動ける力は、チームを引っ張るリーダーに不可欠な資質です。ただし、<strong>「自分自身の成長目標」も同時に持つことで、より持続的に頑張れるようになります。</strong>「この3ヶ月でどんな自分になりたいか」を明文化し、上司やメンターと共有することを勧めます。",
+        quote:"「人のために走る人ほど、自分の目標地点も決めておく必要がある。」"
+      },
+    ],
+    taskWeeks: [
+      {
+        week:"Week 1", color:"#10b981", borderColor:"rgba(16,185,129,0.3)",
+        title:"傾聴力を営業に転換する練習",
+        tasks:[
+          {title:"商談後に「顧客が言葉にしなかった本音」を1つ書き出す",why:"ヒアリング力を言語化することで、提案の精度が上がる",hard:"easy"},
+          {title:"「感謝された場面」と「売上につながった場面」を対比して記録する",why:"共感と成果のつながりを可視化し、数字への抵抗を下げる",hard:"normal"},
+          {title:"断られた時の自分の感情を書く（怖い・悲しい・悔しい）",why:"感情を言語化することで、次回の冷静な対処ができるようになる",hard:"normal"},
+        ]
+      },
+      {
+        week:"Week 2", color:"#f59e0b", borderColor:"rgba(245,158,11,0.3)",
+        title:"クロージング力を意識的に磨く",
+        tasks:[
+          {title:"商談の最後に必ず「次のアクション」を顧客と一緒に決める",why:"「また来ます」で終わらせず、関係を前進させる練習",hard:"normal"},
+          {title:"「断られても良い質問」を1商談で最低1回する",why:"踏み込む勇気を少しずつ鍛える小さなチャレンジ",hard:"hard"},
+          {title:"今週接触した顧客3人に「役に立てた点」を一言メモする",why:"成果を感情で捉えて記録し、自己効力感を高める",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 3-4", color:"#3b82f6", borderColor:"rgba(59,130,246,0.3)",
+        title:"紹介・信頼の循環をつくる",
+        tasks:[
+          {title:"信頼している顧客1人に「ご紹介いただけそうな方はいますか？」と聞く",why:"紹介営業はあなたの強みが最大限活きる手法",hard:"hard"},
+          {title:"チームの雰囲気を上げる行動を1つ意識的に行う（朝の声がけ・ランチ誘いなど）",why:"チームへの貢献実績を自分の強みとして意識的に積み上げる",hard:"easy"},
+          {title:"メンターに「自分の共感力を数字に繋げるコツ」を聞く",why:"弱点を素直に認めて学ぶ姿勢がこのタイプの最大の成長エンジン",hard:"normal"},
+        ]
+      },
+    ]
   },
+
   logic: {
     badge:"📊", color:"#3b82f6",
     typeLabel:"タイプ C",
@@ -437,8 +541,55 @@ const Types = {
     tags:["分析力","戦略思考","問題解決","PDCA"],
     strengths:["論理的なプレゼン・提案","課題の本質を見抜く力","勝率の高い案件設計","データ活用・市場分析"],
     growth:["行動する前に考えすぎることも","感情的な共感をもっと意識する","完璧主義によるスピード低下","チームへの情報共有を心がける"],
-    mgtNote:"「なぜそうするか」の背景・根拠を示すと納得度が高まります。スキルアップの機会が最大のモチベーターに。",
+    mgtNote:"💡 「なぜそうするか」の背景・根拠を示すと納得度が高まります。スキルアップの機会・担当領域の裁量付与が最大のモチベーターになります。学習コンテンツや事例研究の機会を積極的に与えましょう。",
+    mindFeedback: [
+      {
+        icon:"🚀",title:"「完璧な準備」より「70点で動く」習慣をつける",
+        body:"あなたの分析力と準備力は本物です。しかし、<strong>「もう少し調べてから」「完璧な提案ができたら」という思考パターンが、行動のスピードを落としているケースがあります。</strong>「70点の準備で動き、残りの30点は現場で学ぶ」というマインドセットを意識的に練習してください。完璧な計画より、実行と修正のサイクルが成果を生みます。",
+        quote:"「完璧な地図より、早く出発した人が先に頂上に着く。」"
+      },
+      {
+        icon:"❤️",title:"論理の前に「感情を受け止める」一言を",
+        body:"顧客は感情で動き、論理で納得します。あなたはその「論理」が得意なので、<strong>まず「感情を受け止める」ステップを意識的に挟むだけで、成約率が大きく変わります。</strong>提案の前に「それは大変でしたね」「よくわかります」という一言を習慣化してください。論理の力が、感情の受容によって何倍にも活きるようになります。",
+        quote:"「人は感情で動き、論理で動く。両方使える人が最強。」"
+      },
+      {
+        icon:"📢",title:"知識を「伝える・教える」ことに投資する",
+        body:"あなたが持っている分析知識や思考フレームワークは、チームにとって大きな財産です。<strong>「自分でやる」から「人に伝えて一緒にやる」にシフトすることで、あなたの影響力は個人の限界を超えます。</strong>週1回でも「なるほど！」と思った知識を一言でチームに共有する習慣を始めてください。",
+        quote:"「一人の知識は武器。チームの知識は要塞になる。」"
+      },
+    ],
+    taskWeeks: [
+      {
+        week:"Week 1", color:"#3b82f6", borderColor:"rgba(59,130,246,0.3)",
+        title:"スピードと感情力を鍛える基礎づくり",
+        tasks:[
+          {title:"「準備7割で商談に臨む」を1回実践し、結果を記録する",why:"行動の早さが学習の密度を上げることを体験する",hard:"hard"},
+          {title:"商談の冒頭2分は意図的に雑談・共感の時間にする",why:"感情の受容が信頼の入口になることを実感する",hard:"normal"},
+          {title:"今日の商談で「なぜ？」と聞いた回数を記録する",why:"ヒアリングの深さを習慣的に意識する起点をつくる",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 2", color:"#f59e0b", borderColor:"rgba(245,158,11,0.3)",
+        title:"提案の質と感情的説得力を上げる",
+        tasks:[
+          {title:"提案書に「顧客が感じているであろう不安・期待」を書き加える",why:"論理に感情軸を足すことで、相手の腹落ち感が変わる",hard:"normal"},
+          {title:"競合との比較分析を1枚のシートにまとめる",why:"強みが最も活きる「比較提案」スタイルを確立する",hard:"normal"},
+          {title:"仮説を立てて商談に臨み「当たったか外れたか」を記録する",why:"PDCAを高速で回す実践習慣",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 3-4", color:"#10b981", borderColor:"rgba(16,185,129,0.3)",
+        title:"知識をチームに還元する",
+        tasks:[
+          {title:"「今週気づいた営業の法則」をチームに5分でシェアする",why:"アウトプットすることで思考がさらに深まり、信頼も高まる",hard:"hard"},
+          {title:"担当顧客のデータを分析し「次の提案仮説」を3つ立てる",why:"分析力を直接売上につなげる実践トレーニング",hard:"normal"},
+          {title:"上司に「私の弱みはどこですか？」とダイレクトに聞く",why:"客観的な弱点把握が最速の成長につながる",hard:"hard"},
+        ]
+      },
+    ]
   },
+
   steady: {
     badge:"🌱", color:"#f59e0b",
     typeLabel:"タイプ D",
@@ -448,18 +599,63 @@ const Types = {
     tags:["継続力","安定性","高い信頼性","丁寧さ"],
     strengths:["高い継続性と安定したパフォーマンス","ミスの少ない丁寧な仕事","長期顧客関係の維持","プロセス管理・実行力"],
     growth:["変化や挑戦への適応スピードを高める","自分からリード・発言する機会を増やす","スピード感のある行動力を磨く","もっと大きい目標設定に挑戦する"],
-    mgtNote:"急激な変化より段階的なチャレンジが有効。「安心して挑戦できる環境」を用意し、変化への耐性を少しずつ育てましょう。",
+    mgtNote:"💡 急激な変化より段階的なチャレンジが有効。「安心して挑戦できる環境」を用意し、変化への耐性を少しずつ育てましょう。成功体験を丁寧に承認することで自己効力感が高まります。",
+    mindFeedback: [
+      {
+        icon:"🌊",title:"「変化」を恐れではなく「成長の素材」として受け取る",
+        body:"あなたの安定した仕事ぶりはチームの大きな支えです。しかし、<strong>「今のやり方を崩したくない」という感情が、次のステージへの移行を妨げることがあります。</strong>変化を「今のやり方を否定されること」ではなく「新しいツールを手に入れること」として捉え直してみてください。あなたの継続力は、新しいことを習得した後に最も輝きます。",
+        quote:"「コツコツできる人が、新しいことを身につけたら最強になる。」"
+      },
+      {
+        icon:"📣",title:"「伝える」ことへの一歩を、小さく踏み出す",
+        body:"あなたが積み上げてきた経験や丁寧さは、もっと周囲に伝わっていい価値です。<strong>「まだ言えるレベルじゃない」「迷惑になるかも」という謙遜が、あなたの成長の声を抑えてしまっています。</strong>会議で一言でいいので発言する、日報に「今日の工夫」を一行書く——小さいことから「伝える筋肉」をトレーニングしてください。",
+        quote:"「丁寧にやってきた人の言葉は、必ず誰かの心に届く。」"
+      },
+      {
+        icon:"🎯",title:"自分への期待値を少しだけ上げる練習",
+        body:"「確実にできること」だけを選ぶ習慣は安定をもたらしますが、<strong>「少し背伸びした目標」を設定しないと、成長の実感が薄れてしまいます。</strong>今の自分の120%の目標を一つだけ設定し、それを達成するプロセスを丁寧に歩んでみてください。あなたの継続力は、高い目標こそ最も光ります。",
+        quote:"「小さな一歩を積み重ねてきた人が、大きな目標に一番近い。」"
+      },
+    ],
+    taskWeeks: [
+      {
+        week:"Week 1", color:"#f59e0b", borderColor:"rgba(245,158,11,0.3)",
+        title:"小さな「挑戦」の習慣をつくる",
+        tasks:[
+          {title:"今日の業務の中で「いつもより少し難しい選択」を1つ意識してする",why:"変化への抵抗を少しずつ下げるための最小単位のトレーニング",hard:"easy"},
+          {title:"朝の開始時に「今日の一番難しいタスク」を先にやる",why:"先送り癖をなくし、挑戦への慣性をつくる",hard:"normal"},
+          {title:"今週終わりに「できたこと日記」を5つ書く",why:"自己肯定感を言語化して積み上げることが次のチャレンジの燃料になる",hard:"easy"},
+        ]
+      },
+      {
+        week:"Week 2", color:"#10b981", borderColor:"rgba(16,185,129,0.3)",
+        title:"発信・提案する力を鍛える",
+        tasks:[
+          {title:"チームMTGで最低1回、自分から意見・質問を言う",why:"発言する習慣が存在感と影響力を徐々に高める",hard:"hard"},
+          {title:"「こうすればもっと良くなるのでは？」という改善案を上司に1つ伝える",why:"安定プレイヤーから提案できる人材へのシフト",hard:"hard"},
+          {title:"顧客へのフォローメールに「自分なりの一言」を添える",why:"定型文から抜け出す小さな創造性の練習",hard:"normal"},
+        ]
+      },
+      {
+        week:"Week 3-4", color:"#3b82f6", borderColor:"rgba(59,130,246,0.3)",
+        title:"自分の実績を「見える化」する",
+        tasks:[
+          {title:"自分がこのインターンで取り組んだことを箇条書き5つにまとめる",why:"継続してきたことを言語化することで自己評価が正確になる",hard:"easy"},
+          {title:"「今まで避けてきた種類の仕事」に一度だけ手を挙げる",why:"新しい自分を発見する体験が変化耐性を生む",hard:"hard"},
+          {title:"上司・メンターに「成長したと感じる部分はどこですか？」と聞く",why:"客観的な成長評価がこのタイプの自信の源になる",hard:"normal"},
+        ]
+      },
+    ]
   },
 };
 
-const axisLabels = { achieve:"成果・競争軸", empathy:"貢献・共感軸", logic:"論理・分析軸", steady:"継続・安定軸" };
-const axisColors = { achieve:"#e94560", empathy:"#10b981", logic:"#3b82f6", steady:"#f59e0b" };
+const axisLabels = {achieve:"成果・競争軸",empathy:"貢献・共感軸",logic:"論理・分析軸",steady:"継続・安定軸"};
+const axisColors = {achieve:"#e94560",empathy:"#10b981",logic:"#3b82f6",steady:"#f59e0b"};
+const diffLabels = {easy:{label:"やりやすい",color:"#10b981"},normal:{label:"ふつう",color:"#3b82f6"},hard:{label:"挑戦的",color:"#e94560"}};
 
-/* ───────────── STATE ───────────── */
 let cur = 0;
-let scores = { achieve:0, empathy:0, logic:0, steady:0 };
+let scores = {achieve:0,empathy:0,logic:0,steady:0};
 
-/* ───────────── RENDER ───────────── */
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -470,43 +666,43 @@ function startQuiz() { show('quiz'); render(); }
 function render() {
   const q = Qs[cur];
   document.getElementById('q-counter').textContent = `質問 ${cur+1} / ${Qs.length}`;
-  document.getElementById('q-step').textContent = `残り ${Qs.length - cur} 問`;
-  document.getElementById('prog-fill').style.width = `${(cur / Qs.length) * 100}%`;
-
+  document.getElementById('q-step').textContent = `残り ${Qs.length-cur} 問`;
+  document.getElementById('prog-fill').style.width = `${(cur/Qs.length)*100}%`;
   const catEl = document.getElementById('q-cat');
   catEl.textContent = q.category;
-  catEl.style.background = q.catColor + '22';
-  catEl.style.border = `1px solid ${q.catColor}66`;
-  catEl.style.color = q.catColor;
-
+  catEl.style.cssText += `background:${q.catColor}22;border:1px solid ${q.catColor}66;color:${q.catColor}`;
   document.getElementById('q-text').textContent = q.text;
-
   const optsEl = document.getElementById('options');
   optsEl.innerHTML = '';
   q.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'option';
-    btn.innerHTML = `<span class="key">${opt.key}</span><span class="body">${opt.text}${opt.sub ? `<div class="sub">${opt.sub}</div>` : ''}</span>`;
+    btn.innerHTML = `<span class="key">${opt.key}</span><span class="body">${opt.text}${opt.sub?`<div class="sub">${opt.sub}</div>`:''}</span>`;
     btn.onclick = () => pick(opt.scores);
     optsEl.appendChild(btn);
   });
 }
 
-function pick(optScores) {
-  for (const k in optScores) scores[k] += optScores[k];
+function pick(s) {
+  for (const k in s) scores[k] += s[k];
   cur++;
-  if (cur < Qs.length) { render(); }
-  else { showResult(); }
+  cur < Qs.length ? render() : showResult();
 }
 
-/* ───────────── RESULT ───────────── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
 function showResult() {
   document.getElementById('prog-fill').style.width = '100%';
   const top = Object.keys(scores).reduce((a,b) => scores[a] >= scores[b] ? a : b);
   const t = Types[top];
 
   document.getElementById('r-hero').textContent = t.badge;
-  document.getElementById('r-hero').style.cssText += `background:${t.color}22;border:2px solid ${t.color};`;
+  document.getElementById('r-hero').style.cssText = `background:${t.color}22;border:2px solid ${t.color};`;
   document.getElementById('r-type-label').textContent = t.typeLabel;
   document.getElementById('r-name').textContent = t.name;
   document.getElementById('r-name').style.color = t.color;
@@ -517,23 +713,19 @@ function showResult() {
     `<span class="tag" style="color:${t.color};border-color:${t.color}44;background:${t.color}11">${tag}</span>`
   ).join('');
 
-  // axis bars
   const total = Object.values(scores).reduce((a,b)=>a+b,0) || 1;
-  const axesEl = document.getElementById('r-axes');
-  axesEl.innerHTML = '<h3>診断スコア内訳</h3>' + Object.keys(scores).map(k => {
-    const pct = Math.round((scores[k] / total) * 100);
-    return `<div class="axis-row">
-      <div class="axis-name">${axisLabels[k]}</div>
-      <div class="axis-track"><div class="axis-fill" style="width:0%;background:${axisColors[k]}" data-w="${pct}"></div></div>
-      <div class="axis-val">${pct}%</div>
-    </div>`;
-  }).join('');
+  document.getElementById('r-axes').innerHTML = '<div class="axes-title">診断スコア内訳</div>' +
+    Object.keys(scores).map(k => {
+      const pct = Math.round((scores[k]/total)*100);
+      return `<div class="axis-row">
+        <div class="axis-name">${axisLabels[k]}</div>
+        <div class="axis-track"><div class="axis-fill" style="width:0%;background:${axisColors[k]}" data-w="${pct}"></div></div>
+        <div class="axis-val">${pct}%</div>
+      </div>`;
+    }).join('');
 
-  // animate bars after paint
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    document.querySelectorAll('.axis-fill').forEach(el => {
-      el.style.width = el.dataset.w + '%';
-    });
+    document.querySelectorAll('.axis-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
   }));
 
   document.getElementById('r-sw').innerHTML = `
@@ -546,15 +738,54 @@ function showResult() {
       <ul>${t.growth.map(g=>`<li>${g}</li>`).join('')}</ul>
     </div>`;
 
+  /* AI FEEDBACK - MIND */
+  document.getElementById('tab-mind').innerHTML = t.mindFeedback.map(f => `
+    <div class="mind-card">
+      <div class="mind-card-header">
+        <span class="mind-card-icon">${f.icon}</span>
+        <span class="mind-card-title">${f.title}</span>
+      </div>
+      <div class="mind-card-body">${f.body}</div>
+      <div class="mind-quote">${f.quote}</div>
+    </div>
+  `).join('');
+
+  /* AI FEEDBACK - TASKS */
+  document.getElementById('tab-task').innerHTML = t.taskWeeks.map(w => `
+    <div class="task-week">
+      <div class="task-week-header">
+        <span class="week-badge" style="color:${w.color};border-color:${w.color};background:${w.color}15">${w.week}</span>
+        <span class="task-week-title">${w.title}</span>
+      </div>
+      <ul class="task-list">
+        ${w.tasks.map((task,i) => {
+          const d = diffLabels[task.hard];
+          return `<li class="task-item">
+            <div class="task-check" onclick="toggleCheck(this)" title="完了にする">✓</div>
+            <div class="task-body">
+              <strong>${task.title}</strong>
+              <span class="why">💬 ${task.why}</span>
+            </div>
+            <span class="task-difficulty" style="color:${d.color};border-color:${d.color};background:${d.color}15">${d.label}</span>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+
   document.getElementById('r-note').innerHTML =
     `<strong>💡 マネジメント活用メモ</strong><br>${t.mgtNote}`;
 
   show('result');
 }
 
+function toggleCheck(el) {
+  el.classList.toggle('done');
+}
+
 function restart() {
   cur = 0;
-  scores = { achieve:0, empathy:0, logic:0, steady:0 };
+  scores = {achieve:0,empathy:0,logic:0,steady:0};
   show('start');
 }
 </script>
