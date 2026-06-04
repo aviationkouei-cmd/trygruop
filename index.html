@@ -3,438 +3,559 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>営業マン性格診断</title>
+  <title>インターン初期登録 | マインド診断</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #e94560;
+      --blue:   #3b82f6;
+      --green:  #10b981;
+      --yellow: #f59e0b;
+      --bg:     #0f172a;
+      --card:   rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.1);
+      --text:   #f1f5f9;
+      --muted:  #94a3b8;
+    }
 
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      background: var(--bg);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      color: var(--text);
     }
 
-    .container {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      max-width: 700px;
+    .wrap {
       width: 100%;
+      max-width: 680px;
+    }
+
+    /* ── SCREEN UTILS ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 40px;
-      color: #fff;
+      backdrop-filter: blur(12px);
     }
 
-    /* START SCREEN */
-    #start-screen { text-align: center; }
-    #start-screen .logo { font-size: 3rem; margin-bottom: 10px; }
-    #start-screen h1 { font-size: 1.8rem; margin-bottom: 8px; color: #e94560; }
-    #start-screen p { color: #aaa; margin-bottom: 30px; line-height: 1.6; }
-
-    .btn {
-      background: linear-gradient(135deg, #e94560, #c0392b);
-      color: #fff;
-      border: none;
-      padding: 14px 40px;
-      border-radius: 30px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      font-family: inherit;
+    /* ── START ── */
+    #start { text-align: center; }
+    .start-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .start-eyebrow {
+      display: inline-block;
+      background: rgba(233,69,96,0.15);
+      border: 1px solid rgba(233,69,96,0.4);
+      color: var(--red);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,69,96,0.4); }
+    #start h1 { font-size: 1.7rem; margin-bottom: 12px; }
+    #start p { color: var(--muted); line-height: 1.8; margin-bottom: 32px; font-size: 0.95rem; }
+    .pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+    .pillar {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+    }
+    .pillar .num { font-size: 1.3rem; margin-bottom: 4px; }
+    .pillar .label { color: var(--muted); font-size: 0.78rem; }
+    .pillar .title { font-weight: bold; font-size: 0.88rem; }
 
-    /* QUIZ SCREEN */
-    #quiz-screen { display: none; }
+    /* ── PROGRESS ── */
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .progress-label { font-size: 0.8rem; color: var(--muted); }
     .progress-bar {
-      height: 6px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      margin-bottom: 30px;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      margin-bottom: 32px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #e94560, #f5a623);
-      border-radius: 3px;
-      transition: width 0.4s ease;
-    }
-    .question-counter { color: #aaa; font-size: 0.85rem; margin-bottom: 8px; }
-    .question-text {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-    .options { display: flex; flex-direction: column; gap: 12px; }
-    .option {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 16px 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 1rem;
-      color: #fff;
-      text-align: left;
-      font-family: inherit;
-    }
-    .option:hover {
-      background: rgba(233,69,96,0.2);
-      border-color: #e94560;
-      transform: translateX(4px);
-    }
-    .option.selected {
-      background: rgba(233,69,96,0.3);
-      border-color: #e94560;
+      background: linear-gradient(90deg, var(--red), var(--yellow));
+      border-radius: 2px;
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
     }
 
-    /* RESULT SCREEN */
-    #result-screen { display: none; text-align: center; }
-    .result-badge {
-      width: 100px;
-      height: 100px;
+    /* ── QUESTION ── */
+    .q-category {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .q-text {
+      font-size: 1.15rem;
+      font-weight: bold;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      color: var(--text);
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+    .option:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.25);
+      transform: translateX(3px);
+    }
+    .option .key {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .option .body .sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── RESULT ── */
+    #result { text-align: center; }
+    .result-hero {
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 2.8rem;
       margin: 0 auto 20px;
     }
-    .result-type { font-size: 1rem; color: #aaa; margin-bottom: 6px; }
-    .result-name { font-size: 2rem; font-weight: bold; margin-bottom: 20px; }
+    .result-type-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-name { font-size: 1.9rem; font-weight: bold; margin-bottom: 8px; }
+    .result-catch { font-size: 0.95rem; color: var(--muted); margin-bottom: 24px; }
+
     .result-desc {
-      background: rgba(255,255,255,0.06);
-      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 20px;
       text-align: left;
-      line-height: 1.8;
-      color: #ddd;
+      line-height: 1.85;
+      color: #cbd5e1;
+      font-size: 0.93rem;
       margin-bottom: 20px;
     }
-    .result-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
     .tag {
-      background: rgba(233,69,96,0.2);
-      border: 1px solid #e94560;
-      color: #e94560;
       padding: 4px 14px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      border: 1px solid;
     }
-    .strengths-weaknesses {
+
+    /* radar-like axis bars */
+    .axes { margin-bottom: 24px; }
+    .axes h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; text-align: left; }
+    .axis-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .axis-name { font-size: 0.82rem; width: 110px; flex-shrink: 0; text-align: right; color: #cbd5e1; }
+    .axis-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .axis-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .axis-val { font-size: 0.78rem; color: var(--muted); width: 30px; text-align: left; }
+
+    .sw-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 25px;
+      gap: 14px;
+      margin-bottom: 28px;
     }
     .sw-box {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 15px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
       text-align: left;
     }
-    .sw-box h4 { font-size: 0.9rem; margin-bottom: 10px; }
-    .sw-box h4.strength { color: #2ecc71; }
-    .sw-box h4.weakness { color: #e74c3c; }
+    .sw-box h4 { font-size: 0.82rem; margin-bottom: 10px; }
     .sw-box ul { list-style: none; }
-    .sw-box ul li { font-size: 0.85rem; color: #ccc; padding: 3px 0; }
-    .sw-box ul li::before { content: "• "; color: #aaa; }
+    .sw-box li { font-size: 0.82rem; color: #cbd5e1; padding: 3px 0; padding-left: 14px; position: relative; }
+    .sw-box li::before { content: "▸"; position: absolute; left: 0; color: var(--muted); font-size: 0.7rem; top: 4px; }
 
-    @media (max-width: 500px) {
-      .container { padding: 24px; }
-      .strengths-weaknesses { grid-template-columns: 1fr; }
+    .note {
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 0.83rem;
+      color: #93c5fd;
+      line-height: 1.7;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    /* ── BTN ── */
+    .btn {
+      background: linear-gradient(135deg, var(--red), #c0392b);
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      font-weight: bold;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,69,96,0.35); }
+
+    @media (max-width: 520px) {
+      .card { padding: 24px; }
+      .pillars { grid-template-columns: 1fr; }
+      .sw-grid { grid-template-columns: 1fr; }
       .result-name { font-size: 1.5rem; }
+      .axis-name { width: 80px; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-  <!-- START -->
-  <div id="start-screen">
-    <div class="logo">💼</div>
-    <h1>営業マン性格診断</h1>
-    <p>あなたの営業スタイルと強みを発見しよう。<br>15問の質問に答えて、あなたのタイプを診断します。</p>
-    <button class="btn" onclick="startQuiz()">診断スタート</button>
+  <!-- ══════════ START ══════════ -->
+  <div id="start" class="screen active card">
+    <div class="start-icon">🧭</div>
+    <div class="start-eyebrow">インターン 初期登録診断</div>
+    <h1>あなたのマインドを<br>可視化しよう</h1>
+    <p>
+      7つの質問に答えるだけで、あなたの<strong>モチベーションの軸・行動スタイル・コミュニケーション傾向</strong>を診断します。<br>
+      この結果はマネジメントやチーム配属の参考データにも活用されます。
+    </p>
+    <div class="pillars">
+      <div class="pillar"><div class="num">🔥</div><div class="title">モチベーション源泉</div><div class="label">Q1</div></div>
+      <div class="pillar"><div class="num">💪</div><div class="title">レジリエンス・改善力</div><div class="label">Q2</div></div>
+      <div class="pillar"><div class="num">🗣</div><div class="title">コミュニケーション</div><div class="label">Q3</div></div>
+      <div class="pillar"><div class="num">🎯</div><div class="title">目標へのコミット</div><div class="label">Q4</div></div>
+      <div class="pillar"><div class="num">⚡</div><div class="title">変化への対応力</div><div class="label">Q5</div></div>
+      <div class="pillar"><div class="num">🪞</div><div class="title">自己認識・強み</div><div class="label">Q6</div></div>
+      <div class="pillar"><div class="num">🚀</div><div class="title">インターンへの期待</div><div class="label">Q7</div></div>
+    </div>
+    <button class="btn" onclick="startQuiz()">診断をはじめる</button>
   </div>
 
-  <!-- QUIZ -->
-  <div id="quiz-screen">
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="question-counter" id="question-counter"></div>
-    <div class="question-text" id="question-text"></div>
+  <!-- ══════════ QUIZ ══════════ -->
+  <div id="quiz" class="screen card">
+    <div class="progress-header">
+      <span class="progress-label" id="q-counter"></span>
+      <span class="progress-label" id="q-step"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    <div class="q-category" id="q-cat"></div>
+    <div class="q-text" id="q-text"></div>
     <div class="options" id="options"></div>
   </div>
 
-  <!-- RESULT -->
-  <div id="result-screen">
-    <div class="result-badge" id="result-badge"></div>
-    <div class="result-type" id="result-type"></div>
-    <div class="result-name" id="result-name"></div>
-    <div class="result-desc" id="result-desc"></div>
-    <div class="result-tags" id="result-tags"></div>
-    <div class="strengths-weaknesses" id="sw"></div>
+  <!-- ══════════ RESULT ══════════ -->
+  <div id="result" class="screen card">
+    <div class="result-hero" id="r-hero"></div>
+    <div class="result-type-label" id="r-type-label"></div>
+    <div class="result-name" id="r-name"></div>
+    <div class="result-catch" id="r-catch"></div>
+    <div class="result-desc" id="r-desc"></div>
+    <div class="tags" id="r-tags"></div>
+    <div class="axes" id="r-axes"></div>
+    <div class="sw-grid" id="r-sw"></div>
+    <div class="note" id="r-note"></div>
     <button class="btn" onclick="restart()">もう一度診断する</button>
   </div>
 
 </div>
-
 <script>
-const questions = [
+/* ───────────── QUESTIONS ───────────── */
+const Qs = [
   {
-    text: "初めて会う顧客へのアプローチとして最も自然なのは？",
+    category: "Q1 ｜ モチベーションの源泉",
+    catColor: "#e94560",
+    text: "あなたが最も「モチベーションが上がる」と感じる瞬間はどれですか？",
     options: [
-      { text: "まず雑談で打ち解けてから本題に入る", scores: { hunter: 1, consultant: 1, relationship: 3, analyst: 0 } },
-      { text: "顧客の課題をヒアリングして解決策を提案する", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "インパクトのある提案で最初から印象づける", scores: { hunter: 3, consultant: 1, relationship: 0, analyst: 1 } },
-      { text: "事前にしっかりリサーチして万全の準備をする", scores: { hunter: 0, consultant: 1, relationship: 1, analyst: 3 } },
+      { key:"A", text:"目標を達成したり、人より高い成果を出して評価されたとき", sub:"成果・競争軸", scores:{achieve:3,empathy:0,logic:0,steady:0} },
+      { key:"B", text:"顧客やチームのメンバーから「ありがとう」と感謝されたとき", sub:"貢献・対人軸", scores:{achieve:0,empathy:3,logic:0,steady:0} },
+      { key:"C", text:"新しい知識やスキルを身に付け、自分の成長を実感できたとき", sub:"自己成長軸", scores:{achieve:1,empathy:0,logic:2,steady:1} },
+      { key:"D", text:"計画通りに物事を進め、ミスなくやり遂げたとき", sub:"プロセス・安定軸", scores:{achieve:0,empathy:1,logic:1,steady:3} },
     ]
   },
   {
-    text: "商談が思うように進まない時、あなたは？",
+    category: "Q2 ｜ 壁にぶつかったときの行動",
+    catColor: "#f59e0b",
+    text: "高い目標に対して、思うように成果が出ないとき、最初に取る行動は？",
     options: [
-      { text: "別のアングルで粘り強くアプローチし続ける", scores: { hunter: 3, consultant: 1, relationship: 1, analyst: 0 } },
-      { text: "顧客の本当の懸念点を深掘りして聞き出す", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "焦らず関係を維持しながら機を待つ", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 2 } },
-      { text: "データや事例を用意して論理的に説得する", scores: { hunter: 1, consultant: 1, relationship: 0, analyst: 3 } },
+      { key:"A", text:"とにかく行動量（打席数）を増やして、確率論で突破しようとする", sub:"行動量型", scores:{achieve:3,empathy:0,logic:0,steady:1} },
+      { key:"B", text:"なぜ成果が出ないのか、これまでのプロセスを分析して改善策を考える", sub:"思考・分析型", scores:{achieve:1,empathy:0,logic:3,steady:1} },
+      { key:"C", text:"成果が出ている先輩や上司にすぐに相談し、アドバイスを仰ぐ", sub:"素直さ・巻き込み型", scores:{achieve:1,empathy:2,logic:1,steady:0} },
+      { key:"D", text:"一度気持ちをリフレッシュさせ、モチベーションを立て直してから再開する", sub:"メンタルコントロール型", scores:{achieve:0,empathy:1,logic:0,steady:3} },
     ]
   },
   {
-    text: "目標達成が難しい状況で、最初に思うことは？",
+    category: "Q3 ｜ コミュニケーションスタイル",
+    catColor: "#10b981",
+    text: "初対面の人と話すとき、あなたはどのような立ち回りをすることが多いですか？",
     options: [
-      { text: "どうやって数字を作るか、すぐ行動策を考える", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 1 } },
-      { text: "顧客に価値を届けることを優先する", scores: { hunter: 0, consultant: 3, relationship: 2, analyst: 0 } },
-      { text: "今まで築いた関係を頼りにできないか考える", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "原因を分析して改善策を立てる", scores: { hunter: 1, consultant: 1, relationship: 0, analyst: 3 } },
+      { key:"A", text:"自分から積極的に話題を提供し、場の雰囲気を盛り上げる", sub:"開拓・リード型", scores:{achieve:3,empathy:1,logic:0,steady:0} },
+      { key:"B", text:"相手の話をじっくり聞き、相手が話しやすい空気を作る", sub:"傾聴・ヒアリング型", scores:{achieve:0,empathy:3,logic:1,steady:1} },
+      { key:"C", text:"相手のプロフィールや共通点を事前にリサーチし、戦略的に話す", sub:"準備・ロジカル型", scores:{achieve:1,empathy:0,logic:3,steady:1} },
+      { key:"D", text:"相手のテンションや好みに自然と自分を合わせる", sub:"適応・調和型", scores:{achieve:0,empathy:2,logic:0,steady:3} },
     ]
   },
   {
-    text: "あなたが最も得意とするコミュニケーションスタイルは？",
+    category: "Q4 ｜ 目標へのコミットメント",
+    catColor: "#e94560",
+    text: "自分で決めた目標（または与えられた目標）に対するあなたのスタンスは？",
     options: [
-      { text: "エネルギッシュで熱意が伝わるトーク", scores: { hunter: 3, consultant: 0, relationship: 1, analyst: 0 } },
-      { text: "質問を通じて相手の考えを引き出す", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "相手の気持ちに寄り添う共感的な話し方", scores: { hunter: 0, consultant: 1, relationship: 3, analyst: 0 } },
-      { text: "論理的・構造的に情報を整理して伝える", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
+      { key:"A", text:"何が何でも達成する。未達成で終わることは絶対に避けたい", sub:"執着度：高", scores:{achieve:3,empathy:0,logic:0,steady:1} },
+      { key:"B", text:"高めの目標を設定し、たとえ未達成でもプロセスで得られるものがあれば良い", sub:"プロセス重視", scores:{achieve:1,empathy:1,logic:2,steady:0} },
+      { key:"C", text:"確実に達成できる現実的な目標を立て、着実にクリアしていきたい", sub:"堅実重視", scores:{achieve:0,empathy:0,logic:1,steady:3} },
+      { key:"D", text:"目標の数字よりも、自分が納得して楽しく取り組めるかを重視したい", sub:"納得感重視", scores:{achieve:0,empathy:3,logic:0,steady:1} },
     ]
   },
   {
-    text: "週末、仕事のことを考えるとしたら何を考えている？",
+    category: "Q5 ｜ 変化への対応力",
+    catColor: "#3b82f6",
+    text: "ルールや環境が急に変更されたり、新しい挑戦を求められたとき、どう感じますか？",
     options: [
-      { text: "来週のアポと攻め方のシミュレーション", scores: { hunter: 3, consultant: 1, relationship: 0, analyst: 0 } },
-      { text: "顧客の課題に対してより良い提案ができないか", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "顧客との関係を深める機会がないか", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "自分の営業データをレビューして改善点を探す", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
+      { key:"A", text:"チャンスだと捉え、ワクワクしてすぐに新しい環境に飛び込む", sub:"イノベーター型", scores:{achieve:3,empathy:1,logic:0,steady:0} },
+      { key:"B", text:"変更の理由や背景を納得できれば、前向きに対応する", sub:"納得連動型", scores:{achieve:1,empathy:1,logic:2,steady:1} },
+      { key:"C", text:"少し不安や抵抗を感じるが、周囲の出方を見ながら徐々に適応する", sub:"慎重型", scores:{achieve:0,empathy:2,logic:1,steady:2} },
+      { key:"D", text:"これまでのやり方にこだわりがあり、変えることに対してストレスを感じやすい", sub:"保守型", scores:{achieve:0,empathy:0,logic:0,steady:3} },
     ]
   },
   {
-    text: "新規顧客の開拓と既存顧客の深耕、どちらが好き？",
+    category: "Q6 ｜ 自己認識・現時点の強み",
+    catColor: "#10b981",
+    text: "周囲の友人から、あなたはどのような人だと言われることが多いですか？",
     options: [
-      { text: "断然、新規開拓。新しい挑戦が面白い", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 1 } },
-      { text: "課題解決ができるなら新規・既存どちらでも", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "既存深耕。信頼関係を育てていくのが好き", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "市場の状況を見て戦略的に判断する", scores: { hunter: 1, consultant: 1, relationship: 0, analyst: 3 } },
+      { key:"A", text:"「行動力がある」「エネルギーに溢れている」「負けず嫌い」", sub:"突破力", scores:{achieve:3,empathy:0,logic:0,steady:0} },
+      { key:"B", text:"「話しやすい」「相談に乗ってくれる」「気が利く」", sub:"共感力", scores:{achieve:0,empathy:3,logic:0,steady:1} },
+      { key:"C", text:"「頭が良い」「計画性がある」「落ち着いている」", sub:"論理力", scores:{achieve:0,empathy:0,logic:3,steady:1} },
+      { key:"D", text:"「真面目」「コツコツやり抜く」「信頼できる」", sub:"継続力", scores:{achieve:0,empathy:1,logic:1,steady:3} },
     ]
   },
   {
-    text: "商談後のフォローアップでよくやることは？",
+    category: "Q7 ｜ インターンへの期待",
+    catColor: "#f59e0b",
+    text: "今回のインターンを通じて、あなたが「最も得たいもの」は何ですか？",
     options: [
-      { text: "次のアクションを素早く決めてすぐ動く", scores: { hunter: 3, consultant: 1, relationship: 0, analyst: 0 } },
-      { text: "提案内容をカスタマイズして再提案する", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "お礼と一緒に顧客の近況を気にかける連絡をする", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "商談の内容を記録・分析して次に活かす", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "同僚から「あなたらしい」と言われそうな行動は？",
-    options: [
-      { text: "断られても何度もチャレンジする", scores: { hunter: 3, consultant: 0, relationship: 1, analyst: 0 } },
-      { text: "顧客のことを誰より深く理解している", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "顧客に頼られて相談をよく受けている", scores: { hunter: 0, consultant: 1, relationship: 3, analyst: 0 } },
-      { text: "数字やデータで物事を判断している", scores: { hunter: 0, consultant: 0, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "プレゼンで最も力を入れるのはどこ？",
-    options: [
-      { text: "冒頭のつかみとクロージングの迫力", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 1 } },
-      { text: "顧客の課題との紐づけと解決ストーリー", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "顧客が安心できる実績・信頼感の演出", scores: { hunter: 0, consultant: 1, relationship: 3, analyst: 0 } },
-      { text: "データ・根拠の正確さと論理構成", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "ライバルに案件を取られた時の反応は？",
-    options: [
-      { text: "悔しくてすぐ次の案件に全力投球する", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 0 } },
-      { text: "なぜ負けたかを振り返り提案の質を上げる", scores: { hunter: 0, consultant: 3, relationship: 0, analyst: 2 } },
-      { text: "顧客との関係は続けて次の機会を待つ", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "敗因を徹底的に分析してデータに記録する", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "あなたが感じる「売れた！」という達成感はどんな時？",
-    options: [
-      { text: "難しい案件をこじ開けて契約が取れた時", scores: { hunter: 3, consultant: 0, relationship: 1, analyst: 0 } },
-      { text: "顧客の課題が本当に解決できる提案ができた時", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 0 } },
-      { text: "長期的な信頼関係が花開いてリピートされた時", scores: { hunter: 0, consultant: 1, relationship: 3, analyst: 0 } },
-      { text: "立てた戦略通りに案件が進んだ時", scores: { hunter: 1, consultant: 0, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "チームで仕事をする時、自分がよく担う役割は？",
-    options: [
-      { text: "前線に立ってガンガン動く先頭打者", scores: { hunter: 3, consultant: 0, relationship: 1, analyst: 0 } },
-      { text: "顧客の声を社内にフィードバックするハブ役", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "チームの雰囲気を良くする潤滑油役", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "戦略や数値管理を担う参謀役", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "新しいツールや手法が出た時の反応は？",
-    options: [
-      { text: "とりあえず使ってみる。試してから考える", scores: { hunter: 3, consultant: 0, relationship: 1, analyst: 0 } },
-      { text: "顧客提案に活かせるか検討してから導入する", scores: { hunter: 0, consultant: 3, relationship: 0, analyst: 1 } },
-      { text: "周りの反応を見てから徐々に取り入れる", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "効果をデータで検証してから判断する", scores: { hunter: 0, consultant: 0, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "顧客から「価格が高い」と言われた時の対応は？",
-    options: [
-      { text: "交渉力で乗り越える。強引でも決める", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 0 } },
-      { text: "価格より価値を再提示して納得してもらう", scores: { hunter: 0, consultant: 3, relationship: 1, analyst: 1 } },
-      { text: "一旦預かって上司と相談し柔軟に対応する", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 1 } },
-      { text: "コスト対効果を数字で示して説明する", scores: { hunter: 0, consultant: 1, relationship: 0, analyst: 3 } },
-    ]
-  },
-  {
-    text: "理想の営業スタイルに最も近いのは？",
-    options: [
-      { text: "戦士型。どんな壁も突き破るパワー営業", scores: { hunter: 3, consultant: 0, relationship: 0, analyst: 0 } },
-      { text: "医者型。顧客の問題を診断して最適解を処方する", scores: { hunter: 0, consultant: 3, relationship: 0, analyst: 1 } },
-      { text: "友人型。一生付き合える信頼関係を築く営業", scores: { hunter: 0, consultant: 0, relationship: 3, analyst: 0 } },
-      { text: "参謀型。データと戦略で勝率を高める営業", scores: { hunter: 0, consultant: 0, relationship: 0, analyst: 3 } },
+      { key:"A", text:"同世代に圧倒的な差をつける「ビジネス戦闘力（稼ぐ力・営業力）」", sub:"", scores:{achieve:3,empathy:0,logic:1,steady:0} },
+      { key:"B", text:"将来起業したり、組織をマネジメントしたりするための「経営・リーダー視点」", sub:"", scores:{achieve:2,empathy:1,logic:2,steady:0} },
+      { key:"C", text:"就活や将来のキャリアで自信を持って語れる「目に見える実績・データ」", sub:"", scores:{achieve:1,empathy:0,logic:2,steady:2} },
+      { key:"D", text:"尊敬できる仲間や、社会人の先輩との「質の高いネットワーク（人脈）」", sub:"", scores:{achieve:0,empathy:3,logic:0,steady:1} },
     ]
   },
 ];
 
-const types = {
-  hunter: {
-    badge: "🏹",
-    color: "#e94560",
-    type: "タイプ A",
-    name: "ハンター型",
-    desc: "強烈な行動力と突破力を持つ攻めの営業マン。困難な状況でも諦めず、何度でもアプローチし続けるタフなメンタルが武器です。新規開拓や厳しいノルマ環境でも結果を出し、チームの士気を高める存在です。競争を楽しみ、困難な案件ほど燃えるタイプ。",
-    tags: ["行動力", "突破力", "負けず嫌い", "新規開拓"],
-    strengths: ["粘り強い交渉力", "スピード感のある行動", "プレッシャーへの耐性", "強いクロージング力"],
-    weaknesses: ["計画より行動が先行しがち", "顧客との長期関係の維持", "細かいフォローが苦手", "焦りが出やすい"],
+/* ───────────── TYPES ───────────── */
+const Types = {
+  achieve: {
+    badge:"🔥", color:"#e94560",
+    typeLabel:"タイプ A",
+    name:"ゴリゴリ成果追求型",
+    catch:"数字で語り、行動で証明する。",
+    desc:"結果に対して強い執着心を持ち、困難な状況でも前のめりに行動し続けるエネルギーの塊。競争心が高く、目標未達成を最も嫌います。新規開拓や高いノルマ環境でこそ本領発揮するタイプです。マネジメントする側は「成果・承認」で動機づけると効果的です。",
+    tags:["行動力","負けず嫌い","新規開拓","高コミット"],
+    strengths:["圧倒的な行動量と突破力","プレッシャーへの高い耐性","強いクロージング力","自己目標管理力"],
+    growth:["プロセス・質の軽視に注意","チームワークへの意識を高める","長期的な関係構築も重要","焦りから来る判断ミスに注意"],
+    mgtNote:"「数字で認める」フィードバックが最も刺さります。ランキングや社内競争の仕組みを活用してモチベートを。",
   },
-  consultant: {
-    badge: "🔍",
-    color: "#3498db",
-    type: "タイプ B",
-    name: "コンサル型",
-    desc: "顧客の本質的な課題を掘り下げ、最適な解決策を提供するプロフェッショナル。ヒアリング力と提案力に優れ、単なる商品販売ではなく「価値の提供者」として顧客から高い信頼を得ます。複雑な案件や高額商材で特に力を発揮します。",
-    tags: ["ヒアリング力", "提案力", "問題解決", "高付加価値"],
-    strengths: ["深いヒアリング能力", "カスタマイズ提案", "顧客課題の的確な把握", "信頼感の高さ"],
-    weaknesses: ["スピードより質を優先しがち", "小さな案件はコスト高になりやすい", "直感より論理思考が先行", "初動が遅くなることがある"],
+  empathy: {
+    badge:"🤝", color:"#10b981",
+    typeLabel:"タイプ B",
+    name:"伴走・共感型",
+    catch:"信頼が、いちばんの武器。",
+    desc:"人の気持ちに寄り添い、「この人のために頑張りたい」という動機で動くタイプ。顧客から「あなただから相談したい」と頼られる存在になります。既存顧客の深耕や紹介獲得に強みを発揮します。マネジメント側は「感謝・貢献の実感」で最大化できます。",
+    tags:["傾聴力","共感力","信頼構築","チームの潤滑油"],
+    strengths:["深い傾聴・ヒアリング力","自然な紹介・リピート獲得","チームの心理的安全を高める","顧客の本音を引き出す力"],
+    growth:["短期ノルマへのプレッシャーに注意","数値目標への意識を高める","断られることへの耐性を養う","新規開拓のスピード感を身につける"],
+    mgtNote:"「感謝を伝える」「チームへの貢献を可視化する」フィードバックが効果的。数字より影響力で動機づけを。",
   },
-  relationship: {
-    badge: "🤝",
-    color: "#2ecc71",
-    type: "タイプ C",
-    name: "リレーション型",
-    desc: "人との絆を大切にし、長期的な信頼関係から売上を生み出す営業マン。顧客から「あなただから買う」と言われるほどの人間力を持ちます。既存顧客からの紹介や継続受注が多く、安定的な売上の基盤を作ることが得意です。",
-    tags: ["信頼関係", "人間力", "長期視点", "紹介獲得"],
-    strengths: ["深い人間関係の構築", "高いリテンション率", "口コミ・紹介の獲得", "顧客の本音を引き出す力"],
-    weaknesses: ["新規開拓のスピード感", "短期目標の達成が苦手", "断られることへの抵抗感", "関係に依存しすぎることも"],
+  logic: {
+    badge:"📊", color:"#3b82f6",
+    typeLabel:"タイプ C",
+    name:"ロジカル分析型",
+    catch:"データと根拠が、私の羅針盤。",
+    desc:"物事を論理的に構造化し、「なぜ」を徹底的に考えるタイプ。データで仮説を立て、PDCAを回すことを得意とします。複雑な課題の整理や高付加価値な提案で力を発揮します。マネジメント側は「成長実感・スキルアップ」で動機づけると効果的です。",
+    tags:["分析力","戦略思考","問題解決","PDCA"],
+    strengths:["論理的なプレゼン・提案","課題の本質を見抜く力","勝率の高い案件設計","データ活用・市場分析"],
+    growth:["行動する前に考えすぎることも","感情的な共感をもっと意識する","完璧主義によるスピード低下","チームへの情報共有を心がける"],
+    mgtNote:"「なぜそうするか」の背景・根拠を示すと納得度が高まります。スキルアップの機会が最大のモチベーターに。",
   },
-  analyst: {
-    badge: "📊",
-    color: "#f39c12",
-    type: "タイプ D",
-    name: "ストラテジスト型",
-    desc: "データと論理で営業戦略を組み立て、高い勝率を実現する頭脳派営業マン。感情ではなく根拠で動くため、ブレない判断力を持ちます。マーケット分析や案件管理を得意とし、チームに戦略的な視点をもたらします。",
-    tags: ["分析力", "戦略思考", "データ活用", "高勝率"],
-    strengths: ["精緻な市場・顧客分析", "論理的なプレゼン", "勝率の高い案件選定", "PDCAを回す習慣"],
-    weaknesses: ["分析しすぎて行動が遅れることも", "感情的な共感が苦手", "柔軟な対応より計画優先", "泥臭い交渉は得意でない"],
+  steady: {
+    badge:"🌱", color:"#f59e0b",
+    typeLabel:"タイプ D",
+    name:"堅実・継続型",
+    catch:"コツコツが、最強の武器になる。",
+    desc:"計画通り着実に積み上げることを好み、信頼性と安定感が武器のタイプ。ミスが少なく、長期的に安定した成果を出し続けます。既存顧客のフォローや複雑な事務処理・プロセス管理を得意とします。マネジメント側は「安心できる環境」と「段階的なチャレンジ」が効果的です。",
+    tags:["継続力","安定性","高い信頼性","丁寧さ"],
+    strengths:["高い継続性と安定したパフォーマンス","ミスの少ない丁寧な仕事","長期顧客関係の維持","プロセス管理・実行力"],
+    growth:["変化や挑戦への適応スピードを高める","自分からリード・発言する機会を増やす","スピード感のある行動力を磨く","もっと大きい目標設定に挑戦する"],
+    mgtNote:"急激な変化より段階的なチャレンジが有効。「安心して挑戦できる環境」を用意し、変化への耐性を少しずつ育てましょう。",
   },
 };
 
-let current = 0;
-let scores = { hunter: 0, consultant: 0, relationship: 0, analyst: 0 };
+const axisLabels = { achieve:"成果・競争軸", empathy:"貢献・共感軸", logic:"論理・分析軸", steady:"継続・安定軸" };
+const axisColors = { achieve:"#e94560", empathy:"#10b981", logic:"#3b82f6", steady:"#f59e0b" };
 
-function startQuiz() {
-  document.getElementById('start-screen').style.display = 'none';
-  document.getElementById('quiz-screen').style.display = 'block';
-  renderQuestion();
+/* ───────────── STATE ───────────── */
+let cur = 0;
+let scores = { achieve:0, empathy:0, logic:0, steady:0 };
+
+/* ───────────── RENDER ───────────── */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-function renderQuestion() {
-  const q = questions[current];
-  document.getElementById('question-counter').textContent = `質問 ${current + 1} / ${questions.length}`;
-  document.getElementById('question-text').textContent = q.text;
-  document.getElementById('progress-fill').style.width = `${(current / questions.length) * 100}%`;
-  const opts = document.getElementById('options');
-  opts.innerHTML = '';
-  q.options.forEach((opt, i) => {
+function startQuiz() { show('quiz'); render(); }
+
+function render() {
+  const q = Qs[cur];
+  document.getElementById('q-counter').textContent = `質問 ${cur+1} / ${Qs.length}`;
+  document.getElementById('q-step').textContent = `残り ${Qs.length - cur} 問`;
+  document.getElementById('prog-fill').style.width = `${(cur / Qs.length) * 100}%`;
+
+  const catEl = document.getElementById('q-cat');
+  catEl.textContent = q.category;
+  catEl.style.background = q.catColor + '22';
+  catEl.style.border = `1px solid ${q.catColor}66`;
+  catEl.style.color = q.catColor;
+
+  document.getElementById('q-text').textContent = q.text;
+
+  const optsEl = document.getElementById('options');
+  optsEl.innerHTML = '';
+  q.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'option';
-    btn.textContent = opt.text;
-    btn.onclick = () => selectOption(opt.scores);
-    opts.appendChild(btn);
+    btn.innerHTML = `<span class="key">${opt.key}</span><span class="body">${opt.text}${opt.sub ? `<div class="sub">${opt.sub}</div>` : ''}</span>`;
+    btn.onclick = () => pick(opt.scores);
+    optsEl.appendChild(btn);
   });
 }
 
-function selectOption(optScores) {
-  for (const key in optScores) scores[key] += optScores[key];
-  current++;
-  if (current < questions.length) {
-    renderQuestion();
-  } else {
-    showResult();
-  }
+function pick(optScores) {
+  for (const k in optScores) scores[k] += optScores[k];
+  cur++;
+  if (cur < Qs.length) { render(); }
+  else { showResult(); }
 }
 
+/* ───────────── RESULT ───────────── */
 function showResult() {
-  document.getElementById('quiz-screen').style.display = 'none';
-  document.getElementById('result-screen').style.display = 'block';
-  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('prog-fill').style.width = '100%';
+  const top = Object.keys(scores).reduce((a,b) => scores[a] >= scores[b] ? a : b);
+  const t = Types[top];
 
-  const topType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-  const t = types[topType];
+  document.getElementById('r-hero').textContent = t.badge;
+  document.getElementById('r-hero').style.cssText += `background:${t.color}22;border:2px solid ${t.color};`;
+  document.getElementById('r-type-label').textContent = t.typeLabel;
+  document.getElementById('r-name').textContent = t.name;
+  document.getElementById('r-name').style.color = t.color;
+  document.getElementById('r-catch').textContent = t.catch;
+  document.getElementById('r-desc').textContent = t.desc;
 
-  document.getElementById('result-badge').textContent = t.badge;
-  document.getElementById('result-badge').style.background = t.color + '33';
-  document.getElementById('result-badge').style.border = `2px solid ${t.color}`;
-  document.getElementById('result-type').textContent = t.type;
-  document.getElementById('result-name').textContent = t.name;
-  document.getElementById('result-name').style.color = t.color;
-  document.getElementById('result-desc').textContent = t.desc;
+  document.getElementById('r-tags').innerHTML = t.tags.map(tag =>
+    `<span class="tag" style="color:${t.color};border-color:${t.color}44;background:${t.color}11">${tag}</span>`
+  ).join('');
 
-  const tagsEl = document.getElementById('result-tags');
-  tagsEl.innerHTML = t.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+  // axis bars
+  const total = Object.values(scores).reduce((a,b)=>a+b,0) || 1;
+  const axesEl = document.getElementById('r-axes');
+  axesEl.innerHTML = '<h3>診断スコア内訳</h3>' + Object.keys(scores).map(k => {
+    const pct = Math.round((scores[k] / total) * 100);
+    return `<div class="axis-row">
+      <div class="axis-name">${axisLabels[k]}</div>
+      <div class="axis-track"><div class="axis-fill" style="width:0%;background:${axisColors[k]}" data-w="${pct}"></div></div>
+      <div class="axis-val">${pct}%</div>
+    </div>`;
+  }).join('');
 
-  const swEl = document.getElementById('sw');
-  swEl.innerHTML = `
+  // animate bars after paint
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('.axis-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }));
+
+  document.getElementById('r-sw').innerHTML = `
     <div class="sw-box">
-      <h4 class="strength">強み</h4>
-      <ul>${t.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+      <h4 style="color:#4ade80">▲ 強み</h4>
+      <ul>${t.strengths.map(s=>`<li>${s}</li>`).join('')}</ul>
     </div>
     <div class="sw-box">
-      <h4 class="weakness">成長ポイント</h4>
-      <ul>${t.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>
+      <h4 style="color:#fb923c">◆ 成長ポイント</h4>
+      <ul>${t.growth.map(g=>`<li>${g}</li>`).join('')}</ul>
     </div>`;
+
+  document.getElementById('r-note').innerHTML =
+    `<strong>💡 マネジメント活用メモ</strong><br>${t.mgtNote}`;
+
+  show('result');
 }
 
 function restart() {
-  current = 0;
-  scores = { hunter: 0, consultant: 0, relationship: 0, analyst: 0 };
-  document.getElementById('result-screen').style.display = 'none';
-  document.getElementById('start-screen').style.display = 'block';
+  cur = 0;
+  scores = { achieve:0, empathy:0, logic:0, steady:0 };
+  show('start');
 }
 </script>
 </body>
