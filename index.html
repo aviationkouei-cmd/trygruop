@@ -170,6 +170,21 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--blue),var(--purple));}
 .bar-val{font-size:.75rem;color:var(--muted);width:36px;text-align:right;}
 @media(max-width:400px){.stats-grid,.grid2{grid-template-columns:1fr;}}
+.mind-hub-score{width:100px;height:100px;border-radius:50%;border:4px solid var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;}
+.mind-hub-num{font-size:2rem;font-weight:bold;color:#c4b5fd;}
+.risk-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:bold;}
+.risk-low{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
+.risk-mid{background:rgba(245,158,11,.15);color:var(--yellow);border:1px solid rgba(245,158,11,.3);}
+.risk-high{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.survey-opt{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;cursor:pointer;touch-action:manipulation;}
+.survey-opt-btn{width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:bold;color:var(--muted);transition:all .15s;}
+.survey-opt-btn.sel{background:rgba(124,58,237,.3);border-color:var(--purple);color:#c4b5fd;}
+.survey-opt-lbl{font-size:.6rem;color:var(--muted);text-align:center;}
+.mood-row{display:flex;gap:8px;margin-bottom:16px;}
+.mood-btn{flex:1;padding:10px 4px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);cursor:pointer;touch-action:manipulation;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.65rem;color:var(--muted);}
+.mood-btn.sel{border-color:var(--purple);background:rgba(124,58,237,.15);color:#c4b5fd;}
+.mood-emoji{font-size:1.4rem;}
+.journal-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
 </style>
 </head>
 <body>
@@ -179,7 +194,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 <div id="bottom-nav">
   <button class="nav-btn active" data-nav="dashboard"><span class="nav-icon">🏠</span>ホーム</button>
   <button class="nav-btn" data-nav="daily"><span class="nav-icon">📝</span>日報</button>
-  <button class="nav-btn" data-nav="voice"><span class="nav-icon">🎙</span>分析</button>
+  <button class="nav-btn" data-nav="mind"><span class="nav-icon">🧠</span>マインド</button>
   <button class="nav-btn" data-nav="ranking"><span class="nav-icon">🏆</span>ランク</button>
   <button class="nav-btn" data-nav="profile"><span class="nav-icon">👤</span>マイページ</button>
 </div>
@@ -290,6 +305,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     <div class="sec-title">クイックアクション</div>
     <div style="display:flex;flex-direction:column;gap:9px;">
       <button class="btn btn-secondary btn-full" id="dash-daily">📝 日報を入力する</button>
+      <button class="btn btn-secondary btn-full" id="dash-mind">🧠 マインドハブを見る</button>
       <button class="btn btn-secondary btn-full" id="dash-voice">🎙 営業分析を記録する</button>
     </div>
   </div>
@@ -414,6 +430,55 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   </div>
 </div>
 
+<!-- MIND HUB -->
+<div id="s-mind" class="screen">
+  <div class="topbar"><span></span><span class="topbar-title">🧠 マインドハブ</span><span></span></div>
+  <div class="page-inner" id="mind-inner"></div>
+</div>
+
+<!-- SURVEY -->
+<div id="s-survey" class="screen no-nav">
+  <div class="topbar">
+    <button class="topbar-back" id="survey-back">←</button>
+    <span class="topbar-title" id="survey-title">サーベイ</span><span></span>
+  </div>
+  <div class="q-wrap">
+    <div class="prog-bar"><div class="prog-fill" id="survey-prog" style="width:0%"></div></div>
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px;" id="survey-cnt"></div>
+    <div style="font-size:1.05rem;font-weight:bold;line-height:1.65;margin-bottom:22px;" id="survey-q"></div>
+    <div style="display:flex;gap:6px;justify-content:space-between;" id="survey-opts"></div>
+  </div>
+</div>
+
+<!-- SURVEY RESULT -->
+<div id="s-survey-result" class="screen no-nav">
+  <div class="topbar">
+    <button class="topbar-back" id="sresult-back">←</button>
+    <span class="topbar-title">結果</span><span></span>
+  </div>
+  <div class="page-inner" style="text-align:center;">
+    <div style="margin-top:16px;" id="sresult-inner"></div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div id="s-journal" class="screen no-nav">
+  <div class="topbar">
+    <button class="topbar-back" id="journal-back">←</button>
+    <span class="topbar-title">📔 日誌</span><span></span>
+  </div>
+  <div class="page-inner" id="journal-inner"></div>
+</div>
+
+<!-- AI COACH -->
+<div id="s-coach" class="screen no-nav">
+  <div class="topbar">
+    <button class="topbar-back" id="coach-back">←</button>
+    <span class="topbar-title">🤖 AIコーチ</span><span></span>
+  </div>
+  <div class="page-inner" id="coach-inner"></div>
+</div>
+
 <!-- ADMIN -->
 <div id="s-admin" class="screen no-nav">
   <div class="topbar">
@@ -529,20 +594,30 @@ function loadData(){
               {id:'r2',date:'2024-06-09',goal:'商談3件',apo:3,mtg:3,con:1,sales:40000,good:'ヒアリング深化',imp:'クロージング',tmr:'提案書作成'}],
      voices:[{id:'v1',date:'2024-06-10',cust:'ABC商事 鈴木様',phase:'クロージング',scores:[4,4,5,4,4],total:84,
               ai:'クロージング力と提案の質が高水準です。課題ヒアリングをさらに深めることで成約率がさらに上がるでしょう。'}],
-     fb:[{from:'管理者',txt:'先週の新規2件獲得は素晴らしい！このペースを維持しつつ、提案の質も意識してください。',date:'2024-06-11'}]},
+     fb:[{from:'管理者',txt:'先週の新規2件獲得は素晴らしい！このペースを維持しつつ、提案の質も意識してください。',date:'2024-06-11'}],
+     mindSurveys:[
+       {id:'ms1',type:'growth',answers:[4,4,4,3,4],date:'2024-06-10'},
+       {id:'ms2',type:'resilience',answers:[3,4,3,3,4],date:'2024-06-10'}
+     ],
+     journals:[
+       {id:'j1',mood:4,good:'新規顧客と良い関係が築けた',hard:'提案が上手くまとまらなかった',learned:'傾聴の重要性を再認識した',date:'2024-06-10'},
+       {id:'j2',mood:3,good:'チームと連携できた',hard:'時間管理が難しかった',learned:'優先順位をつける大切さ',date:'2024-06-09'}
+     ]},
     {id:'u2',name:'佐藤 健太',email:'kenta@demo.com',pw:btoa('demo1234'),team:'チームB',intro:'頑張ります',
      type:'empathy',ts:{achieve:5,empathy:19,logic:7,steady:8},approved:true,created:'2024-06-01',
      reports:[{id:'r3',date:'2024-06-10',goal:'顧客フォロー',apo:2,mtg:4,con:1,sales:60000,good:'関係構築',imp:'スピード感',tmr:'提案書'}],
      voices:[{id:'v2',date:'2024-06-10',cust:'〇〇商事 田中部長',phase:'課題ヒアリング',scores:[5,5,3,3,5],total:84,
               ai:'ヒアリング力と関係構築が抜群です。提案・クロージングで踏み込む勇気を持つとさらに成果が上がります。'}],
-     fb:[]},
+     fb:[],
+     mindSurveys:[{id:'ms3',type:'humility',answers:[5,5,4,5,4],date:'2024-06-10'}],
+     journals:[{id:'j3',mood:5,good:'顧客に感謝された',hard:'数字が伸び悩んだ',learned:'小さな成果も積み上げが大事',date:'2024-06-10'}]},
     {id:'u3',name:'山本 智也',email:'tomoya@demo.com',pw:btoa('demo1234'),team:'チームA',intro:'分析が得意',
      type:'logic',ts:{achieve:7,empathy:5,logic:20,steady:9},approved:true,created:'2024-06-02',
      reports:[{id:'r4',date:'2024-06-10',goal:'データ提案',apo:1,mtg:2,con:2,sales:120000,good:'高単価受注',imp:'行動量',tmr:'新規開拓'}],
-     voices:[],fb:[]},
+     voices:[],fb:[],mindSurveys:[],journals:[]},
     {id:'u4',name:'井上 美咲',email:'misaki@demo.com',pw:btoa('demo1234'),team:'チームC',intro:'よろしく',
      type:'steady',ts:{achieve:4,empathy:8,logic:6,steady:19},approved:false,created:'2024-06-12',
-     reports:[],voices:[],fb:[]},
+     reports:[],voices:[],fb:[],mindSurveys:[],journals:[]},
   ],cur:null,adminIn:false};
   save(d);return d;
 }
@@ -582,7 +657,7 @@ document.querySelectorAll('.nav-btn').forEach(b=>{
     const n=b.dataset.nav;
     if(n==='dashboard'){renderDash();show('s-dashboard');}
     else if(n==='daily'){renderDaily();show('s-daily');}
-    else if(n==='voice'){renderVoice();show('s-voice');}
+    else if(n==='mind'){renderMind();show('s-mind');}
     else if(n==='ranking'){renderRanking('contracts');show('s-ranking');}
     else if(n==='profile'){renderProfile();show('s-profile');}
   });
@@ -698,6 +773,7 @@ tap($e('btn-logout'),()=>{
   show('s-home');$e('bottom-nav').classList.remove('visible');toast('👋 ログアウトしました');
 });
 tap($e('dash-daily'),()=>{renderDaily();show('s-daily');navActive('daily');});
+tap($e('dash-mind'),()=>{renderMind();show('s-mind');navActive('mind');});
 tap($e('dash-voice'),()=>{renderVoice();show('s-voice');navActive('voice');});
 
 /* ─── DAILY ─── */
@@ -954,6 +1030,234 @@ function renderStats(){
     }).join('')}
     <div class="divider"></div>
     <div style="font-size:.82rem;color:var(--muted);">総ユーザー数：${d.users.length}名　承認済み：${d.users.filter(u=>u.approved).length}名</div>`;
+}
+
+/* ─── MIND ─── */
+const MindDims={
+  growth:     {icon:'🌱',name:'成長志向',    color:'#10b981'},
+  resilience: {icon:'💪',name:'レジリエンス',color:'#3b82f6'},
+  proactivity:{icon:'⚡',name:'主体性・継続力',color:'#f59e0b'},
+  efficacy:   {icon:'🎯',name:'自己効力感',  color:'#e94560'},
+  humility:   {icon:'🤲',name:'素直さ',      color:'#7c3aed'},
+};
+const SurveyQs={
+  growth:['失敗から学ぶことができる','新しいことへの挑戦が好きだ','努力すれば必ず成長できると信じている','フィードバックを積極的に求める','現状に満足せず常に改善しようとする'],
+  resilience:['困難な状況でも前向きでいられる','失敗してもすぐに立ち直れる','プレッシャーの下でも冷静でいられる','逆境を成長の機会と捉えられる','感情をうまくコントロールできる'],
+  proactivity:['指示がなくても自分で動ける','目標に向けて毎日コツコツ取り組める','始めたことを途中で諦めない','困難があっても自分から解決策を探す','期限を守って計画的に行動できる'],
+  efficacy:['難しい目標でも達成できると信じている','自分の能力を信頼している','初めてのことでも「できる」と思って取り組める','過去の成功体験から自信を得ている','新しいスキルを習得できると思う'],
+  humility:['アドバイスを素直に受け入れられる','自分の間違いを認めることができる','先輩や上司から積極的に学ぼうとする','批判的なフィードバックも感謝して受け取れる','自分の知らないことを素直に認められる'],
+};
+const MindTips={
+  growth:{low:['小さな失敗を記録して振り返る習慣をつけましょう','毎日1つ新しいことを試してみましょう','「成長できる」という信念を育てることが第一歩です'],mid:['フィードバックを積極的に求めてみましょう','読書や学習に週2時間投資してみましょう','成長した点を日誌に記録して自己効力感を高めましょう'],high:['メンターとして周囲の成長を助けましょう','より高い目標を設定して限界を広げましょう','学んだことをチームに共有して定着させましょう']},
+  resilience:{low:['深呼吸や短い瞑想で感情を整える練習をしましょう','失敗を「データ」として客観的に捉える習慣をつけましょう','サポートできる人を見つけて相談する勇気を持ちましょう'],mid:['逆境を乗り越えた経験を振り返り自信にしましょう','ストレス発散の方法を複数持ちましょう','困難な状況での自分の反応パターンを把握しましょう'],high:['レジリエンスの高さをチームの支えに活かしましょう','さらに難しい状況に挑戦して強さを磨きましょう','困難を経験した後の回復プロセスを言語化しましょう']},
+  proactivity:{low:['毎日小さなタスクを自分で決めて実行しましょう','目標を紙に書いて毎朝確認しましょう','「やる気を待つ」より「行動してからやる気を出す」を意識しましょう'],mid:['週次で目標の進捗を確認する習慣をつけましょう','困難に直面したとき解決策を3つ考えてみましょう','期限を自分で設定して守る練習をしましょう'],high:['後輩のロールモデルとして主体性を示しましょう','より大きなプロジェクトをリードしてみましょう','自律的な行動習慣を言語化して共有しましょう']},
+  efficacy:{low:['過去の小さな成功体験を3つ書き出しましょう','「できない」より「どうすればできるか」を考えましょう','一つのことを完成させて達成感を積み上げましょう'],mid:['少し難しい目標に挑戦して成功体験を増やしましょう','自分の強みリストを作成して定期的に見返しましょう','信頼できる人から肯定的なフィードバックをもらいましょう'],high:['高い目標をさらに引き上げて挑戦しましょう','自己効力感の高さで周囲を鼓舞しましょう','新しい分野でも「できる」姿勢で挑戦し続けましょう']},
+  humility:{low:['今日アドバイスをもらったら「ありがとう」と素直に受け取りましょう','自分の間違いに気づいたらすぐに認める練習をしましょう','先輩から一つ学べることを毎日探しましょう'],mid:['批判的なフィードバックから改善点を見つけましょう','知らないことを恥と思わず質問する勇気を持ちましょう','他者の意見を取り入れた行動を意識的に記録しましょう'],high:['素直さをチームの文化として広めましょう','どんな立場の人からも学べる姿勢を継続しましょう','謙虚さと自信のバランスをモデルとして示しましょう']},
+};
+
+function calcMindScores(u){
+  const surveys=u.mindSurveys||[];
+  const result={};
+  Object.keys(MindDims).forEach(type=>{
+    const latest=surveys.filter(s=>s.type===type).slice(-1)[0];
+    result[type]=latest?Math.round(latest.answers.reduce((a,b)=>a+b,0)/latest.answers.length*20):0;
+  });
+  return result;
+}
+function calcMindTotal(scores){
+  const vals=Object.values(scores);
+  return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0;
+}
+function calcBurnoutRisk(u){
+  const scores=calcMindScores(u);
+  const mindTotal=calcMindTotal(scores);
+  const reports=u.reports||[];
+  let daysSinceReport=0;
+  if(reports.length){
+    const last=new Date(reports[reports.length-1].date);
+    daysSinceReport=Math.floor((Date.now()-last.getTime())/(1000*60*60*24));
+  }
+  let level,pct;
+  if(mindTotal<40||(reports.length>0&&daysSinceReport>7)){level='high';pct=Math.max(60,100-mindTotal);}
+  else if(mindTotal<60){level='mid';pct=Math.max(30,70-mindTotal);}
+  else{level='low';pct=Math.max(5,30-Math.floor(mindTotal/5));}
+  return{level,pct};
+}
+function calcTurnoverRisk(u){
+  const scores=calcMindScores(u);
+  const mindTotal=calcMindTotal(scores);
+  const journals=u.journals||[];
+  const avgMood=journals.length?journals.reduce((s,j)=>s+(j.mood||3),0)/journals.length:3;
+  let level,pct;
+  if(mindTotal<40||avgMood<2){level='high';pct=Math.max(55,90-mindTotal);}
+  else if(mindTotal<60||avgMood<3){level='mid';pct=Math.max(25,60-mindTotal);}
+  else{level='low';pct=Math.max(5,25-Math.floor(mindTotal/6));}
+  return{level,pct};
+}
+function riskLabel(r){return r.level==='high'?'高リスク':r.level==='mid'?'中リスク':'低リスク';}
+function renderMind(){
+  const u=me();if(!u)return;
+  const scores=calcMindScores(u);
+  const total=calcMindTotal(scores);
+  const burnout=calcBurnoutRisk(u);
+  const turnover=calcTurnoverRisk(u);
+  const inner=$e('mind-inner');
+  inner.innerHTML=`
+    <div class="mind-hub-score"><div class="mind-hub-num">${total}</div><div style="font-size:.66rem;color:var(--muted);">総合スコア</div></div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;">
+      <span class="risk-badge risk-${burnout.level}">燃え尽き ${riskLabel(burnout)}</span>
+      <span class="risk-badge risk-${turnover.level}">離脱 ${riskLabel(turnover)}</span>
+    </div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="sec-title" style="margin-top:0;">5つのマインド軸</div>
+      ${Object.keys(MindDims).map(k=>{
+        const d=MindDims[k];const sc=scores[k];
+        return `<div class="axes-row" style="margin-bottom:10px;">
+          <div class="ax-name">${d.icon} ${d.name}</div>
+          <div class="ax-track"><div class="ax-bar" style="width:${sc}%;background:${d.color}"></div></div>
+          <div class="ax-pct">${sc}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="sec-title">サーベイを受ける</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+      ${Object.keys(MindDims).map(k=>`<button class="btn btn-secondary btn-full" onclick="window.startSurvey('${k}')">${MindDims[k].icon} ${MindDims[k].name}サーベイ</button>`).join('')}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn btn-secondary btn-full" id="mind-journal-btn">📔 日誌をつける</button>
+      <button class="btn btn-secondary btn-full" id="mind-coach-btn">🤖 AIコーチに相談する</button>
+    </div>`;
+  tap($e('mind-journal-btn'),()=>{renderJournal();show('s-journal');});
+  tap($e('mind-coach-btn'),()=>{renderCoach();show('s-coach');});
+}
+
+let surveyType='',surveyQIdx=0,surveyAnswers=[],surveyResultScore=0;
+window.startSurvey=function(type){
+  surveyType=type;surveyQIdx=0;surveyAnswers=[];
+  const dim=MindDims[type];
+  $e('survey-title').textContent=dim.icon+' '+dim.name+'サーベイ';
+  renderSurveyQ();show('s-survey');
+};
+tap($e('survey-back'),()=>{renderMind();show('s-mind');navActive('mind');});
+tap($e('sresult-back'),()=>{renderMind();show('s-mind');navActive('mind');});
+
+function renderSurveyQ(){
+  const qs=SurveyQs[surveyType];
+  $e('survey-prog').style.width=`${surveyQIdx/qs.length*100}%`;
+  $e('survey-cnt').textContent=`質問 ${surveyQIdx+1} / ${qs.length}`;
+  $e('survey-q').textContent=qs[surveyQIdx];
+  const labels=['全くそう思わない','あまり','どちらとも','ややそう思う','非常にそう思う'];
+  $e('survey-opts').innerHTML=labels.map((l,i)=>`
+    <div class="survey-opt" onclick="window.surveySelect(${i+1})">
+      <div class="survey-opt-btn" id="sopt${i}">${i+1}</div>
+      <div class="survey-opt-lbl">${l}</div>
+    </div>`).join('');
+}
+window.surveySelect=function(val){
+  surveyAnswers.push(val);
+  const qs=SurveyQs[surveyType];
+  surveyQIdx++;
+  if(surveyQIdx<qs.length){renderSurveyQ();}
+  else{
+    surveyResultScore=Math.round(surveyAnswers.reduce((a,b)=>a+b,0)/surveyAnswers.length*20);
+    const d=get();const u=d.users.find(x=>x.id===d.cur);
+    if(!u.mindSurveys)u.mindSurveys=[];
+    u.mindSurveys.push({id:uid(),type:surveyType,answers:[...surveyAnswers],date:today()});
+    save(d);
+    renderSurveyResult();show('s-survey-result');
+  }
+};
+function renderSurveyResult(){
+  const dim=MindDims[surveyType];
+  const sc=surveyResultScore;
+  const tier=sc<=40?'low':sc<=70?'mid':'high';
+  const tips=MindTips[surveyType][tier];
+  $e('sresult-inner').innerHTML=`
+    <div class="mind-hub-score" style="border-color:${dim.color}">
+      <div class="mind-hub-num" style="color:${dim.color}">${sc}</div>
+      <div style="font-size:.66rem;color:var(--muted);">/100</div>
+    </div>
+    <div style="font-size:1.1rem;font-weight:bold;margin-bottom:4px;">${dim.icon} ${dim.name}</div>
+    <div style="font-size:.83rem;color:var(--muted);margin-bottom:20px;">${sc>=71?'マスターレベル':sc>=41?'成長中':'伸び代あり'}</div>
+    <div class="card" style="text-align:left;">
+      <div class="sec-title" style="margin-top:0;">🤖 AIアドバイス</div>
+      ${tips.map((t,i)=>`<div style="display:flex;gap:10px;margin-bottom:10px;font-size:.85rem;line-height:1.65;"><span style="color:${dim.color};flex-shrink:0">${i+1}.</span><span>${t}</span></div>`).join('')}
+    </div>
+    <button class="btn btn-primary btn-full" style="margin-top:16px;" id="sresult-done">マインドハブへ戻る</button>`;
+  tap($e('sresult-done'),()=>{renderMind();show('s-mind');navActive('mind');});
+}
+
+let journalMood=3;
+tap($e('journal-back'),()=>{renderMind();show('s-mind');navActive('mind');});
+function renderJournal(){
+  journalMood=3;
+  const u=me();if(!u)return;
+  const moodLabels=['最悪','つらい','普通','良い','最高'];
+  const moodEmojis=['😞','😕','😐','😊','🥳'];
+  const journals=[...(u.journals||[])].reverse().slice(0,5);
+  $e('journal-inner').innerHTML=`
+    <div class="card" style="margin-bottom:16px;">
+      <div class="sec-title" style="margin-top:0;">今日の気分</div>
+      <div class="mood-row">
+        ${moodEmojis.map((em,i)=>`<button class="mood-btn${i+1===journalMood?' sel':''}" id="mood${i+1}" onclick="window.setMood(${i+1})">
+          <div class="mood-emoji">${em}</div><div>${moodLabels[i]}</div>
+        </button>`).join('')}
+      </div>
+      <div class="form-group"><label class="form-label">良かったこと</label>
+        <textarea class="form-input" id="j-good" placeholder="今日うまくいったこと"></textarea></div>
+      <div class="form-group"><label class="form-label">難しかったこと</label>
+        <textarea class="form-input" id="j-hard" placeholder="課題に感じたこと"></textarea></div>
+      <div class="form-group"><label class="form-label">学んだこと</label>
+        <textarea class="form-input" id="j-learned" placeholder="気づきや学び"></textarea></div>
+      <button class="btn btn-primary btn-full" id="j-submit">記録する</button>
+    </div>
+    <div class="sec-title">過去の日誌（最新5件）</div>
+    ${journals.length?journals.map(j=>`<div class="journal-item">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:1.2rem;">${moodEmojis[(j.mood||3)-1]}</span>
+        <span style="font-size:.72rem;color:var(--muted);">${fd(j.date)}</span>
+      </div>
+      ${j.good?`<div style="font-size:.8rem;margin-bottom:3px;"><span style="color:var(--green);">✅</span> ${j.good}</div>`:''}
+      ${j.hard?`<div style="font-size:.8rem;margin-bottom:3px;"><span style="color:var(--yellow);">⚡</span> ${j.hard}</div>`:''}
+      ${j.learned?`<div style="font-size:.8rem;"><span style="color:var(--blue);">💡</span> ${j.learned}</div>`:''}
+    </div>`).join(''):'<p style="color:var(--muted);font-size:.83rem;">日誌がまだありません</p>'}`;
+  tap($e('j-submit'),()=>{
+    const good=$e('j-good').value.trim();
+    const hard=$e('j-hard').value.trim();
+    const learned=$e('j-learned').value.trim();
+    if(!good&&!hard&&!learned){toast('⚠️ 何か一つ入力してください');return;}
+    const d=get();const u=d.users.find(x=>x.id===d.cur);
+    if(!u.journals)u.journals=[];
+    u.journals.push({id:uid(),mood:journalMood,good,hard,learned,date:today()});
+    save(d);
+    toast('✅ 日誌を記録しました');
+    renderJournal();
+  });
+}
+window.setMood=function(v){
+  journalMood=v;
+  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===v));
+};
+
+tap($e('coach-back'),()=>{renderMind();show('s-mind');navActive('mind');});
+function renderCoach(){
+  const u=me();if(!u)return;
+  const scores=calcMindScores(u);
+  const weakKey=Object.keys(scores).reduce((a,b)=>scores[a]<=scores[b]?a:b);
+  const dim=MindDims[weakKey];
+  const sc=scores[weakKey];
+  const tier=sc<=40?'low':sc<=70?'mid':'high';
+  const tips=MindTips[weakKey][tier];
+  $e('coach-inner').innerHTML=`
+    <div class="ai-box" style="margin-bottom:20px;">
+      <div style="font-size:.88rem;font-weight:bold;margin-bottom:8px;">🤖 AIコーチからのメッセージ</div>
+      <div style="font-size:.83rem;line-height:1.75;">${dim.icon}「${dim.name}」が現在最も伸び代のある軸です（スコア：${sc}）。以下の3つのアクションに取り組んでみましょう。</div>
+    </div>
+    <div style="font-size:.88rem;font-weight:bold;color:#c4b5fd;margin-bottom:12px;">${dim.icon} ${dim.name} — 今週のアクション</div>
+    ${tips.map((t,i)=>`<div class="card" style="margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:${dim.color}22;border:1px solid ${dim.color}55;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:bold;color:${dim.color};flex-shrink:0;">${i+1}</div>
+      <div style="font-size:.85rem;line-height:1.7;">${t}</div>
+    </div>`).join('')}`;
 }
 
 /* ─── INIT ─── */
