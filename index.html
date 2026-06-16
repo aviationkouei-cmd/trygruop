@@ -402,6 +402,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     <div id="p-axes" style="margin-bottom:14px;"></div>
     <div class="sec-title">🤖 AIフィードバック（マインド成長）</div>
     <div id="p-ai"></div>
+    <div class="sec-title">👏 仲間からのポジティブFB</div>
+    <div id="p-pos-fb"></div>
     <div class="sec-title">💬 管理者からのフィードバック</div>
     <div id="p-admin-fb"></div>
     <div class="sec-title">🔒 パスワード変更</div>
@@ -898,11 +900,30 @@ function renderRanking(tab){
         <div class="rank-name">${u.name}${isMe?' <span style="font-size:.65rem;color:var(--red)">（あなた）</span>':''}</div>
         <div class="rank-sub">${u.team}　<span class="type-badge" style="color:${t.color};border-color:${t.color}44;background:${t.color}11">${t.tl}</span></div>
       </div>
-      <div class="rank-val">${val}</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+        <div class="rank-val">${val}</div>
+        ${!isMe&&mu?`<button class="btn btn-sm" style="padding:4px 10px;font-size:.65rem;background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.3);border-radius:12px;" onclick="window.sendPosFb('${u.id}','${u.name}')">👏 褒める</button>`:''}
+      </div>
     </div>`;
   }).join(''):'<p style="color:var(--muted);font-size:.83rem;">承認済みユーザーがいません</p>';
 }
 document.querySelectorAll('.rank-tab').forEach(b=>tap(b,()=>renderRanking(b.dataset.rt)));
+
+/* ─── POSITIVE FB ─── */
+const posFbMessages=['素晴らしい成果です！','いつも頑張ってますね！','チームの誇りです！','その調子で頑張って！','尊敬します！'];
+window.sendPosFb=function(toId,toName){
+  const mu=me();if(!mu)return;
+  const msgs=posFbMessages;
+  const pick=msgs[Math.floor(Math.random()*msgs.length)];
+  const custom=prompt(`${toName}さんにポジティブFBを送る:\n（空白のままでもデフォルトメッセージを送れます）`);
+  const txt=custom!==null?(custom.trim()||pick):null;
+  if(txt===null)return;
+  const d=get();const target=d.users.find(x=>x.id===toId);
+  if(!target)return;
+  if(!target.posFb)target.posFb=[];
+  target.posFb.push({from:mu.name,txt,date:today()});
+  save(d);toast('👏 ポジティブFBを送りました！');
+};
 
 /* ─── PROFILE ─── */
 function renderProfile(){
@@ -927,6 +948,14 @@ function renderProfile(){
       <div class="mind-body">${m.b}</div>
       <div class="mind-quote">${m.q}</div>
     </div>`).join('');
+  const posFbs=u.posFb||[];
+  $e('p-pos-fb').innerHTML=posFbs.length
+    ?[...posFbs].reverse().slice(0,5).map(f=>`
+      <div class="fb-item" style="border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.05);">
+        <div class="fb-from" style="color:var(--green);">👏 ${f.from}　${fd(f.date)}</div>
+        <div class="fb-text">${f.txt}</div>
+      </div>`).join('')
+    :'<p style="color:var(--muted);font-size:.83rem;margin-bottom:14px;">まだ届いていません。ランキング画面から仲間を褒めることができます！</p>';
   const fbs=u.fb||[];
   $e('p-admin-fb').innerHTML=fbs.length
     ?[...fbs].reverse().map(f=>`
@@ -1123,6 +1152,30 @@ function renderMind(){
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
       ${Object.keys(MindDims).map(k=>`<button class="btn btn-secondary btn-full" onclick="window.startSurvey('${k}')">${MindDims[k].icon} ${MindDims[k].name}サーベイ</button>`).join('')}
     </div>
+    ${(()=>{
+      const surveys=[...(u.mindSurveys||[])].reverse().slice(0,6).reverse();
+      if(!surveys.length)return '';
+      const history=surveys.map(s=>{
+        const avg=s.answers.reduce((a,b)=>a+b,0)/s.answers.length;
+        return {date:s.date,score:Math.round(avg*20),type:s.type};
+      });
+      const maxS=Math.max(...history.map(h=>h.score),1);
+      return `<div class="card" style="margin-bottom:16px;">
+        <div class="sec-title" style="margin-top:0;">📈 マインド成長推移</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:60px;margin-bottom:8px;">
+          ${history.map(h=>{
+            const d=MindDims[h.type]||{color:'#7c3aed'};
+            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <div style="font-size:.6rem;color:var(--muted);">${h.score}</div>
+              <div style="width:100%;background:${d.color};border-radius:3px 3px 0 0;height:${Math.round(h.score/maxS*44)}px;min-height:4px;"></div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="display:flex;gap:6px;">
+          ${history.map(h=>`<div style="flex:1;text-align:center;font-size:.55rem;color:var(--muted);">${(h.date||'').slice(5)}</div>`).join('')}
+        </div>
+      </div>`;
+    })()}
     <div style="display:flex;flex-direction:column;gap:8px;">
       <button class="btn btn-secondary btn-full" id="mind-journal-btn">📔 日誌をつける</button>
       <button class="btn btn-secondary btn-full" id="mind-coach-btn">🤖 AIコーチに相談する</button>
