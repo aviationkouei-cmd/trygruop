@@ -2,1324 +2,1350 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>営業道場</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>営業道場 Pro</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red:#e94560;--blue:#3b82f6;--green:#10b981;--yellow:#f59e0b;--purple:#7c3aed;
-  --bg:#0f172a;--card:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.1);
-  --text:#f1f5f9;--muted:#94a3b8;--nav-h:64px;
+  --sidebar-bg:#1e293b;--sidebar-text:#94a3b8;--sidebar-active:#3b82f6;
+  --bg:#f0f4f8;--card:#fff;--border:#e2e8f0;
+  --primary:#3b82f6;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#7c3aed;
+  --text:#1e293b;--muted:#64748b;
 }
-body{font-family:'Hiragino Kaku Gothic ProN','Meiryo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-.screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav-h)+16px);}
-.screen.active{display:block;}
-.screen.no-nav{padding-bottom:0;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:13px 28px;border-radius:30px;border:none;font-family:inherit;font-size:.95rem;
-  font-weight:bold;cursor:pointer;transition:all .2s;touch-action:manipulation;
-  -webkit-appearance:none;user-select:none;width:auto;}
-.btn-primary{background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;}
-.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-.btn-green{background:linear-gradient(135deg,var(--green),#059669);color:#fff;}
-.btn-blue{background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;}
-.btn-danger{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
-.btn-sm{padding:8px 16px;font-size:.8rem;border-radius:20px;}
-.btn-full{width:100%;}
-.btn:active{transform:scale(0.97);}
-.topbar{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.96);
-  border-bottom:1px solid var(--border);display:flex;align-items:center;
-  justify-content:space-between;padding:0 16px;height:52px;}
-.topbar-title{font-size:1rem;font-weight:bold;}
-.topbar-back{background:none;border:none;color:var(--muted);font-size:1.3rem;
-  cursor:pointer;padding:8px;touch-action:manipulation;}
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;
-  background:rgba(15,23,42,.97);border-top:1px solid var(--border);
-  display:none;height:var(--nav-h);}
-#bottom-nav.visible{display:flex;}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;cursor:pointer;padding:8px 0;touch-action:manipulation;
-  border:none;background:none;color:var(--muted);font-family:inherit;font-size:.65rem;}
-.nav-btn.active{color:var(--red);}
-.nav-icon{font-size:1.3rem;}
-.page-inner{max-width:680px;margin:0 auto;padding:16px;}
-.form-group{margin-bottom:14px;}
-.form-label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:5px;}
-.form-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);
-  border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:.93rem;
-  outline:none;transition:border-color .2s;-webkit-appearance:none;}
-.form-input:focus{border-color:var(--blue);}
-.form-input::placeholder{color:var(--muted);}
-select.form-input option{background:#1e293b;}
-textarea.form-input{resize:vertical;min-height:78px;}
-.sec-title{font-size:.75rem;color:var(--muted);font-weight:bold;letter-spacing:.06em;
-  margin:20px 0 10px;text-transform:uppercase;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);
-  background:#1e293b;border:1px solid var(--border);border-radius:10px;
-  padding:10px 20px;font-size:.83rem;z-index:9999;display:none;white-space:nowrap;
-  box-shadow:0 4px 20px rgba(0,0,0,.4);}
-.toast.show{display:block;}
-.divider{height:1px;background:var(--border);margin:18px 0;}
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;text-align:center;padding:40px 24px;}
-.hero-logo{font-size:4rem;margin-bottom:16px;}
-.hero h1{font-size:2rem;margin-bottom:8px;}
-.hero p{color:var(--muted);line-height:1.7;margin-bottom:36px;font-size:.93rem;}
-.hero-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
-/* DASHBOARD */
-.welcome-card{background:linear-gradient(135deg,rgba(233,69,96,.15),rgba(124,58,237,.15));
-  border:1px solid rgba(233,69,96,.3);border-radius:16px;padding:20px;margin-bottom:16px;}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;}
-.stat-val{font-size:1.7rem;font-weight:bold;margin-bottom:3px;}
-.stat-lbl{font-size:.75rem;color:var(--muted);}
-.pending-banner{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);
-  border-radius:12px;padding:13px;margin-bottom:14px;font-size:.83rem;color:#fcd34d;}
-/* QUIZ */
-.q-wrap{max-width:680px;margin:0 auto;padding:16px;}
-.prog-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:22px;overflow:hidden;}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--yellow));border-radius:2px;transition:width .4s;}
-.q-cat{display:inline-block;font-size:.7rem;padding:3px 10px;border-radius:20px;margin-bottom:10px;}
-.q-text{font-size:1.08rem;font-weight:bold;line-height:1.6;margin-bottom:18px;}
-.q-opts{display:flex;flex-direction:column;gap:9px;}
-.q-opt{display:flex;align-items:flex-start;gap:11px;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:13px;padding:13px 15px;cursor:pointer;
-  text-align:left;font-family:inherit;color:var(--text);font-size:.88rem;line-height:1.5;
-  touch-action:manipulation;-webkit-appearance:none;user-select:none;transition:all .15s;}
-.q-opt:active{background:rgba(233,69,96,.2);border-color:rgba(233,69,96,.5);}
-.q-key{flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.08);
-  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-  font-size:.72rem;font-weight:bold;color:var(--muted);margin-top:1px;}
-.q-sub{font-size:.7rem;color:var(--muted);margin-top:2px;}
-/* RESULT */
-.res-hero{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:2.2rem;margin:0 auto 14px;}
-.axes-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.ax-name{font-size:.76rem;width:86px;flex-shrink:0;text-align:right;color:#cbd5e1;}
-.ax-track{flex:1;height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;}
-.ax-bar{height:100%;border-radius:4px;transition:width .8s;}
-.ax-pct{font-size:.72rem;color:var(--muted);width:32px;}
-/* DAILY */
-.report-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
-.report-date{font-size:.73rem;color:var(--muted);margin-bottom:6px;}
-.kpi-chips{display:flex;flex-wrap:wrap;gap:6px;}
-.kpi-chip{background:rgba(255,255,255,.06);border-radius:7px;padding:3px 9px;font-size:.78rem;}
-/* VOICE */
-.slider-group{margin-bottom:14px;}
-.sl-head{display:flex;justify-content:space-between;margin-bottom:5px;}
-.sl-lbl{font-size:.83rem;}
-.sl-val{font-size:.95rem;font-weight:bold;color:var(--blue);}
-input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:3px;
-  background:rgba(255,255,255,.1);outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
-  border-radius:50%;background:var(--blue);cursor:pointer;}
-.score-circle{width:84px;height:84px;border-radius:50%;border:3px solid var(--blue);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;}
-.sc-num{font-size:1.4rem;font-weight:bold;color:var(--blue);}
-.sc-lbl{font-size:.66rem;color:var(--muted);}
-.ai-box{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);
-  border-radius:12px;padding:13px;font-size:.83rem;line-height:1.75;color:#c4b5fd;}
-.voice-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
-/* RANKING */
-.rank-tabs{display:flex;gap:7px;margin-bottom:14px;}
-.rank-tab{flex:1;padding:9px;border-radius:10px;border:1px solid var(--border);
-  background:rgba(255,255,255,.03);color:var(--muted);font-family:inherit;
-  font-size:.78rem;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;}
-.rank-tab.active{background:rgba(233,69,96,.2);border-color:rgba(233,69,96,.5);color:var(--red);font-weight:bold;}
-.rank-item{display:flex;align-items:center;gap:11px;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
-.rank-item.me{border-color:var(--red);background:rgba(233,69,96,.08);}
-.rank-num{font-size:1.2rem;font-weight:bold;width:30px;text-align:center;flex-shrink:0;}
-.rank-info{flex:1;min-width:0;}
-.rank-name{font-weight:bold;font-size:.92rem;}
-.rank-sub{font-size:.72rem;color:var(--muted);}
-.rank-val{font-size:1.05rem;font-weight:bold;color:var(--yellow);flex-shrink:0;}
-.type-badge{display:inline-block;font-size:.62rem;padding:1px 7px;border-radius:9px;border:1px solid;}
-/* PROFILE */
-.mind-card{background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.2);
-  border-radius:12px;padding:14px;margin-bottom:11px;}
-.mind-title{font-size:.86rem;font-weight:bold;color:#c4b5fd;margin-bottom:7px;}
-.mind-body{font-size:.81rem;line-height:1.8;color:#cbd5e1;}
-.mind-quote{border-left:2px solid var(--purple);padding-left:9px;margin-top:7px;
-  font-size:.77rem;color:#a78bfa;font-style:italic;}
-.fb-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
-.fb-from{font-size:.7rem;color:var(--purple);margin-bottom:5px;}
-.fb-text{font-size:.85rem;line-height:1.7;color:#cbd5e1;}
-/* ADMIN */
-.admin-tabs{display:flex;gap:7px;margin-bottom:18px;}
-.admin-tab{flex:1;padding:9px;border-radius:10px;border:1px solid var(--border);
-  background:rgba(255,255,255,.03);color:var(--muted);font-family:inherit;
-  font-size:.8rem;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;}
-.admin-tab.active{background:rgba(124,58,237,.2);border-color:rgba(124,58,237,.5);color:#c4b5fd;font-weight:bold;}
-.atab-panel{display:none;}
-.atab-panel.active{display:block;}
-.user-row{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
-.user-row-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
-.badge-ok{display:inline-block;font-size:.68rem;padding:2px 9px;border-radius:9px;
-  background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
-.badge-wait{display:inline-block;font-size:.68rem;padding:2px 9px;border-radius:9px;
-  background:rgba(245,158,11,.15);color:var(--yellow);border:1px solid rgba(245,158,11,.3);}
-.bar-row{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
-.bar-lbl{font-size:.78rem;width:76px;flex-shrink:0;color:var(--muted);}
-.bar-track{flex:1;height:9px;background:rgba(255,255,255,.07);border-radius:5px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--blue),var(--purple));}
-.bar-val{font-size:.75rem;color:var(--muted);width:36px;text-align:right;}
-@media(max-width:400px){.stats-grid,.grid2{grid-template-columns:1fr;}}
-.mind-hub-score{width:100px;height:100px;border-radius:50%;border:4px solid var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;}
-.mind-hub-num{font-size:2rem;font-weight:bold;color:#c4b5fd;}
-.risk-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:bold;}
-.risk-low{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
-.risk-mid{background:rgba(245,158,11,.15);color:var(--yellow);border:1px solid rgba(245,158,11,.3);}
-.risk-high{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
-.survey-opt{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;cursor:pointer;touch-action:manipulation;}
-.survey-opt-btn{width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:bold;color:var(--muted);transition:all .15s;}
-.survey-opt-btn.sel{background:rgba(124,58,237,.3);border-color:var(--purple);color:#c4b5fd;}
-.survey-opt-lbl{font-size:.6rem;color:var(--muted);text-align:center;}
-.mood-row{display:flex;gap:8px;margin-bottom:16px;}
-.mood-btn{flex:1;padding:10px 4px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);cursor:pointer;touch-action:manipulation;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.65rem;color:var(--muted);}
-.mood-btn.sel{border-color:var(--purple);background:rgba(124,58,237,.15);color:#c4b5fd;}
-.mood-emoji{font-size:1.4rem;}
-.journal-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;}
+body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text)}
+#sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:var(--sidebar-bg);overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+#main-area{margin-left:260px;min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+#page-content{padding:24px;flex:1}
+.page{display:none}.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s;touch-action:manipulation}
+.btn:hover{filter:brightness(.95)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-secondary{background:#f1f5f9;color:var(--text);border:1px solid var(--border)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 12px;font-size:.78rem}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:1.3rem;font-weight:700;color:var(--text)}
+.page-subtitle{font-size:.82rem;color:var(--muted);margin-top:2px}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.kpi-label{font-size:.72rem;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.kpi-value{font-size:1.5rem;font-weight:700;margin-bottom:4px}
+.kpi-meta{font-size:.72rem;color:var(--success)}
+.grid-3{display:grid;grid-template-columns:2fr 1fr 2fr;gap:16px;margin-bottom:20px}
+.grid-3b{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.section-title{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:600}
+.badge-blue{background:#eff6ff;color:var(--primary)}
+.badge-green{background:#f0fdf4;color:var(--success)}
+.badge-yellow{background:#fffbeb;color:var(--warning)}
+.badge-red{background:#fef2f2;color:var(--danger)}
+.badge-purple{background:#faf5ff;color:var(--purple)}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:5px}
+.form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.88rem;outline:none;transition:border-color .15s;background:#fff;color:var(--text)}
+.form-input:focus{border-color:var(--primary)}
+select.form-input option{background:#fff}
+textarea.form-input{resize:vertical;min-height:80px}
+.table{width:100%;border-collapse:collapse}
+.table th{text-align:left;font-size:.72rem;font-weight:600;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--border);white-space:nowrap}
+.table td{padding:12px;border-bottom:1px solid var(--border);font-size:.85rem;vertical-align:middle}
+.table tr:last-child td{border-bottom:none}
+.table tr:hover td{background:#f8fafc}
+.avatar{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;color:#fff}
+.chip{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;margin:2px}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s}
+.sidebar-logo{padding:20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sidebar-logo-icon{font-size:1.5rem}
+.sidebar-logo-text{font-size:1rem;font-weight:700;color:#fff}
+.sidebar-logo-sub{font-size:.65rem;color:var(--sidebar-text)}
+.nav-section{padding:16px 12px 8px}
+.nav-section-title{font-size:.62rem;font-weight:700;color:#475569;letter-spacing:.08em;text-transform:uppercase;padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--sidebar-text);font-size:.83rem;transition:all .15s;touch-action:manipulation;user-select:none;margin-bottom:2px}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#e2e8f0}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa}
+.nav-item-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:10px}
+.bar-col{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px;height:100%;justify-content:flex-end}
+.bar{width:100%;background:var(--primary);border-radius:3px 3px 0 0;opacity:.85;min-height:4px}
+.bar-label{font-size:.6rem;color:var(--muted);text-align:center}
+.kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px}
+.kanban-col{min-width:220px;background:#f8fafc;border-radius:10px;padding:12px}
+.kanban-col-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.kanban-col-title{font-size:.8rem;font-weight:700}
+.kanban-col-count{font-size:.7rem;background:var(--border);border-radius:20px;padding:1px 8px;color:var(--muted)}
+.kanban-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;transition:box-shadow .15s}
+.kanban-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.kanban-card-company{font-size:.85rem;font-weight:600;margin-bottom:4px}
+.kanban-card-amount{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-title{font-size:1rem;font-weight:700;margin-bottom:20px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+#toast{position:fixed;top:70px;right:20px;background:#1e293b;color:#fff;border-radius:10px;padding:12px 20px;font-size:.84rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.quiz-overlay{position:fixed;inset:0;background:rgba(15,23,42,.97);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px}
+.quiz-box{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.quiz-opt{display:flex;gap:10px;align-items:flex-start;padding:14px;border:2px solid var(--border);border-radius:10px;margin-bottom:10px;cursor:pointer;transition:all .15s}
+.quiz-opt:hover{border-color:var(--primary);background:#f8fafc}
+.quiz-opt-key{width:26px;height:26px;border-radius:6px;background:#eff6ff;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.scale-btn{flex:1;padding:12px 0;border:2px solid var(--border);border-radius:10px;background:#fff;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s}
+.scale-btn:hover{border-color:var(--purple);background:#faf5ff}
+.score-circle{width:80px;height:80px;border-radius:50%;border:4px solid var(--primary);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto}
+.score-num{font-size:1.4rem;font-weight:700;color:var(--primary)}
+.activity-item{display:flex;gap:12px;margin-bottom:16px}
+.activity-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.activity-body{flex:1;border-bottom:1px solid var(--border);padding-bottom:12px}
+.activity-meta{font-size:.72rem;color:var(--muted);margin-top:3px}
+.rank-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rank-num{font-size:.9rem;font-weight:700;width:24px;text-align:center;color:var(--muted)}
+.rank-name{flex:1;font-size:.85rem;font-weight:600}
+.rank-bar-wrap{width:100px}
+.rank-score{font-size:.85rem;font-weight:700;color:var(--primary);width:60px;text-align:right}
+.mind-score-big{width:100px;height:100px;border-radius:50%;border:6px solid var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 12px}
+.mind-score-num{font-size:1.8rem;font-weight:700;color:var(--purple)}
+.mind-dim-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.mind-dim-name{font-size:.72rem;width:72px;color:var(--muted);flex-shrink:0}
+#login-screen{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:#fff;border-radius:20px;padding:40px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo-icon{font-size:2.5rem;display:block;margin-bottom:8px}
+.login-logo-title{font-size:1.4rem;font-weight:700;color:var(--text)}
+.login-logo-sub{font-size:.8rem;color:var(--muted)}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin-bottom:24px}
+.podium-col{display:flex;flex-direction:column;align-items:center;gap:8px}
+.podium-block{background:linear-gradient(180deg,#3b82f6,#2563eb);border-radius:10px 10px 0 0;width:90px;display:flex;align-items:flex-start;justify-content:center;color:#fff;font-weight:700;font-size:1.4rem;padding-top:10px}
+.toggle{width:42px;height:24px;border-radius:12px;background:#cbd5e1;position:relative;cursor:pointer;transition:background .15s;flex-shrink:0}
+.toggle.on{background:var(--success)}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .15s}
+.toggle.on::after{left:21px}
+.content-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.content-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.content-thumb{height:110px;display:flex;align-items:center;justify-content:center;font-size:2.4rem}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-260px);transition:transform .25s}
+  #sidebar.open{transform:translateX(0)}
+  #main-area{margin-left:0}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-3,.grid-3b,.grid-2{grid-template-columns:1fr}
+  #hamburger{display:flex!important}
+  #topbar{padding-left:60px}
+}
+#hamburger{display:none;position:fixed;top:14px;left:14px;z-index:200;background:#1e293b;color:#fff;border:none;border-radius:8px;padding:8px 10px;font-size:1rem;cursor:pointer}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+.sidebar-overlay.visible{display:block}
+.tab-bar{display:flex;gap:6px;margin-bottom:16px;border-bottom:2px solid var(--border);padding-bottom:0;flex-wrap:wrap}
+.tab-btn{padding:8px 16px;border:none;background:none;font-family:inherit;font-size:.83rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-weight:500;touch-action:manipulation}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+.upload-area{border:2px dashed var(--border);border-radius:12px;padding:40px;text-align:center;color:var(--muted);background:#f8fafc;margin-bottom:16px}
+.gauge{height:14px;border-radius:7px;background:#e2e8f0;overflow:hidden}
+.gauge-fill{height:100%;border-radius:7px}
 </style>
 </head>
 <body>
-<div class="toast" id="toast"></div>
 
-<!-- BOTTOM NAV -->
-<div id="bottom-nav">
-  <button class="nav-btn active" data-nav="dashboard"><span class="nav-icon">🏠</span>ホーム</button>
-  <button class="nav-btn" data-nav="daily"><span class="nav-icon">📝</span>日報</button>
-  <button class="nav-btn" data-nav="mind"><span class="nav-icon">🧠</span>マインド</button>
-  <button class="nav-btn" data-nav="ranking"><span class="nav-icon">🏆</span>ランク</button>
-  <button class="nav-btn" data-nav="profile"><span class="nav-icon">👤</span>マイページ</button>
-</div>
-
-<!-- HOME -->
-<div id="s-home" class="screen no-nav active">
-  <div class="hero">
-    <div class="hero-logo">⚔️</div>
-    <h1>営業道場</h1>
-    <p>インターン生の営業スキルを可視化する<br>成長管理プラットフォーム</p>
-    <div class="hero-btns">
-      <button class="btn btn-primary btn-full" id="h-login">ログイン</button>
-      <button class="btn btn-secondary btn-full" id="h-register">新規登録（性格診断付き）</button>
-      <button class="btn btn-secondary btn-full btn-sm" id="h-admin">🔐 管理者ログイン</button>
-    </div>
-  </div>
-</div>
+<button id="hamburger">☰</button>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <!-- LOGIN -->
-<div id="s-login" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="login-back">←</button>
-    <span class="topbar-title">ログイン</span><span></span>
-  </div>
-  <div class="page-inner" style="max-width:420px;">
-    <div style="margin-top:24px;">
-      <div class="form-group"><label class="form-label">メールアドレス</label>
-        <input class="form-input" type="email" id="l-email" placeholder="example@mail.com"></div>
-      <div class="form-group"><label class="form-label">パスワード</label>
-        <input class="form-input" type="password" id="l-pw" placeholder="••••••••"></div>
-      <button class="btn btn-primary btn-full" style="margin-top:8px;" id="btn-login">ログイン</button>
-      <p style="text-align:center;margin-top:16px;font-size:.83rem;color:var(--muted);">
-        アカウントがない方は <span style="color:var(--blue);cursor:pointer;" id="l-to-reg">新規登録</span>
-      </p>
+<div id="login-screen" style="display:flex">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="login-logo-icon">⚔️</span>
+      <div class="login-logo-title">営業道場 Pro</div>
+      <div class="login-logo-sub">AI営業マネージャー</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input" id="login-email" placeholder="taro@demo.com" value="taro@demo.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">パスワード</label>
+      <input class="form-input" id="login-pw" type="password" placeholder="demo1234" value="demo1234">
+    </div>
+    <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;margin-top:8px">ログイン</button>
+    <div style="font-size:.72rem;color:var(--muted);margin-top:16px;text-align:center;line-height:1.6">
+      デモアカウント: taro@demo.com / demo1234<br>
+      ichiro@demo.com・hanako@demo.com 等も利用可
     </div>
   </div>
 </div>
 
-<!-- REGISTER -->
-<div id="s-register" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="reg-back">←</button>
-    <span class="topbar-title">新規登録</span><span></span>
-  </div>
-  <div class="page-inner" style="max-width:480px;">
-    <div style="margin-top:16px;">
-      <div class="form-group"><label class="form-label">氏名</label>
-        <input class="form-input" type="text" id="r-name" placeholder="山田 太郎"></div>
-      <div class="form-group"><label class="form-label">メールアドレス</label>
-        <input class="form-input" type="email" id="r-email" placeholder="example@mail.com"></div>
-      <div class="form-group"><label class="form-label">パスワード（6文字以上）</label>
-        <input class="form-input" type="password" id="r-pw" placeholder="••••••••"></div>
-      <div class="form-group"><label class="form-label">チーム</label>
-        <select class="form-input" id="r-team">
-          <option value="">選択してください</option>
-          <option>チームA</option><option>チームB</option>
-          <option>チームC</option><option>チームD</option>
-        </select></div>
-      <div class="form-group"><label class="form-label">一言自己紹介</label>
-        <textarea class="form-input" id="r-intro" placeholder="よろしくお願いします！"></textarea></div>
-      <button class="btn btn-primary btn-full" id="btn-register">次へ → 性格診断</button>
-    </div>
-  </div>
-</div>
-
-<!-- QUIZ -->
-<div id="s-quiz" class="screen no-nav">
-  <div class="topbar"><span></span><span class="topbar-title">性格診断</span><span></span></div>
-  <div class="q-wrap">
-    <div class="prog-bar"><div class="prog-fill" id="q-prog" style="width:0%"></div></div>
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:7px;" id="q-cnt"></div>
-    <div class="q-cat" id="q-cat"></div>
-    <div class="q-text" id="q-text"></div>
-    <div class="q-opts" id="q-opts"></div>
-  </div>
-</div>
-
-<!-- QUIZ RESULT -->
-<div id="s-qresult" class="screen no-nav">
-  <div class="topbar"><span></span><span class="topbar-title">診断結果</span><span></span></div>
-  <div class="page-inner" style="max-width:560px;text-align:center;">
-    <div style="margin-top:16px;">
-      <div class="res-hero" id="qr-hero"></div>
-      <div style="font-size:.78rem;color:var(--muted);" id="qr-tlabel"></div>
-      <div style="font-size:1.6rem;font-weight:bold;margin:5px 0;" id="qr-name"></div>
-      <div style="font-size:.88rem;color:var(--muted);margin-bottom:18px;" id="qr-catch"></div>
-      <div class="card" style="text-align:left;line-height:1.8;font-size:.86rem;color:#cbd5e1;margin-bottom:16px;" id="qr-desc"></div>
-      <div id="qr-axes" style="margin-bottom:20px;"></div>
-      <button class="btn btn-primary btn-full" id="btn-qdone">ダッシュボードへ →</button>
-    </div>
-  </div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="s-dashboard" class="screen">
-  <div class="topbar">
-    <span></span><span class="topbar-title">⚔️ 営業道場</span>
-    <button class="btn btn-sm btn-secondary" id="btn-logout" style="padding:6px 12px;font-size:.73rem;">ログアウト</button>
-  </div>
-  <div class="page-inner">
-    <div class="pending-banner" id="dash-pending" style="display:none;">⏳ 承認待ちです。管理者の承認後に全機能が利用できます。</div>
-    <div class="welcome-card">
-      <div style="font-size:.78rem;color:var(--muted);">おかえりなさい</div>
-      <div style="font-size:1.25rem;font-weight:bold;margin:4px 0;" id="dash-name"></div>
-      <div style="font-size:.83rem;" id="dash-type"></div>
-    </div>
-    <div class="stats-grid" id="dash-stats"></div>
-    <div class="sec-title">クイックアクション</div>
-    <div style="display:flex;flex-direction:column;gap:9px;">
-      <button class="btn btn-secondary btn-full" id="dash-daily">📝 日報を入力する</button>
-      <button class="btn btn-secondary btn-full" id="dash-mind">🧠 マインドハブを見る</button>
-      <button class="btn btn-secondary btn-full" id="dash-voice">🎙 営業分析を記録する</button>
-    </div>
-  </div>
-</div>
-
-<!-- DAILY -->
-<div id="s-daily" class="screen">
-  <div class="topbar"><span></span><span class="topbar-title">📝 日報</span><span></span></div>
-  <div class="page-inner">
-    <div class="card" style="margin-bottom:16px;">
-      <div class="sec-title" style="margin-top:0;">今日の日報を入力</div>
-      <div class="form-group"><label class="form-label">日付</label>
-        <input class="form-input" type="date" id="d-date"></div>
-      <div class="form-group"><label class="form-label">本日の目標</label>
-        <input class="form-input" type="text" id="d-goal" placeholder="例：アポ5件獲得"></div>
-      <div class="grid2">
-        <div class="form-group"><label class="form-label">アポ件数</label>
-          <input class="form-input" type="number" id="d-apo" placeholder="0" min="0"></div>
-        <div class="form-group"><label class="form-label">商談件数</label>
-          <input class="form-input" type="number" id="d-mtg" placeholder="0" min="0"></div>
-        <div class="form-group"><label class="form-label">成約件数</label>
-          <input class="form-input" type="number" id="d-con" placeholder="0" min="0"></div>
-        <div class="form-group"><label class="form-label">売上金額（円）</label>
-          <input class="form-input" type="number" id="d-sales" placeholder="0" min="0"></div>
+<!-- APP -->
+<div id="app-screen" style="display:none">
+  <nav id="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-icon">⚔️</span>
+      <div>
+        <div class="sidebar-logo-text">営業道場 Pro</div>
+        <div class="sidebar-logo-sub">AI営業マネージャー</div>
       </div>
-      <div class="form-group"><label class="form-label">良かったこと</label>
-        <textarea class="form-input" id="d-good" placeholder="うまくいったこと"></textarea></div>
-      <div class="form-group"><label class="form-label">改善点</label>
-        <textarea class="form-input" id="d-imp" placeholder="明日改善したいこと"></textarea></div>
-      <div class="form-group"><label class="form-label">明日の目標</label>
-        <input class="form-input" type="text" id="d-tmr" placeholder="例：提案資料を仕上げる"></div>
-      <button class="btn btn-primary btn-full" id="btn-daily">送信する</button>
     </div>
-    <div class="sec-title">過去の日報（最新5件）</div>
-    <div id="daily-list"></div>
-  </div>
-</div>
-
-<!-- VOICE -->
-<div id="s-voice" class="screen">
-  <div class="topbar"><span></span><span class="topbar-title">🎙 営業KPI分析</span><span></span></div>
-  <div class="page-inner">
-    <div class="card" style="margin-bottom:16px;">
-      <div class="sec-title" style="margin-top:0;">商談を記録する</div>
-      <div class="form-group"><label class="form-label">顧客名</label>
-        <input class="form-input" type="text" id="v-cust" placeholder="株式会社〇〇 田中様"></div>
-      <div class="form-group"><label class="form-label">商談日</label>
-        <input class="form-input" type="date" id="v-date"></div>
-      <div class="form-group"><label class="form-label">商談フェーズ</label>
-        <select class="form-input" id="v-phase">
-          <option>初回訪問</option><option>課題ヒアリング</option>
-          <option>提案・プレゼン</option><option>クロージング</option><option>フォローアップ</option>
-        </select></div>
-      <div class="divider"></div>
-      <div style="font-size:.83rem;font-weight:bold;margin-bottom:14px;">5項目スキル評価（1〜5）</div>
-      <div id="v-sliders"></div>
-      <div class="score-circle" id="v-circle">
-        <span class="sc-num" id="v-score">-</span>
-        <span class="sc-lbl">総合スコア</span>
+    <div style="flex:1;overflow-y:auto">
+      <div class="nav-section">
+        <div class="nav-item active" data-page="dashboard"><span class="nav-item-icon">🏠</span>ダッシュボード</div>
       </div>
-      <button class="btn btn-primary btn-full" id="btn-voice">送信してAI分析を見る</button>
+      <div class="nav-section">
+        <div class="nav-section-title">営業管理</div>
+        <div class="nav-item" data-page="deals"><span class="nav-item-icon">📋</span>案件管理</div>
+        <div class="nav-item" data-page="customers"><span class="nav-item-icon">👥</span>顧客管理</div>
+        <div class="nav-item" data-page="activities"><span class="nav-item-icon">📞</span>活動管理</div>
+        <div class="nav-item" data-page="goals"><span class="nav-item-icon">🎯</span>目標・実績管理</div>
+        <div class="nav-item" data-page="ai-analysis"><span class="nav-item-icon">🎙</span>商談AI分析</div>
+        <div class="nav-item" data-page="forecast"><span class="nav-item-icon">📈</span>売上予測</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">人材・マインド診断</div>
+        <div class="nav-item" data-page="mind-diagnosis"><span class="nav-item-icon">🧠</span>性格・マインド診断</div>
+        <div class="nav-item" data-page="diagnosis-results"><span class="nav-item-icon">📊</span>診断結果一覧</div>
+        <div class="nav-item" data-page="strengths"><span class="nav-item-icon">💪</span>強み・課題分析</div>
+        <div class="nav-item" data-page="condition"><span class="nav-item-icon">💚</span>コンディションチェック</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">教育・育成</div>
+        <div class="nav-item" data-page="training"><span class="nav-item-icon">🌱</span>育成プラン</div>
+        <div class="nav-item" data-page="content"><span class="nav-item-icon">📚</span>研修コンテンツ</div>
+        <div class="nav-item" data-page="coaching"><span class="nav-item-icon">🤝</span>コーチング記録</div>
+        <div class="nav-item" data-page="feedback"><span class="nav-item-icon">💬</span>フィードバック</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">行動管理・KPI</div>
+        <div class="nav-item" data-page="kpi"><span class="nav-item-icon">📱</span>架電・アポ管理</div>
+        <div class="nav-item" data-page="ai-coach"><span class="nav-item-icon">🤖</span>AIコーチ</div>
+        <div class="nav-item" data-page="ranking"><span class="nav-item-icon">🏆</span>ランキング</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">設定・その他</div>
+        <div class="nav-item" data-page="settings"><span class="nav-item-icon">⚙️</span>システム設定</div>
+        <div class="nav-item" id="nav-logout"><span class="nav-item-icon">🚪</span>ログアウト</div>
+      </div>
     </div>
-    <div id="v-ai-wrap" style="display:none;margin-bottom:16px;">
-      <div class="sec-title">🤖 AI分析コメント</div>
-      <div class="ai-box" id="v-ai-text"></div>
-    </div>
-    <div class="sec-title">過去の分析（最新3件）</div>
-    <div id="voice-list"></div>
-  </div>
-</div>
-
-<!-- RANKING -->
-<div id="s-ranking" class="screen">
-  <div class="topbar"><span></span><span class="topbar-title">🏆 チームランキング</span><span></span></div>
-  <div class="page-inner">
-    <div class="rank-tabs">
-      <button class="rank-tab active" data-rt="contracts">成約件数</button>
-      <button class="rank-tab" data-rt="sales">累計売上</button>
-      <button class="rank-tab" data-rt="kpi">KPIスコア</button>
-    </div>
-    <div id="rank-list"></div>
-  </div>
-</div>
-
-<!-- PROFILE -->
-<div id="s-profile" class="screen">
-  <div class="topbar"><span></span><span class="topbar-title">👤 マイページ</span><span></span></div>
-  <div class="page-inner">
-    <div class="card text-center" style="margin-bottom:14px;text-align:center;">
-      <div class="res-hero" id="p-hero"></div>
-      <div style="font-size:1.2rem;font-weight:bold;" id="p-name-type"></div>
-      <div style="font-size:.82rem;color:var(--muted);" id="p-catch"></div>
-    </div>
-    <div id="p-axes" style="margin-bottom:14px;"></div>
-    <div class="sec-title">🤖 AIフィードバック（マインド成長）</div>
-    <div id="p-ai"></div>
-    <div class="sec-title">👏 仲間からのポジティブFB</div>
-    <div id="p-pos-fb"></div>
-    <div class="sec-title">💬 管理者からのフィードバック</div>
-    <div id="p-admin-fb"></div>
-    <div class="sec-title">🔒 パスワード変更</div>
-    <div class="card">
-      <div class="form-group"><label class="form-label">現在のパスワード</label>
-        <input class="form-input" type="password" id="pw-cur"></div>
-      <div class="form-group"><label class="form-label">新しいパスワード</label>
-        <input class="form-input" type="password" id="pw-new"></div>
-      <button class="btn btn-secondary btn-full" id="btn-pw">変更する</button>
+  </nav>
+  <div id="main-area">
+    <header id="topbar">
+      <div>
+        <div id="topbar-title" style="font-weight:700;font-size:1rem">ダッシュボード</div>
+        <div id="topbar-date" style="font-size:.72rem;color:var(--muted)"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:1.1rem;cursor:pointer">🔔</span>
+        <div id="topbar-user" style="display:flex;align-items:center;gap:8px"></div>
+      </div>
+    </header>
+    <div id="page-content">
+      <div class="page active" id="page-dashboard"></div>
+      <div class="page" id="page-deals"></div>
+      <div class="page" id="page-customers"></div>
+      <div class="page" id="page-activities"></div>
+      <div class="page" id="page-goals"></div>
+      <div class="page" id="page-ai-analysis"></div>
+      <div class="page" id="page-forecast"></div>
+      <div class="page" id="page-mind-diagnosis"></div>
+      <div class="page" id="page-diagnosis-results"></div>
+      <div class="page" id="page-strengths"></div>
+      <div class="page" id="page-condition"></div>
+      <div class="page" id="page-training"></div>
+      <div class="page" id="page-content"></div>
+      <div class="page" id="page-coaching"></div>
+      <div class="page" id="page-feedback"></div>
+      <div class="page" id="page-kpi"></div>
+      <div class="page" id="page-ai-coach"></div>
+      <div class="page" id="page-ranking"></div>
+      <div class="page" id="page-settings"></div>
     </div>
   </div>
 </div>
 
-<!-- ADMIN LOGIN -->
-<div id="s-admin-login" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="al-back">←</button>
-    <span class="topbar-title">🔐 管理者ログイン</span><span></span>
-  </div>
-  <div class="page-inner" style="max-width:360px;">
-    <div style="margin-top:24px;">
-      <div class="form-group"><label class="form-label">管理者パスワード</label>
-        <input class="form-input" type="password" id="a-pw" placeholder="••••••••"></div>
-      <button class="btn btn-primary btn-full" id="btn-admin-login">ログイン</button>
-    </div>
-  </div>
-</div>
-
-<!-- MIND HUB -->
-<div id="s-mind" class="screen">
-  <div class="topbar"><span></span><span class="topbar-title">🧠 マインドハブ</span><span></span></div>
-  <div class="page-inner" id="mind-inner"></div>
-</div>
-
-<!-- SURVEY -->
-<div id="s-survey" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="survey-back">←</button>
-    <span class="topbar-title" id="survey-title">サーベイ</span><span></span>
-  </div>
-  <div class="q-wrap">
-    <div class="prog-bar"><div class="prog-fill" id="survey-prog" style="width:0%"></div></div>
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px;" id="survey-cnt"></div>
-    <div style="font-size:1.05rem;font-weight:bold;line-height:1.65;margin-bottom:22px;" id="survey-q"></div>
-    <div style="display:flex;gap:6px;justify-content:space-between;" id="survey-opts"></div>
-  </div>
-</div>
-
-<!-- SURVEY RESULT -->
-<div id="s-survey-result" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="sresult-back">←</button>
-    <span class="topbar-title">結果</span><span></span>
-  </div>
-  <div class="page-inner" style="text-align:center;">
-    <div style="margin-top:16px;" id="sresult-inner"></div>
-  </div>
-</div>
-
-<!-- JOURNAL -->
-<div id="s-journal" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="journal-back">←</button>
-    <span class="topbar-title">📔 日誌</span><span></span>
-  </div>
-  <div class="page-inner" id="journal-inner"></div>
-</div>
-
-<!-- AI COACH -->
-<div id="s-coach" class="screen no-nav">
-  <div class="topbar">
-    <button class="topbar-back" id="coach-back">←</button>
-    <span class="topbar-title">🤖 AIコーチ</span><span></span>
-  </div>
-  <div class="page-inner" id="coach-inner"></div>
-</div>
-
-<!-- ADMIN -->
-<div id="s-admin" class="screen no-nav">
-  <div class="topbar">
-    <span></span><span class="topbar-title">⚙️ 管理者画面</span>
-    <button class="btn btn-sm btn-danger" id="btn-admin-out" style="padding:6px 12px;font-size:.73rem;">ログアウト</button>
-  </div>
-  <div class="page-inner">
-    <div class="admin-tabs">
-      <button class="admin-tab active" data-at="users">👥 ユーザー</button>
-      <button class="admin-tab" data-at="fbsend">💬 FB送信</button>
-      <button class="admin-tab" data-at="stats">📊 統計</button>
-    </div>
-    <div id="at-users" class="atab-panel active"></div>
-    <div id="at-fbsend" class="atab-panel">
-      <div class="form-group"><label class="form-label">送信先</label>
-        <select class="form-input" id="fb-sel"></select></div>
-      <div class="form-group"><label class="form-label">フィードバックコメント</label>
-        <textarea class="form-input" id="fb-txt" placeholder="具体的なアドバイスを入力" style="min-height:110px;"></textarea></div>
-      <button class="btn btn-primary btn-full" id="btn-fb">送信する</button>
-    </div>
-    <div id="at-stats" class="atab-panel"></div>
-  </div>
-</div>
+<!-- MODALS -->
+<div id="modal-overlay" style="display:none"></div>
+<div id="toast" style="display:none"></div>
+<div id="quiz-overlay" style="display:none"></div>
+<div id="survey-overlay" style="display:none"></div>
 
 <script>
-/* ─── DATA ─── */
-const ADMIN_PW='Admin2024!', KEY='eido2_data';
-const Types={
-  achieve:{badge:'🔥',color:'#e94560',tl:'タイプA',name:'ゴリゴリ成果追求型',catch:'数字で語り、行動で証明する。',
-    desc:'結果に対して強い執着心を持ち、困難でも前のめりに行動し続けるエネルギーの塊。競争心が高く、新規開拓や高いノルマ環境でこそ本領発揮するタイプ。',
-    minds:[
-      {i:'⚡',t:'「量」だけでなく「質」を意識するマインドへ',b:'あなたの最大の武器は圧倒的な行動量です。しかし<strong>「なぜ刺さらないのか」</strong>を一瞬立ち止まって考える習慣を加えることで、精度が劇的に上がります。',q:'「行動量は信頼の証。でも考える10秒が1時間の無駄を消す。」'},
-      {i:'🧘',t:'「負けを認める強さ」がレベルアップの鍵',b:'負けず嫌いは最強の燃料ですが、<strong>認めたくない感情が改善を邪魔する</strong>ことも。失敗を「恥」でなく「データ」として捉え直してください。',q:'「悔しさをエネルギーにするのがあなた。悔しさを学びにするのが次のあなた。」'},
-      {i:'🤝',t:'チームを巻き込む力を育てる',b:'一匹狼で動けるのはあなたの強みですが、<strong>周囲を巻き込んで大きな成果を出す体験</strong>を積むことが次のステージへの鍵です。',q:'「一人で100を取るより、チームで1000を取れる人になれ。」'},
-    ]},
-  empathy:{badge:'🤝',color:'#10b981',tl:'タイプB',name:'伴走・共感型',catch:'信頼が、いちばんの武器。',
-    desc:'人の気持ちに寄り添い「この人のために頑張りたい」という動機で動くタイプ。顧客から「あなただから相談したい」と頼られる存在になります。',
-    minds:[
-      {i:'💪',t:'「好かれる営業」から「結果を出す営業」へ',b:'「嫌われたくない」という感情がクロージングを邪魔することがあります。<strong>本当に良い提案なら背中を押すことも貢献</strong>の一形態です。',q:'「優しさは、時に勇気を持って背中を押すことでもある。」'},
-      {i:'🎯',t:'数字を「貢献の証拠」として好きになる',b:'<strong>「今週3人の役に立てた＝3件の受注」</strong>という思考回路を育ててください。数字を人の顔に変換して管理してみましょう。',q:'「数字の裏に、笑顔がある。それを忘れなければ、数字は怖くない。」'},
-      {i:'🔥',t:'自分の成長目標も同時に持つ',b:'他者のために動ける力は貴重です。ただし<strong>「自分自身の成長目標」も同時に持つ</strong>ことで、より持続的に頑張れるようになります。',q:'「人のために走る人ほど、自分のゴールも決めておく必要がある。」'},
-    ]},
-  logic:{badge:'📊',color:'#3b82f6',tl:'タイプC',name:'ロジカル分析型',catch:'データと根拠が、私の羅針盤。',
-    desc:'物事を論理的に構造化し「なぜ」を徹底的に考えるタイプ。データで仮説を立て、PDCAを回すことを得意とします。',
-    minds:[
-      {i:'🚀',t:'「完璧な準備」より「70点で動く」習慣を',b:'<strong>「もう少し調べてから」という思考パターン</strong>が行動のスピードを落としているケースがあります。「70点の準備で動き、残りは現場で学ぶ」を意識してください。',q:'「完璧な地図より、早く出発した人が先に頂上に着く。」'},
-      {i:'❤️',t:'論理の前に「感情を受け止める」一言を',b:'顧客は感情で動き、論理で納得します。<strong>まず「感情を受け止める」一言</strong>を意識的に挟むだけで成約率が変わります。',q:'「人は感情で動き、論理で動く。両方使える人が最強。」'},
-      {i:'📢',t:'知識を「伝える・教える」ことに投資する',b:'あなたの分析知識は<strong>チームにとって大きな財産</strong>です。週1回「なるほど！」と思った知識をチームに共有してください。',q:'「一人の知識は武器。チームの知識は要塞になる。」'},
-    ]},
-  steady:{badge:'🌱',color:'#f59e0b',tl:'タイプD',name:'堅実・継続型',catch:'コツコツが、最強の武器になる。',
-    desc:'計画通り着実に積み上げることを好み、信頼性と安定感が武器のタイプ。ミスが少なく長期的に安定した成果を出し続けます。',
-    minds:[
-      {i:'🌊',t:'「変化」を成長の素材として受け取る',b:'<strong>「今のやり方を崩したくない」という感情</strong>が次のステージへの移行を妨げることがあります。変化を「新しいツールを手に入れること」として捉え直してください。',q:'「コツコツできる人が、新しいことを身につけたら最強になる。」'},
-      {i:'📣',t:'「伝える」ことへの一歩を踏み出す',b:'あなたが積み上げてきた経験は<strong>もっと周囲に伝わっていい価値</strong>です。会議で一言発言する、日報に工夫を書く——小さいことから「伝える筋肉」を鍛えてください。',q:'「丁寧にやってきた人の言葉は、必ず誰かの心に届く。」'},
-      {i:'🎯',t:'自分への期待値を少しだけ上げる',b:'「確実にできること」だけを選ぶ習慣は安定をもたらしますが、<strong>今の自分の120%の目標</strong>を一つだけ設定してみてください。',q:'「小さな一歩を積み重ねてきた人が、大きな目標に一番近い。」'},
-    ]},
-};
-const AL={achieve:'成果・競争',empathy:'貢献・共感',logic:'論理・分析',steady:'継続・安定'};
-const AC={achieve:'#e94560',empathy:'#10b981',logic:'#3b82f6',steady:'#f59e0b'};
-const VI=['課題ヒアリング','ニーズ把握','提案の質','クロージング力','関係構築'];
-const Qs=[
-  {c:'Q1｜モチベーションの源泉',col:'#e94560',
-   t:'あなたが最も「モチベーションが上がる」と感じる瞬間はどれですか？',
-   o:[{k:'A',t:'目標を達成したり、人より高い成果を出して評価されたとき',s:'成果・競争軸',sc:{achieve:3,empathy:0,logic:0,steady:0}},
-      {k:'B',t:'顧客やチームのメンバーから「ありがとう」と感謝されたとき',s:'貢献・対人軸',sc:{achieve:0,empathy:3,logic:0,steady:0}},
-      {k:'C',t:'新しい知識やスキルを身に付け、自分の成長を実感できたとき',s:'自己成長軸',sc:{achieve:1,empathy:0,logic:2,steady:1}},
-      {k:'D',t:'計画通りに物事を進め、ミスなくやり遂げたとき',s:'プロセス・安定軸',sc:{achieve:0,empathy:1,logic:1,steady:3}}]},
-  {c:'Q2｜壁にぶつかったときの行動',col:'#f59e0b',
-   t:'高い目標に対して、思うように成果が出ないとき、最初に取る行動は？',
-   o:[{k:'A',t:'とにかく行動量（打席数）を増やして、確率論で突破しようとする',s:'行動量型',sc:{achieve:3,empathy:0,logic:0,steady:1}},
-      {k:'B',t:'なぜ成果が出ないのか、これまでのプロセスを分析して改善策を考える',s:'思考・分析型',sc:{achieve:1,empathy:0,logic:3,steady:1}},
-      {k:'C',t:'成果が出ている先輩や上司にすぐ相談し、アドバイスを仰ぐ',s:'素直さ・巻き込み型',sc:{achieve:1,empathy:2,logic:1,steady:0}},
-      {k:'D',t:'一度気持ちをリフレッシュさせ、モチベーションを立て直してから再開する',s:'メンタルコントロール型',sc:{achieve:0,empathy:1,logic:0,steady:3}}]},
-  {c:'Q3｜コミュニケーションスタイル',col:'#10b981',
-   t:'初対面の人と話すとき、あなたはどのような立ち回りをすることが多いですか？',
-   o:[{k:'A',t:'自分から積極的に話題を提供し、場の雰囲気を盛り上げる',s:'開拓・リード型',sc:{achieve:3,empathy:1,logic:0,steady:0}},
-      {k:'B',t:'相手の話をじっくり聞き、相手が話しやすい空気を作る',s:'傾聴・ヒアリング型',sc:{achieve:0,empathy:3,logic:1,steady:1}},
-      {k:'C',t:'相手のプロフィールや共通点を事前にリサーチし、戦略的に話す',s:'準備・ロジカル型',sc:{achieve:1,empathy:0,logic:3,steady:1}},
-      {k:'D',t:'相手のテンションや好みに自然と自分を合わせる',s:'適応・調和型',sc:{achieve:0,empathy:2,logic:0,steady:3}}]},
-  {c:'Q4｜目標へのコミットメント',col:'#e94560',
-   t:'自分で決めた目標（または与えられた目標）に対するあなたのスタンスは？',
-   o:[{k:'A',t:'何が何でも達成する。未達成で終わることは絶対に避けたい',s:'執着度：高',sc:{achieve:3,empathy:0,logic:0,steady:1}},
-      {k:'B',t:'高めの目標を設定し、たとえ未達成でもプロセスで得られるものがあれば良い',s:'プロセス重視',sc:{achieve:1,empathy:1,logic:2,steady:0}},
-      {k:'C',t:'確実に達成できる現実的な目標を立て、着実にクリアしていきたい',s:'堅実重視',sc:{achieve:0,empathy:0,logic:1,steady:3}},
-      {k:'D',t:'目標の数字よりも、自分が納得して楽しく取り組めるかを重視したい',s:'納得感重視',sc:{achieve:0,empathy:3,logic:0,steady:1}}]},
-  {c:'Q5｜変化への対応力',col:'#3b82f6',
-   t:'ルールや環境が急に変更されたり、新しい挑戦を求められたとき、どう感じますか？',
-   o:[{k:'A',t:'チャンスだと捉え、ワクワクしてすぐ新しい環境に飛び込む',s:'イノベーター型',sc:{achieve:3,empathy:1,logic:0,steady:0}},
-      {k:'B',t:'変更の理由や背景を納得できれば、前向きに対応する',s:'納得連動型',sc:{achieve:1,empathy:1,logic:2,steady:1}},
-      {k:'C',t:'少し不安や抵抗を感じるが、周囲の出方を見ながら徐々に適応する',s:'慎重型',sc:{achieve:0,empathy:2,logic:1,steady:2}},
-      {k:'D',t:'これまでのやり方にこだわりがあり、変えることにストレスを感じやすい',s:'保守型',sc:{achieve:0,empathy:0,logic:0,steady:3}}]},
-  {c:'Q6｜自己認識・現時点の強み',col:'#10b981',
-   t:'周囲の友人から、あなたはどのような人だと言われることが多いですか？',
-   o:[{k:'A',t:'「行動力がある」「エネルギーに溢れている」「負けず嫌い」',s:'突破力',sc:{achieve:3,empathy:0,logic:0,steady:0}},
-      {k:'B',t:'「話しやすい」「相談に乗ってくれる」「気が利く」',s:'共感力',sc:{achieve:0,empathy:3,logic:0,steady:1}},
-      {k:'C',t:'「頭が良い」「計画性がある」「落ち着いている」',s:'論理力',sc:{achieve:0,empathy:0,logic:3,steady:1}},
-      {k:'D',t:'「真面目」「コツコツやり抜く」「信頼できる」',s:'継続力',sc:{achieve:0,empathy:1,logic:1,steady:3}}]},
-  {c:'Q7｜インターンへの期待',col:'#f59e0b',
-   t:'今回のインターンを通じて、あなたが「最も得たいもの」は何ですか？',
-   o:[{k:'A',t:'同世代に圧倒的な差をつける「ビジネス戦闘力（稼ぐ力・営業力）」',s:'',sc:{achieve:3,empathy:0,logic:1,steady:0}},
-      {k:'B',t:'将来起業や組織マネジメントするための「経営・リーダー視点」',s:'',sc:{achieve:2,empathy:1,logic:2,steady:0}},
-      {k:'C',t:'就活で語れる「目に見える実績・データ」',s:'',sc:{achieve:1,empathy:0,logic:2,steady:2}},
-      {k:'D',t:'尊敬できる仲間や先輩との「質の高いネットワーク」',s:'',sc:{achieve:0,empathy:3,logic:0,steady:1}}]},
-];
+const KEY = 'salesProData';
+const ADMIN_PW = 'Admin2024!';
 
-function loadData(){
-  const r=localStorage.getItem(KEY);
-  if(r)return JSON.parse(r);
-  const d={users:[
-    {id:'u1',name:'田中 花子',email:'hanako@demo.com',pw:btoa('demo1234'),team:'チームA',intro:'よろしく！',
-     type:'achieve',ts:{achieve:18,empathy:6,logic:8,steady:5},approved:true,created:'2024-06-01',
-     reports:[{id:'r1',date:'2024-06-10',goal:'アポ5件',apo:5,mtg:3,con:2,sales:80000,good:'新規2件獲得',imp:'提案スピード',tmr:'フォロー電話'},
-              {id:'r2',date:'2024-06-09',goal:'商談3件',apo:3,mtg:3,con:1,sales:40000,good:'ヒアリング深化',imp:'クロージング',tmr:'提案書作成'}],
-     voices:[{id:'v1',date:'2024-06-10',cust:'ABC商事 鈴木様',phase:'クロージング',scores:[4,4,5,4,4],total:84,
-              ai:'クロージング力と提案の質が高水準です。課題ヒアリングをさらに深めることで成約率がさらに上がるでしょう。'}],
-     fb:[{from:'管理者',txt:'先週の新規2件獲得は素晴らしい！このペースを維持しつつ、提案の質も意識してください。',date:'2024-06-11'}],
-     mindSurveys:[
-       {id:'ms1',type:'growth',answers:[4,4,4,3,4],date:'2024-06-10'},
-       {id:'ms2',type:'resilience',answers:[3,4,3,3,4],date:'2024-06-10'}
-     ],
-     journals:[
-       {id:'j1',mood:4,good:'新規顧客と良い関係が築けた',hard:'提案が上手くまとまらなかった',learned:'傾聴の重要性を再認識した',date:'2024-06-10'},
-       {id:'j2',mood:3,good:'チームと連携できた',hard:'時間管理が難しかった',learned:'優先順位をつける大切さ',date:'2024-06-09'}
-     ]},
-    {id:'u2',name:'佐藤 健太',email:'kenta@demo.com',pw:btoa('demo1234'),team:'チームB',intro:'頑張ります',
-     type:'empathy',ts:{achieve:5,empathy:19,logic:7,steady:8},approved:true,created:'2024-06-01',
-     reports:[{id:'r3',date:'2024-06-10',goal:'顧客フォロー',apo:2,mtg:4,con:1,sales:60000,good:'関係構築',imp:'スピード感',tmr:'提案書'}],
-     voices:[{id:'v2',date:'2024-06-10',cust:'〇〇商事 田中部長',phase:'課題ヒアリング',scores:[5,5,3,3,5],total:84,
-              ai:'ヒアリング力と関係構築が抜群です。提案・クロージングで踏み込む勇気を持つとさらに成果が上がります。'}],
-     fb:[],
-     mindSurveys:[{id:'ms3',type:'humility',answers:[5,5,4,5,4],date:'2024-06-10'}],
-     journals:[{id:'j3',mood:5,good:'顧客に感謝された',hard:'数字が伸び悩んだ',learned:'小さな成果も積み上げが大事',date:'2024-06-10'}]},
-    {id:'u3',name:'山本 智也',email:'tomoya@demo.com',pw:btoa('demo1234'),team:'チームA',intro:'分析が得意',
-     type:'logic',ts:{achieve:7,empathy:5,logic:20,steady:9},approved:true,created:'2024-06-02',
-     reports:[{id:'r4',date:'2024-06-10',goal:'データ提案',apo:1,mtg:2,con:2,sales:120000,good:'高単価受注',imp:'行動量',tmr:'新規開拓'}],
-     voices:[],fb:[],mindSurveys:[],journals:[]},
-    {id:'u4',name:'井上 美咲',email:'misaki@demo.com',pw:btoa('demo1234'),team:'チームC',intro:'よろしく',
-     type:'steady',ts:{achieve:4,empathy:8,logic:6,steady:19},approved:false,created:'2024-06-12',
-     reports:[],voices:[],fb:[],mindSurveys:[],journals:[]},
-  ],cur:null,adminIn:false};
-  save(d);return d;
-}
-function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-function get(){return loadData();}
-function me(){const d=get();return d.users.find(u=>u.id===d.cur)||null;}
-
-/* ─── UTILS ─── */
-function $e(id){return document.getElementById(id);}
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  $e(id).classList.add('active');
-  $e('bottom-nav').classList.toggle('visible',!$e(id).classList.contains('no-nav'));
-  window.scrollTo(0,0);
-}
-function toast(msg,ms=2200){
-  const t=$e('toast');t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),ms);
-}
-function tap(el,fn){
-  if(!el)return;
-  let hit=false;
-  el.addEventListener('touchend',e=>{e.preventDefault();hit=true;fn(e);setTimeout(()=>hit=false,500)},{passive:false});
-  el.addEventListener('click',e=>{if(!hit)fn(e);});
-}
-function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
-function today(){return new Date().toISOString().slice(0,10);}
-function fd(d){return d?d.replace(/-/g,'/'):''}
-function fm(n){return Number(n).toLocaleString()+'円'}
-function navActive(n){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav===n));}
-
-/* ─── NAV ─── */
-document.querySelectorAll('.nav-btn').forEach(b=>{
-  tap(b,()=>{
-    const u=me();if(!u){show('s-home');return;}
-    navActive(b.dataset.nav);
-    const n=b.dataset.nav;
-    if(n==='dashboard'){renderDash();show('s-dashboard');}
-    else if(n==='daily'){renderDaily();show('s-daily');}
-    else if(n==='mind'){renderMind();show('s-mind');}
-    else if(n==='ranking'){renderRanking('contracts');show('s-ranking');}
-    else if(n==='profile'){renderProfile();show('s-profile');}
-  });
-});
-
-/* ─── HOME ─── */
-tap($e('h-login'),()=>show('s-login'));
-tap($e('h-register'),()=>show('s-register'));
-tap($e('h-admin'),()=>show('s-admin-login'));
-tap($e('login-back'),()=>show('s-home'));
-tap($e('reg-back'),()=>show('s-home'));
-tap($e('al-back'),()=>show('s-home'));
-tap($e('l-to-reg'),()=>show('s-register'));
-
-/* ─── LOGIN ─── */
-tap($e('btn-login'),()=>{
-  const email=$e('l-email').value.trim(),pw=$e('l-pw').value;
-  if(!email||!pw){toast('⚠️ 全項目を入力してください');return;}
-  const d=get();const u=d.users.find(u=>u.email===email&&u.pw===btoa(pw));
-  if(!u){toast('❌ メールアドレスまたはパスワードが違います');return;}
-  d.cur=u.id;save(d);
-  renderDash();show('s-dashboard');navActive('dashboard');
-});
-
-/* ─── REGISTER ─── */
-tap($e('btn-register'),()=>{
-  const name=$e('r-name').value.trim(),email=$e('r-email').value.trim(),
-        pw=$e('r-pw').value,team=$e('r-team').value,intro=$e('r-intro').value.trim();
-  if(!name||!email||!pw||!team){toast('⚠️ 必須項目を入力してください');return;}
-  if(pw.length<6){toast('⚠️ パスワードは6文字以上');return;}
-  const d=get();
-  if(d.users.find(u=>u.email===email)){toast('⚠️ このメールは登録済みです');return;}
-  pendingReg={id:uid(),name,email,pw:btoa(pw),team,intro,type:'',ts:{achieve:0,empathy:0,logic:0,steady:0},
-    approved:false,created:today(),reports:[],voices:[],fb:[]};
-  qIdx=0;qSc={achieve:0,empathy:0,logic:0,steady:0};
-  renderQuiz();show('s-quiz');
-});
-
-/* ─── QUIZ ─── */
-let qIdx=0,qSc={achieve:0,empathy:0,logic:0,steady:0},pendingReg=null;
-function renderQuiz(){
-  const q=Qs[qIdx];
-  $e('q-prog').style.width=`${qIdx/Qs.length*100}%`;
-  $e('q-cnt').textContent=`質問 ${qIdx+1} / ${Qs.length}`;
-  const cat=$e('q-cat');
-  cat.textContent=q.c;
-  cat.style.cssText=`background:${q.col}22;border:1px solid ${q.col}55;color:${q.col};display:inline-block;font-size:.7rem;padding:3px 10px;border-radius:20px;margin-bottom:10px;`;
-  $e('q-text').textContent=q.t;
-  const opts=$e('q-opts');opts.innerHTML='';
-  q.o.forEach(o=>{
-    const btn=document.createElement('button');
-    btn.className='q-opt';
-    btn.innerHTML=`<span class="q-key">${o.k}</span><span><div>${o.t}</div>${o.s?`<div class="q-sub">${o.s}</div>`:''}</span>`;
-    tap(btn,()=>{for(const k in o.sc)qSc[k]+=o.sc[k];qIdx++;qIdx<Qs.length?renderQuiz():finishQuiz();});
-    opts.appendChild(btn);
-  });
-}
-function finishQuiz(){
-  const top=Object.keys(qSc).reduce((a,b)=>qSc[a]>=qSc[b]?a:b);
-  const t=Types[top];
-  if(pendingReg){
-    pendingReg.type=top;pendingReg.ts={...qSc};
-    const d=get();d.users.push(pendingReg);d.cur=pendingReg.id;save(d);pendingReg=null;
-  } else {
-    const d=get();const u=d.users.find(u=>u.id===d.cur);
-    if(u){u.type=top;u.ts={...qSc};save(d);}
-  }
-  const h=$e('qr-hero');
-  h.textContent=t.badge;h.style.cssText=`background:${t.color}22;border:2px solid ${t.color};width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 14px;`;
-  $e('qr-tlabel').textContent=t.tl;
-  $e('qr-name').textContent=t.name;$e('qr-name').style.color=t.color;
-  $e('qr-catch').textContent=t.catch;
-  $e('qr-desc').textContent=t.desc;
-  const tot=Object.values(qSc).reduce((a,b)=>a+b,0)||1;
-  $e('qr-axes').innerHTML=Object.keys(qSc).map(k=>{
-    const p=Math.round(qSc[k]/tot*100);
-    return `<div class="axes-row"><div class="ax-name">${AL[k]}</div>
-    <div class="ax-track"><div class="ax-bar" style="width:0%;background:${AC[k]}" data-w="${p}"></div></div>
-    <div class="ax-pct">${p}%</div></div>`;
-  }).join('');
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    document.querySelectorAll('#qr-axes .ax-bar').forEach(el=>el.style.width=el.dataset.w+'%');
-  }));
-  show('s-qresult');
-}
-tap($e('btn-qdone'),()=>{renderDash();show('s-dashboard');navActive('dashboard');});
-
-/* ─── DASHBOARD ─── */
-function renderDash(){
-  const u=me();if(!u)return;
-  $e('dash-pending').style.display=u.approved?'none':'block';
-  $e('dash-name').textContent=u.name;
-  const t=Types[u.type]||Types.achieve;
-  $e('dash-type').innerHTML=`<span style="color:${t.color}">${t.badge} ${t.tl}：${t.name}</span>`;
-  const rpts=u.reports||[];
-  const wk=rpts.slice(-7);
-  const tcon=wk.reduce((s,r)=>s+(r.con||0),0);
-  const tsal=wk.reduce((s,r)=>s+(r.sales||0),0);
-  const vcs=u.voices||[];
-  const akpi=vcs.length?Math.round(vcs.reduce((s,v)=>s+v.total,0)/vcs.length):0;
-  const d=get();
-  const appr=d.users.filter(u=>u.approved);
-  const sorted=appr.sort((a,b)=>totCon(b)-totCon(a));
-  const rank=sorted.findIndex(x=>x.id===u.id)+1;
-  $e('dash-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-val" style="color:var(--red)">${tcon}</div><div class="stat-lbl">今週の成約件数</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--yellow)">${(tsal/10000).toFixed(1)}<span style="font-size:.85rem">万</span></div><div class="stat-lbl">今週の売上</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--blue)">${akpi||'-'}<span style="font-size:.85rem">${akpi?'%':''}</span></div><div class="stat-lbl">平均KPIスコア</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--green)">${rank>0?rank+'位':'-'}</div><div class="stat-lbl">チーム内順位</div></div>`;
-}
-tap($e('btn-logout'),()=>{
-  const d=get();d.cur=null;save(d);
-  show('s-home');$e('bottom-nav').classList.remove('visible');toast('👋 ログアウトしました');
-});
-tap($e('dash-daily'),()=>{renderDaily();show('s-daily');navActive('daily');});
-tap($e('dash-mind'),()=>{renderMind();show('s-mind');navActive('mind');});
-tap($e('dash-voice'),()=>{renderVoice();show('s-voice');navActive('voice');});
-
-/* ─── DAILY ─── */
-function renderDaily(){
-  $e('d-date').value=today();
-  const u=me();if(!u)return;
-  const rpts=[...(u.reports||[])].reverse().slice(0,5);
-  $e('daily-list').innerHTML=rpts.length?rpts.map(r=>`
-    <div class="report-item">
-      <div class="report-date">${fd(r.date)}　目標：${r.goal}</div>
-      <div class="kpi-chips">
-        <span class="kpi-chip">アポ ${r.apo}件</span>
-        <span class="kpi-chip">商談 ${r.mtg}件</span>
-        <span class="kpi-chip">成約 ${r.con}件</span>
-        <span class="kpi-chip">${fm(r.sales)}</span>
-      </div>
-      ${r.good?`<div style="font-size:.78rem;color:var(--green);margin-top:6px;">✅ ${r.good}</div>`:''}
-      ${r.imp?`<div style="font-size:.78rem;color:var(--muted);margin-top:2px;">💡 ${r.imp}</div>`:''}
-    </div>`).join('')
-  :'<p style="color:var(--muted);font-size:.83rem;">日報がまだありません</p>';
-}
-tap($e('btn-daily'),()=>{
-  const date=$e('d-date').value,goal=$e('d-goal').value.trim();
-  if(!date||!goal){toast('⚠️ 日付と目標は必須です');return;}
-  const r={id:uid(),date,goal,apo:+$e('d-apo').value||0,mtg:+$e('d-mtg').value||0,
-    con:+$e('d-con').value||0,sales:+$e('d-sales').value||0,
-    good:$e('d-good').value.trim(),imp:$e('d-imp').value.trim(),tmr:$e('d-tmr').value.trim()};
-  const d=get();const u=d.users.find(u=>u.id===d.cur);
-  u.reports.push(r);save(d);
-  ['d-goal','d-apo','d-mtg','d-con','d-sales','d-good','d-imp','d-tmr'].forEach(id=>$e(id).value='');
-  $e('d-date').value=today();
-  renderDaily();toast('✅ 日報を送信しました');
-});
-
-/* ─── VOICE ─── */
-let vSc=[3,3,3,3,3];
-function renderVoice(){
-  $e('v-date').value=today();
-  $e('v-ai-wrap').style.display='none';
-  const wrap=$e('v-sliders');wrap.innerHTML='';
-  VI.forEach((lbl,i)=>{
-    const el=document.createElement('div');el.className='slider-group';
-    el.innerHTML=`<div class="sl-head"><span class="sl-lbl">${lbl}</span><span class="sl-val" id="sv${i}">${vSc[i]}</span></div>
-      <input type="range" min="1" max="5" value="${vSc[i]}" id="sl${i}">`;
-    wrap.appendChild(el);
-  });
-  VI.forEach((_,i)=>{
-    const sl=$e(`sl${i}`);
-    const upd=()=>{vSc[i]=+sl.value;$e(`sv${i}`).textContent=sl.value;updVScore();};
-    sl.addEventListener('input',upd);sl.addEventListener('change',upd);
-  });
-  updVScore();
-  const u=me();if(!u)return;
-  const vcs=[...(u.voices||[])].reverse().slice(0,3);
-  $e('voice-list').innerHTML=vcs.length?vcs.map(v=>`
-    <div class="voice-item">
-      <div class="report-date">${fd(v.date)}　${v.cust}　${v.phase}</div>
-      <div style="display:flex;align-items:center;gap:12px;margin:7px 0;">
-        <div style="font-size:1.3rem;font-weight:bold;color:var(--blue)">${v.total}%</div>
-        <div style="flex:1;display:flex;flex-wrap:wrap;gap:5px;">
-          ${VI.map((l,i)=>`<span style="font-size:.7rem;color:var(--muted)">${l}:${v.scores[i]}</span>`).join('')}
-        </div>
-      </div>
-      <div style="font-size:.79rem;color:#a78bfa;line-height:1.65;">${v.ai}</div>
-    </div>`).join('')
-  :'<p style="color:var(--muted);font-size:.83rem;">分析データがまだありません</p>';
-}
-function updVScore(){
-  const avg=vSc.reduce((a,b)=>a+b,0)/vSc.length;
-  const pct=Math.round(avg*20);
-  $e('v-score').textContent=pct+'%';
-}
-function genAI(pct,scores,type){
-  const weak=VI[scores.indexOf(Math.min(...scores))];
-  const strong=VI[scores.indexOf(Math.max(...scores))];
-  const tc={achieve:`あなたのエネルギーが${strong}に反映されています。`,
-    empathy:`共感力が${strong}で光っています。`,
-    logic:`データ思考が${strong}に現れています。`,
-    steady:`着実な積み重ねが${strong}に表れています。`};
-  const base=tc[type]||'';
-  if(pct>=80)return `${base}総合スコア${pct}%は優秀な水準です。特に${strong}は高得点。${weak}をさらに意識することで次のステージへ進めます。`;
-  if(pct>=60)return `${base}総合スコア${pct}%。${strong}を活かしつつ、${weak}の強化が次の成長ポイントです。商談のどのフェーズで課題が出るかを振り返ってみましょう。`;
-  return `${base}総合スコア${pct}%。${weak}が特に伸び代のあるエリアです。まず${weak}に集中して改善策を立ててみましょう。上司へのヒアリングも有効です。`;
-}
-tap($e('btn-voice'),()=>{
-  const cust=$e('v-cust').value.trim(),date=$e('v-date').value;
-  if(!cust||!date){toast('⚠️ 顧客名と日付は必須です');return;}
-  const u=me();
-  const avg=vSc.reduce((a,b)=>a+b,0)/vSc.length;
-  const pct=Math.round(avg*20);
-  const ai=genAI(pct,[...vSc],u.type||'achieve');
-  const entry={id:uid(),date,cust,phase:$e('v-phase').value,scores:[...vSc],total:pct,ai};
-  const d=get();const uu=d.users.find(x=>x.id===d.cur);
-  uu.voices.push(entry);save(d);
-  $e('v-ai-text').textContent=ai;
-  $e('v-ai-wrap').style.display='block';
-  renderVoice();toast('✅ 分析を保存しました');
-  setTimeout(()=>$e('v-ai-wrap').scrollIntoView({behavior:'smooth'}),100);
-});
-
-/* ─── RANKING ─── */
-function totCon(u){return(u.reports||[]).reduce((s,r)=>s+(r.con||0),0);}
-function totSal(u){return(u.reports||[]).reduce((s,r)=>s+(r.sales||0),0);}
-function avgKpi(u){const v=u.voices||[];return v.length?Math.round(v.reduce((s,x)=>s+x.total,0)/v.length):0;}
-function renderRanking(tab){
-  document.querySelectorAll('.rank-tab').forEach(b=>b.classList.toggle('active',b.dataset.rt===tab));
-  const d=get();const mu=me();
-  const users=d.users.filter(u=>u.approved);
-  const sorted=[...users].sort((a,b)=>{
-    if(tab==='contracts')return totCon(b)-totCon(a);
-    if(tab==='sales')return totSal(b)-totSal(a);
-    return avgKpi(b)-avgKpi(a);
-  });
-  $e('rank-list').innerHTML=sorted.length?sorted.map((u,i)=>{
-    const t=Types[u.type]||Types.achieve;
-    const isMe=mu&&u.id===mu.id;
-    const val=tab==='contracts'?`${totCon(u)}件`:tab==='sales'?`${(totSal(u)/10000).toFixed(1)}万円`:`${avgKpi(u)}%`;
-    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
-    return `<div class="rank-item${isMe?' me':''}">
-      <div class="rank-num">${medal}</div>
-      <div class="rank-info">
-        <div class="rank-name">${u.name}${isMe?' <span style="font-size:.65rem;color:var(--red)">（あなた）</span>':''}</div>
-        <div class="rank-sub">${u.team}　<span class="type-badge" style="color:${t.color};border-color:${t.color}44;background:${t.color}11">${t.tl}</span></div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
-        <div class="rank-val">${val}</div>
-        ${!isMe&&mu?`<button class="btn btn-sm" style="padding:4px 10px;font-size:.65rem;background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.3);border-radius:12px;" onclick="window.sendPosFb('${u.id}','${u.name}')">👏 褒める</button>`:''}
-      </div>
-    </div>`;
-  }).join(''):'<p style="color:var(--muted);font-size:.83rem;">承認済みユーザーがいません</p>';
-}
-document.querySelectorAll('.rank-tab').forEach(b=>tap(b,()=>renderRanking(b.dataset.rt)));
-
-/* ─── POSITIVE FB ─── */
-const posFbMessages=['素晴らしい成果です！','いつも頑張ってますね！','チームの誇りです！','その調子で頑張って！','尊敬します！'];
-window.sendPosFb=function(toId,toName){
-  const mu=me();if(!mu)return;
-  const msgs=posFbMessages;
-  const pick=msgs[Math.floor(Math.random()*msgs.length)];
-  const custom=prompt(`${toName}さんにポジティブFBを送る:\n（空白のままでもデフォルトメッセージを送れます）`);
-  const txt=custom!==null?(custom.trim()||pick):null;
-  if(txt===null)return;
-  const d=get();const target=d.users.find(x=>x.id===toId);
-  if(!target)return;
-  if(!target.posFb)target.posFb=[];
-  target.posFb.push({from:mu.name,txt,date:today()});
-  save(d);toast('👏 ポジティブFBを送りました！');
+const PersonalityTypes = {
+  achieve: {badge:'🔥',color:'#e94560',name:'ゴリゴリ成果追求型',label:'タイプA',catch:'数字で語り、行動で証明する。',
+    strengths:['行動力','突破力','競争心'],challenges:['計画性','継続力','細部への注意'],
+    desc:'結果に対して強い執着心を持ち、困難でも前のめりに行動し続けるエネルギーの塊。'},
+  empathy: {badge:'🤝',color:'#10b981',name:'伴走・共感型',label:'タイプB',catch:'信頼が、いちばんの武器。',
+    strengths:['コミュニケーション力','傾聴力','関係構築'],challenges:['数字意識','クロージング力','自己主張'],
+    desc:'人の気持ちに寄り添い顧客から頼られる存在。'},
+  logic: {badge:'📊',color:'#3b82f6',name:'ロジカル分析型',label:'タイプC',catch:'データと根拠が、私の羅針盤。',
+    strengths:['論理思考','準備力','データ分析'],challenges:['行動スピード','感情対応','即興力'],
+    desc:'物事を論理的に構造化しPDCAを回すことを得意とする。'},
+  steady: {badge:'🌱',color:'#f59e0b',name:'堅実・継続型',label:'タイプD',catch:'コツコツが、最強の武器になる。',
+    strengths:['信頼性','継続力','正確性'],challenges:['変化対応','自己表現','積極性'],
+    desc:'計画通り着実に積み上げることを好み、安定した成果を出し続ける。'},
 };
 
-/* ─── PROFILE ─── */
-function renderProfile(){
-  const u=me();if(!u)return;
-  const t=Types[u.type]||Types.achieve;
-  const h=$e('p-hero');
-  h.textContent=t.badge;
-  h.style.cssText=`background:${t.color}22;border:2px solid ${t.color};width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 13px;`;
-  $e('p-name-type').innerHTML=`${u.name}　<span style="color:${t.color}">${t.name}</span>`;
-  $e('p-catch').textContent=t.catch;
-  const sc=u.ts||{achieve:0,empathy:0,logic:0,steady:0};
-  const tot=Object.values(sc).reduce((a,b)=>a+b,0)||1;
-  $e('p-axes').innerHTML='<div class="card">'+Object.keys(sc).map(k=>{
-    const p=Math.round(sc[k]/tot*100);
-    return `<div class="axes-row"><div class="ax-name">${AL[k]}</div>
-    <div class="ax-track"><div class="ax-bar" style="width:${p}%;background:${AC[k]}"></div></div>
-    <div class="ax-pct">${p}%</div></div>`;
-  }).join('')+'</div>';
-  $e('p-ai').innerHTML=t.minds.map(m=>`
-    <div class="mind-card">
-      <div class="mind-title">${m.i} ${m.t}</div>
-      <div class="mind-body">${m.b}</div>
-      <div class="mind-quote">${m.q}</div>
-    </div>`).join('');
-  const posFbs=u.posFb||[];
-  $e('p-pos-fb').innerHTML=posFbs.length
-    ?[...posFbs].reverse().slice(0,5).map(f=>`
-      <div class="fb-item" style="border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.05);">
-        <div class="fb-from" style="color:var(--green);">👏 ${f.from}　${fd(f.date)}</div>
-        <div class="fb-text">${f.txt}</div>
-      </div>`).join('')
-    :'<p style="color:var(--muted);font-size:.83rem;margin-bottom:14px;">まだ届いていません。ランキング画面から仲間を褒めることができます！</p>';
-  const fbs=u.fb||[];
-  $e('p-admin-fb').innerHTML=fbs.length
-    ?[...fbs].reverse().map(f=>`
-      <div class="fb-item">
-        <div class="fb-from">💬 ${f.from}　${fd(f.date)}</div>
-        <div class="fb-text">${f.txt}</div>
-      </div>`).join('')
-    :'<p style="color:var(--muted);font-size:.83rem;">まだフィードバックはありません</p>';
-}
-tap($e('btn-pw'),()=>{
-  const cur=$e('pw-cur').value,nw=$e('pw-new').value;
-  if(!cur||!nw){toast('⚠️ 全項目入力してください');return;}
-  if(nw.length<6){toast('⚠️ 6文字以上で設定してください');return;}
-  const u=me();if(!u)return;
-  if(btoa(cur)!==u.pw){toast('❌ 現在のパスワードが違います');return;}
-  const d=get();const uu=d.users.find(x=>x.id===d.cur);uu.pw=btoa(nw);save(d);
-  $e('pw-cur').value='';$e('pw-new').value='';toast('✅ パスワードを変更しました');
-});
-
-/* ─── ADMIN ─── */
-tap($e('btn-admin-login'),()=>{
-  if($e('a-pw').value!==ADMIN_PW){toast('❌ パスワードが違います');return;}
-  const d=get();d.adminIn=true;save(d);$e('a-pw').value='';
-  renderAdmin();show('s-admin');
-});
-tap($e('btn-admin-out'),()=>{
-  const d=get();d.adminIn=false;save(d);show('s-home');toast('👋 管理者ログアウト');
-});
-document.querySelectorAll('.admin-tab').forEach(b=>{
-  tap(b,()=>{
-    document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.atab-panel').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');$e('at-'+b.dataset.at).classList.add('active');
-    if(b.dataset.at==='stats')renderStats();
-    if(b.dataset.at==='fbsend')renderFbSel();
-  });
-});
-function renderAdmin(){
-  const d=get();
-  $e('at-users').innerHTML=d.users.map(u=>{
-    const t=Types[u.type]||Types.achieve;
-    return `<div class="user-row">
-      <div class="user-row-head">
-        <div>
-          <div style="font-weight:bold">${u.name} <span class="type-badge" style="color:${t.color};border-color:${t.color}44;background:${t.color}11">${t.tl}</span></div>
-          <div style="font-size:.75rem;color:var(--muted)">${u.email}　${u.team}</div>
-        </div>
-        <span class="${u.approved?'badge-ok':'badge-wait'}">${u.approved?'✅ 承認済み':'⏳ 承認待ち'}</span>
-      </div>
-      <div style="display:flex;gap:7px;">
-        ${!u.approved?`<button class="btn btn-sm btn-green" onclick="appUser('${u.id}',true)">承認</button>`:''}
-        ${u.approved?`<button class="btn btn-sm btn-danger" onclick="appUser('${u.id}',false)">取消</button>`:''}
-      </div>
-    </div>`;
-  }).join('');
-  renderFbSel();renderStats();
-}
-window.appUser=function(id,val){
-  const d=get();const u=d.users.find(x=>x.id===id);if(u){u.approved=val;save(d);}
-  renderAdmin();toast(val?'✅ 承認しました':'⚠️ 承認を取り消しました');
-};
-function renderFbSel(){
-  const d=get();
-  $e('fb-sel').innerHTML=d.users.map(u=>`<option value="${u.id}">${u.name}（${u.team}）</option>`).join('');
-}
-tap($e('btn-fb'),()=>{
-  const id=$e('fb-sel').value,txt=$e('fb-txt').value.trim();
-  if(!txt){toast('⚠️ コメントを入力してください');return;}
-  const d=get();const u=d.users.find(x=>x.id===id);
-  if(!u.fb)u.fb=[];
-  u.fb.push({from:'管理者',txt,date:today()});save(d);
-  $e('fb-txt').value='';toast('✅ フィードバックを送信しました');
-});
-function renderStats(){
-  const d=get();
-  const teams=['チームA','チームB','チームC','チームD'];
-  const tc={achieve:0,empathy:0,logic:0,steady:0};
-  d.users.forEach(u=>{if(u.type)tc[u.type]=(tc[u.type]||0)+1;});
-  const maxT=Math.max(...Object.values(tc),1);
-  const tStats=teams.map(team=>{
-    const ms=d.users.filter(u=>u.team===team&&u.approved);
-    const ak=ms.length?Math.round(ms.reduce((s,u)=>s+avgKpi(u),0)/ms.length):0;
-    return{team,count:ms.length,ak};
-  });
-  const maxK=Math.max(...tStats.map(t=>t.ak),1);
-  $e('at-stats').innerHTML=`
-    <div class="sec-title" style="margin-top:0;">チーム別 平均KPIスコア</div>
-    ${tStats.map(t=>`<div class="bar-row">
-      <div class="bar-lbl">${t.team}<br><span style="font-size:.68rem">${t.count}名</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${t.ak?Math.round(t.ak/maxK*100):0}%"></div></div>
-      <div class="bar-val">${t.ak}%</div>
-    </div>`).join('')}
-    <div class="sec-title">タイプ分布</div>
-    ${Object.keys(tc).map(k=>{
-      const t=Types[k];
-      return `<div class="bar-row">
-        <div class="bar-lbl">${t.badge} ${t.tl}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(tc[k]/maxT*100)}%;background:${t.color}"></div></div>
-        <div class="bar-val">${tc[k]}名</div>
-      </div>`;
-    }).join('')}
-    <div class="divider"></div>
-    <div style="font-size:.82rem;color:var(--muted);">総ユーザー数：${d.users.length}名　承認済み：${d.users.filter(u=>u.approved).length}名</div>`;
-}
-
-/* ─── MIND ─── */
-const MindDims={
-  growth:     {icon:'🌱',name:'成長志向',    color:'#10b981'},
-  resilience: {icon:'💪',name:'レジリエンス',color:'#3b82f6'},
+const MindDims = {
+  growth:{icon:'🌱',name:'成長志向',color:'#10b981'},
+  resilience:{icon:'💪',name:'レジリエンス',color:'#3b82f6'},
   proactivity:{icon:'⚡',name:'主体性・継続力',color:'#f59e0b'},
-  efficacy:   {icon:'🎯',name:'自己効力感',  color:'#e94560'},
-  humility:   {icon:'🤲',name:'素直さ',      color:'#7c3aed'},
+  efficacy:{icon:'🎯',name:'自己効力感',color:'#e94560'},
+  humility:{icon:'🤲',name:'素直さ',color:'#7c3aed'},
 };
-const SurveyQs={
+
+const SurveyQs = {
   growth:['失敗から学ぶことができる','新しいことへの挑戦が好きだ','努力すれば必ず成長できると信じている','フィードバックを積極的に求める','現状に満足せず常に改善しようとする'],
   resilience:['困難な状況でも前向きでいられる','失敗してもすぐに立ち直れる','プレッシャーの下でも冷静でいられる','逆境を成長の機会と捉えられる','感情をうまくコントロールできる'],
   proactivity:['指示がなくても自分で動ける','目標に向けて毎日コツコツ取り組める','始めたことを途中で諦めない','困難があっても自分から解決策を探す','期限を守って計画的に行動できる'],
   efficacy:['難しい目標でも達成できると信じている','自分の能力を信頼している','初めてのことでも「できる」と思って取り組める','過去の成功体験から自信を得ている','新しいスキルを習得できると思う'],
   humility:['アドバイスを素直に受け入れられる','自分の間違いを認めることができる','先輩や上司から積極的に学ぼうとする','批判的なフィードバックも感謝して受け取れる','自分の知らないことを素直に認められる'],
 };
-const MindTips={
-  growth:{low:['小さな失敗を記録して振り返る習慣をつけましょう','毎日1つ新しいことを試してみましょう','「成長できる」という信念を育てることが第一歩です'],mid:['フィードバックを積極的に求めてみましょう','読書や学習に週2時間投資してみましょう','成長した点を日誌に記録して自己効力感を高めましょう'],high:['メンターとして周囲の成長を助けましょう','より高い目標を設定して限界を広げましょう','学んだことをチームに共有して定着させましょう']},
-  resilience:{low:['深呼吸や短い瞑想で感情を整える練習をしましょう','失敗を「データ」として客観的に捉える習慣をつけましょう','サポートできる人を見つけて相談する勇気を持ちましょう'],mid:['逆境を乗り越えた経験を振り返り自信にしましょう','ストレス発散の方法を複数持ちましょう','困難な状況での自分の反応パターンを把握しましょう'],high:['レジリエンスの高さをチームの支えに活かしましょう','さらに難しい状況に挑戦して強さを磨きましょう','困難を経験した後の回復プロセスを言語化しましょう']},
-  proactivity:{low:['毎日小さなタスクを自分で決めて実行しましょう','目標を紙に書いて毎朝確認しましょう','「やる気を待つ」より「行動してからやる気を出す」を意識しましょう'],mid:['週次で目標の進捗を確認する習慣をつけましょう','困難に直面したとき解決策を3つ考えてみましょう','期限を自分で設定して守る練習をしましょう'],high:['後輩のロールモデルとして主体性を示しましょう','より大きなプロジェクトをリードしてみましょう','自律的な行動習慣を言語化して共有しましょう']},
-  efficacy:{low:['過去の小さな成功体験を3つ書き出しましょう','「できない」より「どうすればできるか」を考えましょう','一つのことを完成させて達成感を積み上げましょう'],mid:['少し難しい目標に挑戦して成功体験を増やしましょう','自分の強みリストを作成して定期的に見返しましょう','信頼できる人から肯定的なフィードバックをもらいましょう'],high:['高い目標をさらに引き上げて挑戦しましょう','自己効力感の高さで周囲を鼓舞しましょう','新しい分野でも「できる」姿勢で挑戦し続けましょう']},
-  humility:{low:['今日アドバイスをもらったら「ありがとう」と素直に受け取りましょう','自分の間違いに気づいたらすぐに認める練習をしましょう','先輩から一つ学べることを毎日探しましょう'],mid:['批判的なフィードバックから改善点を見つけましょう','知らないことを恥と思わず質問する勇気を持ちましょう','他者の意見を取り入れた行動を意識的に記録しましょう'],high:['素直さをチームの文化として広めましょう','どんな立場の人からも学べる姿勢を継続しましょう','謙虚さと自信のバランスをモデルとして示しましょう']},
-};
 
-function calcMindScores(u){
-  const surveys=u.mindSurveys||[];
-  const result={};
-  Object.keys(MindDims).forEach(type=>{
-    const latest=surveys.filter(s=>s.type===type).slice(-1)[0];
-    result[type]=latest?Math.round(latest.answers.reduce((a,b)=>a+b,0)/latest.answers.length*20):0;
-  });
-  return result;
+const QuizQs = [
+  {c:'Q1｜モチベーションの源泉',t:'最もモチベーションが上がる瞬間は？',
+   o:[{k:'A',t:'目標を達成し人より高い成果を出して評価されたとき',sc:{achieve:3,empathy:0,logic:0,steady:0}},
+      {k:'B',t:'顧客やチームから「ありがとう」と感謝されたとき',sc:{achieve:0,empathy:3,logic:0,steady:0}},
+      {k:'C',t:'新しい知識やスキルを身に付け成長を実感できたとき',sc:{achieve:1,empathy:0,logic:2,steady:1}},
+      {k:'D',t:'計画通りに物事を進め、ミスなくやり遂げたとき',sc:{achieve:0,empathy:1,logic:1,steady:3}}]},
+  {c:'Q2｜壁にぶつかったときの行動',t:'思うように成果が出ないとき、最初に取る行動は？',
+   o:[{k:'A',t:'とにかく行動量を増やして確率論で突破する',sc:{achieve:3,empathy:0,logic:0,steady:1}},
+      {k:'B',t:'プロセスを分析して改善策を考える',sc:{achieve:1,empathy:0,logic:3,steady:1}},
+      {k:'C',t:'先輩に相談しアドバイスを仰ぐ',sc:{achieve:1,empathy:2,logic:1,steady:0}},
+      {k:'D',t:'気持ちをリフレッシュしてから再開する',sc:{achieve:0,empathy:1,logic:0,steady:3}}]},
+  {c:'Q3｜コミュニケーションスタイル',t:'初対面の人と話すとき、どのような立ち回りをしますか？',
+   o:[{k:'A',t:'自分から積極的に話題を提供し場を盛り上げる',sc:{achieve:3,empathy:1,logic:0,steady:0}},
+      {k:'B',t:'相手の話をじっくり聞き話しやすい空気を作る',sc:{achieve:0,empathy:3,logic:1,steady:1}},
+      {k:'C',t:'相手をリサーチして戦略的に話す',sc:{achieve:1,empathy:0,logic:3,steady:1}},
+      {k:'D',t:'相手のテンションに自然と合わせる',sc:{achieve:0,empathy:2,logic:0,steady:3}}]},
+  {c:'Q4｜目標へのコミットメント',t:'目標に対するスタンスは？',
+   o:[{k:'A',t:'何が何でも達成する。未達成は絶対に避けたい',sc:{achieve:3,empathy:0,logic:0,steady:1}},
+      {k:'B',t:'高い目標を設定しプロセスで得るものがあれば良い',sc:{achieve:1,empathy:1,logic:2,steady:0}},
+      {k:'C',t:'確実に達成できる現実的な目標を立てる',sc:{achieve:0,empathy:0,logic:1,steady:3}},
+      {k:'D',t:'納得して楽しく取り組めるかを重視する',sc:{achieve:0,empathy:3,logic:0,steady:1}}]},
+  {c:'Q5｜変化への対応力',t:'ルールや環境が急に変更されたとき、どう感じますか？',
+   o:[{k:'A',t:'チャンスと捉えワクワクして飛び込む',sc:{achieve:3,empathy:1,logic:0,steady:0}},
+      {k:'B',t:'理由を納得できれば前向きに対応する',sc:{achieve:1,empathy:1,logic:2,steady:1}},
+      {k:'C',t:'周囲の様子を見ながら徐々に適応する',sc:{achieve:0,empathy:2,logic:1,steady:2}},
+      {k:'D',t:'変えることにストレスを感じやすい',sc:{achieve:0,empathy:0,logic:0,steady:3}}]},
+  {c:'Q6｜自己認識',t:'周囲の友人から、どのような人だと言われますか？',
+   o:[{k:'A',t:'「行動力がある」「エネルギーに溢れている」',sc:{achieve:3,empathy:0,logic:0,steady:0}},
+      {k:'B',t:'「話しやすい」「相談に乗ってくれる」',sc:{achieve:0,empathy:3,logic:0,steady:1}},
+      {k:'C',t:'「頭が良い」「計画性がある」',sc:{achieve:0,empathy:0,logic:3,steady:1}},
+      {k:'D',t:'「真面目」「コツコツやり抜く」「信頼できる」',sc:{achieve:0,empathy:1,logic:1,steady:3}}]},
+  {c:'Q7｜インターンへの期待',t:'今回の活動で最も得たいものは何ですか？',
+   o:[{k:'A',t:'同世代に圧倒的な差をつける「営業力・稼ぐ力」',sc:{achieve:3,empathy:0,logic:1,steady:0}},
+      {k:'B',t:'経営・リーダー視点',sc:{achieve:2,empathy:1,logic:2,steady:0}},
+      {k:'C',t:'就活で語れる「実績・データ」',sc:{achieve:1,empathy:0,logic:2,steady:2}},
+      {k:'D',t:'質の高いネットワーク',sc:{achieve:0,empathy:3,logic:0,steady:1}}]},
+];
+
+const PHASES = ['初回接触','ヒアリング','提案','クロージング','受注','失注'];
+
+function loadData() {
+  const r = localStorage.getItem(KEY);
+  if (r) return JSON.parse(r);
+  const u1 = {id:'u1',name:'田中 太郎',email:'taro@demo.com',pw:btoa('demo1234'),
+    role:'営業担当',team:'第一営業課',dept:'営業部',
+    personalityType:'achieve',personalityScores:{achieve:18,empathy:6,logic:8,steady:5},
+    mindScores:{growth:80,resilience:65,proactivity:75,efficacy:85,humility:70},
+    mindSurveys:[
+      {id:'ms1',date:'2024-06-01',type:'growth',answers:[4,4,4,4,4],score:80},
+      {id:'ms2',date:'2024-06-01',type:'efficacy',answers:[4,5,4,4,4],score:84},
+    ],
+    kpiGoals:{sales:15000000,apo:80,deals:60,orders:15},
+    kpiDaily:[
+      {date:'2024-05-27',calls:30,apo:5,deals:3,proposals:2,orders:1,followups:4},
+      {date:'2024-05-28',calls:25,apo:4,deals:4,proposals:3,orders:0,followups:5},
+      {date:'2024-05-29',calls:35,apo:6,deals:2,proposals:1,orders:2,followups:3},
+      {date:'2024-05-30',calls:20,apo:3,deals:3,proposals:2,orders:1,followups:6},
+      {date:'2024-05-31',calls:28,apo:5,deals:3,proposals:2,orders:1,followups:4},
+    ],
+    journals:[{id:'j1',date:'2024-05-31',mood:4,good:'新規アポ3件獲得',hard:'クロージングで迷った',learned:'提案は具体的な数字を示すと効果的'}],
+    positiveFb:[{from:'鈴木 一郎',txt:'いつもエネルギー溢れる営業で刺激になります！',date:'2024-05-30'}],
+    fb:[{from:'管理者',txt:'今週の新規開拓は素晴らしい！クロージングの練習を積んでいきましょう。',date:'2024-05-31'}],
+  };
+  const u2 = {id:'u2',name:'鈴木 一郎',email:'ichiro@demo.com',pw:btoa('demo1234'),
+    role:'営業担当',team:'チームB',dept:'営業部',
+    personalityType:'logic',personalityScores:{achieve:7,empathy:5,logic:20,steady:9},
+    mindScores:{growth:72,resilience:68,proactivity:65,efficacy:78,humility:82},
+    mindSurveys:[],kpiGoals:{sales:12000000,apo:60,deals:45,orders:12},
+    kpiDaily:[{date:'2024-05-31',calls:22,apo:3,deals:4,proposals:3,orders:1,followups:5}],
+    journals:[],positiveFb:[],fb:[],
+  };
+  const u3 = {id:'u3',name:'佐藤 花子',email:'hanako@demo.com',pw:btoa('demo1234'),
+    role:'営業担当',team:'チームA',dept:'営業部',
+    personalityType:'empathy',personalityScores:{achieve:5,empathy:19,logic:7,steady:8},
+    mindScores:{growth:68,resilience:74,proactivity:70,efficacy:65,humility:90},
+    mindSurveys:[],kpiGoals:{sales:10000000,apo:50,deals:40,orders:10},
+    kpiDaily:[{date:'2024-05-31',calls:18,apo:3,deals:3,proposals:2,orders:1,followups:7}],
+    journals:[],positiveFb:[],fb:[],
+  };
+  const u4 = {id:'u4',name:'山本 健太',email:'kenta@demo.com',pw:btoa('demo1234'),
+    role:'営業担当',team:'チームB',dept:'営業部',
+    personalityType:'steady',personalityScores:{achieve:4,empathy:8,logic:6,steady:19},
+    mindScores:{growth:65,resilience:70,proactivity:72,efficacy:60,humility:78},
+    mindSurveys:[],kpiGoals:{sales:10000000,apo:50,deals:40,orders:10},
+    kpiDaily:[{date:'2024-05-31',calls:20,apo:4,deals:3,proposals:2,orders:1,followups:5}],
+    journals:[],positiveFb:[],fb:[],
+  };
+  const u5 = {id:'u5',name:'高橋 美咲',email:'misaki@demo.com',pw:btoa('demo1234'),
+    role:'営業担当',team:'チームC',dept:'営業部',
+    personalityType:'empathy',personalityScores:{achieve:4,empathy:18,logic:6,steady:9},
+    mindScores:{growth:62,resilience:60,proactivity:58,efficacy:65,humility:85},
+    mindSurveys:[],kpiGoals:{sales:8000000,apo:40,deals:30,orders:8},
+    kpiDaily:[{date:'2024-05-31',calls:15,apo:2,deals:2,proposals:1,orders:0,followups:6}],
+    journals:[],positiveFb:[],fb:[],
+  };
+  const deals = [
+    {id:'d1',company:'デルタ商会',contact:'山田部長',amount:800000,phase:'初回接触',probability:20,salesperson:'u1',date:'2024-05-10',memo:'新規開拓。来週再アポ予定。'},
+    {id:'d2',company:'株式会社テック',contact:'佐々木社長',amount:5000000,phase:'ヒアリング',probability:40,salesperson:'u2',date:'2024-05-08',memo:'課題ヒアリング完了。提案書作成中。'},
+    {id:'d3',company:'ABC商事',contact:'田中部長',amount:3200000,phase:'提案',probability:65,salesperson:'u1',date:'2024-05-12',memo:'提案資料提出済み。回答待ち。'},
+    {id:'d4',company:'XYZ株式会社',contact:'鈴木課長',amount:1800000,phase:'クロージング',probability:85,salesperson:'u3',date:'2024-05-15',memo:'最終確認中。契約書送付予定。'},
+    {id:'d5',company:'オメガ産業',contact:'中村社長',amount:2400000,phase:'受注',probability:100,salesperson:'u4',date:'2024-05-20',memo:'受注確定！契約書締結完了。'},
+    {id:'d6',company:'フューチャー技研',contact:'小林部長',amount:1200000,phase:'ヒアリング',probability:35,salesperson:'u5',date:'2024-05-22',memo:'初回ヒアリング良好。'},
+    {id:'d7',company:'グローバル商事',contact:'渡辺取締役',amount:4500000,phase:'提案',probability:55,salesperson:'u2',date:'2024-05-18',memo:'競合3社との比較検討中。'},
+  ];
+  const customers = [
+    {id:'c1',company:'ABC商事',contact:'田中 誠',phone:'03-1234-5678',email:'tanaka@abc.co.jp',status:'商談中',salesperson:'u1',lastContact:'2024-05-29',notes:'CRM導入に前向き'},
+    {id:'c2',company:'XYZ株式会社',contact:'鈴木 花子',phone:'03-2345-6789',email:'suzuki@xyz.co.jp',status:'クロージング',salesperson:'u3',lastContact:'2024-05-30',notes:'予算確保済み'},
+    {id:'c3',company:'株式会社テック',contact:'佐々木 一郎',phone:'03-3456-7890',email:'sasaki@tech.co.jp',status:'ヒアリング',salesperson:'u2',lastContact:'2024-05-28',notes:'DX推進担当'},
+    {id:'c4',company:'オメガ産業',contact:'中村 健太',phone:'06-4567-8901',email:'nakamura@omega.co.jp',status:'受注',salesperson:'u4',lastContact:'2024-05-31',notes:'既存顧客。追加提案余地あり'},
+    {id:'c5',company:'デルタ商会',contact:'山田 美咲',phone:'06-5678-9012',email:'yamada@delta.co.jp',status:'初回接触',salesperson:'u1',lastContact:'2024-05-25',notes:'競合製品使用中'},
+    {id:'c6',company:'グローバル商事',contact:'渡辺 次郎',phone:'03-6789-0123',email:'watanabe@global.co.jp',status:'提案',salesperson:'u2',lastContact:'2024-05-27',notes:'意思決定者は渡辺取締役'},
+  ];
+  const activities = [
+    {id:'a1',type:'商談',company:'ABC商事',contact:'田中 誠',memo:'提案書を基に詳細説明。価格交渉あり。',date:'2024-05-31 14:00',salesperson:'u1'},
+    {id:'a2',type:'架電',company:'デルタ商会',contact:'山田 美咲',memo:'アポ取得成功。6/3 15時に訪問予定。',date:'2024-05-31 10:30',salesperson:'u1'},
+    {id:'a3',type:'メール',company:'XYZ株式会社',contact:'鈴木 花子',memo:'契約書ドラフト送付。確認依頼。',date:'2024-05-30 16:00',salesperson:'u3'},
+    {id:'a4',type:'フォロー',company:'オメガ産業',contact:'中村 健太',memo:'受注後フォロー。オンボーディング日程調整。',date:'2024-05-30 11:00',salesperson:'u4'},
+    {id:'a5',type:'商談',company:'株式会社テック',contact:'佐々木 一郎',memo:'課題ヒアリング。DX推進の課題が明確に。',date:'2024-05-29 13:00',salesperson:'u2'},
+    {id:'a6',type:'架電',company:'グローバル商事',contact:'渡辺 次郎',memo:'提案内容確認の電話。追加資料依頼あり。',date:'2024-05-29 10:00',salesperson:'u2'},
+    {id:'a7',type:'メール',company:'フューチャー技研',contact:'小林部長',memo:'ヒアリングシートを送付。回答待ち。',date:'2024-05-28 17:00',salesperson:'u5'},
+    {id:'a8',type:'商談',company:'XYZ株式会社',contact:'鈴木 花子',memo:'最終プレゼン。担当者の反応良好。',date:'2024-05-28 14:00',salesperson:'u3'},
+  ];
+  const tasks = [
+    {id:'t1',title:'提案書作成 - グローバル商事',company:'グローバル商事',dueDate:'2024-06-03',priority:'高',done:false,salesperson:'u2'},
+    {id:'t2',title:'契約書送付 - XYZ株式会社',company:'XYZ株式会社',dueDate:'2024-06-02',priority:'高',done:false,salesperson:'u3'},
+    {id:'t3',title:'フォローアップメール - デルタ商会',company:'デルタ商会',dueDate:'2024-06-04',priority:'中',done:false,salesperson:'u1'},
+    {id:'t4',title:'見積書修正 - ABC商事',company:'ABC商事',dueDate:'2024-06-05',priority:'中',done:true,salesperson:'u1'},
+    {id:'t5',title:'ヒアリングシート作成 - 株式会社テック',company:'株式会社テック',dueDate:'2024-06-06',priority:'低',done:false,salesperson:'u2'},
+  ];
+  const d = {users:[u1,u2,u3,u4,u5],deals,customers,activities,tasks,cur:null};
+  save(d);
+  return d;
 }
-function calcMindTotal(scores){
-  const vals=Object.values(scores);
-  return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0;
+
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function get(){return loadData();}
+function me(){const d=get();return d.users.find(u=>u.id===d.cur)||null;}
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function today(){return new Date().toISOString().slice(0,10);}
+function fd(d){return d?d.replace(/-/g,'/'):''}
+function fm(n){return Number(n).toLocaleString()+'円'}
+function fmM(n){return (Number(n)/10000).toFixed(0)+'万'}
+function pct(a,b){return b?Math.round(a/b*100):0;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function uname(id){const u=get().users.find(x=>x.id===id);return u?u.name:'-';}
+function avatarColor(name){const cs=['#3b82f6','#10b981','#f59e0b','#e94560','#7c3aed','#0ea5e9'];let h=0;for(const c of String(name))h+=c.charCodeAt(0);return cs[h%cs.length];}
+function av(name,size){size=size||32;const c=avatarColor(name);const init=String(name).trim().slice(0,1);return `<span class="avatar" style="background:${c};width:${size}px;height:${size}px">${esc(init)}</span>`;}
+
+function tap(el,fn){
+  if(!el)return;
+  let hit=false;
+  el.addEventListener('touchend',e=>{e.preventDefault();hit=true;fn(e);setTimeout(()=>hit=false,500)},{passive:false});
+  el.addEventListener('click',e=>{if(!hit)fn(e);});
 }
-function calcBurnoutRisk(u){
-  const scores=calcMindScores(u);
-  const mindTotal=calcMindTotal(scores);
-  const reports=u.reports||[];
-  let daysSinceReport=0;
-  if(reports.length){
-    const last=new Date(reports[reports.length-1].date);
-    daysSinceReport=Math.floor((Date.now()-last.getTime())/(1000*60*60*24));
+
+function toast(msg,ms=2500){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',ms);
+}
+
+let currentPage='dashboard';
+const PageTitles={dashboard:'ダッシュボード',deals:'案件管理',customers:'顧客管理',activities:'活動管理',goals:'目標・実績管理','ai-analysis':'商談AI分析',forecast:'売上予測','mind-diagnosis':'性格・マインド診断','diagnosis-results':'診断結果一覧',strengths:'強み・課題分析',condition:'コンディションチェック',training:'育成プラン',content:'研修コンテンツ',coaching:'コーチング記録',feedback:'フィードバック',kpi:'架電・アポ管理','ai-coach':'AIコーチ',ranking:'ランキング',settings:'システム設定'};
+
+function navigate(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.toggle('active',n.dataset.page===id));
+  currentPage=id;
+  renderPage(id);
+  if(window.innerWidth<768){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('visible');
   }
-  let level,pct;
-  if(mindTotal<40||(reports.length>0&&daysSinceReport>7)){level='high';pct=Math.max(60,100-mindTotal);}
-  else if(mindTotal<60){level='mid';pct=Math.max(30,70-mindTotal);}
-  else{level='low';pct=Math.max(5,30-Math.floor(mindTotal/5));}
-  return{level,pct};
-}
-function calcTurnoverRisk(u){
-  const scores=calcMindScores(u);
-  const mindTotal=calcMindTotal(scores);
-  const journals=u.journals||[];
-  const avgMood=journals.length?journals.reduce((s,j)=>s+(j.mood||3),0)/journals.length:3;
-  let level,pct;
-  if(mindTotal<40||avgMood<2){level='high';pct=Math.max(55,90-mindTotal);}
-  else if(mindTotal<60||avgMood<3){level='mid';pct=Math.max(25,60-mindTotal);}
-  else{level='low';pct=Math.max(5,25-Math.floor(mindTotal/6));}
-  return{level,pct};
-}
-function riskLabel(r){return r.level==='high'?'高リスク':r.level==='mid'?'中リスク':'低リスク';}
-function renderMind(){
-  const u=me();if(!u)return;
-  const scores=calcMindScores(u);
-  const total=calcMindTotal(scores);
-  const burnout=calcBurnoutRisk(u);
-  const turnover=calcTurnoverRisk(u);
-  const inner=$e('mind-inner');
-  inner.innerHTML=`
-    <div class="mind-hub-score"><div class="mind-hub-num">${total}</div><div style="font-size:.66rem;color:var(--muted);">総合スコア</div></div>
-    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;">
-      <span class="risk-badge risk-${burnout.level}">燃え尽き ${riskLabel(burnout)}</span>
-      <span class="risk-badge risk-${turnover.level}">離脱 ${riskLabel(turnover)}</span>
-    </div>
-    <div class="card" style="margin-bottom:16px;">
-      <div class="sec-title" style="margin-top:0;">5つのマインド軸</div>
-      ${Object.keys(MindDims).map(k=>{
-        const d=MindDims[k];const sc=scores[k];
-        return `<div class="axes-row" style="margin-bottom:10px;">
-          <div class="ax-name">${d.icon} ${d.name}</div>
-          <div class="ax-track"><div class="ax-bar" style="width:${sc}%;background:${d.color}"></div></div>
-          <div class="ax-pct">${sc}</div>
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="sec-title">サーベイを受ける</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-      ${Object.keys(MindDims).map(k=>`<button class="btn btn-secondary btn-full" onclick="window.startSurvey('${k}')">${MindDims[k].icon} ${MindDims[k].name}サーベイ</button>`).join('')}
-    </div>
-    ${(()=>{
-      const surveys=[...(u.mindSurveys||[])].reverse().slice(0,6).reverse();
-      if(!surveys.length)return '';
-      const history=surveys.map(s=>{
-        const avg=s.answers.reduce((a,b)=>a+b,0)/s.answers.length;
-        return {date:s.date,score:Math.round(avg*20),type:s.type};
-      });
-      const maxS=Math.max(...history.map(h=>h.score),1);
-      return `<div class="card" style="margin-bottom:16px;">
-        <div class="sec-title" style="margin-top:0;">📈 マインド成長推移</div>
-        <div style="display:flex;align-items:flex-end;gap:6px;height:60px;margin-bottom:8px;">
-          ${history.map(h=>{
-            const d=MindDims[h.type]||{color:'#7c3aed'};
-            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
-              <div style="font-size:.6rem;color:var(--muted);">${h.score}</div>
-              <div style="width:100%;background:${d.color};border-radius:3px 3px 0 0;height:${Math.round(h.score/maxS*44)}px;min-height:4px;"></div>
-            </div>`;
-          }).join('')}
-        </div>
-        <div style="display:flex;gap:6px;">
-          ${history.map(h=>`<div style="flex:1;text-align:center;font-size:.55rem;color:var(--muted);">${(h.date||'').slice(5)}</div>`).join('')}
-        </div>
-      </div>`;
-    })()}
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button class="btn btn-secondary btn-full" id="mind-journal-btn">📔 日誌をつける</button>
-      <button class="btn btn-secondary btn-full" id="mind-coach-btn">🤖 AIコーチに相談する</button>
-    </div>`;
-  tap($e('mind-journal-btn'),()=>{renderJournal();show('s-journal');});
-  tap($e('mind-coach-btn'),()=>{renderCoach();show('s-coach');});
+  window.scrollTo(0,0);
 }
 
-let surveyType='',surveyQIdx=0,surveyAnswers=[],surveyResultScore=0;
-window.startSurvey=function(type){
-  surveyType=type;surveyQIdx=0;surveyAnswers=[];
-  const dim=MindDims[type];
-  $e('survey-title').textContent=dim.icon+' '+dim.name+'サーベイ';
-  renderSurveyQ();show('s-survey');
-};
-tap($e('survey-back'),()=>{renderMind();show('s-mind');navActive('mind');});
-tap($e('sresult-back'),()=>{renderMind();show('s-mind');navActive('mind');});
-
-function renderSurveyQ(){
-  const qs=SurveyQs[surveyType];
-  $e('survey-prog').style.width=`${surveyQIdx/qs.length*100}%`;
-  $e('survey-cnt').textContent=`質問 ${surveyQIdx+1} / ${qs.length}`;
-  $e('survey-q').textContent=qs[surveyQIdx];
-  const labels=['全くそう思わない','あまり','どちらとも','ややそう思う','非常にそう思う'];
-  $e('survey-opts').innerHTML=labels.map((l,i)=>`
-    <div class="survey-opt" onclick="window.surveySelect(${i+1})">
-      <div class="survey-opt-btn" id="sopt${i}">${i+1}</div>
-      <div class="survey-opt-lbl">${l}</div>
-    </div>`).join('');
-}
-window.surveySelect=function(val){
-  surveyAnswers.push(val);
-  const qs=SurveyQs[surveyType];
-  surveyQIdx++;
-  if(surveyQIdx<qs.length){renderSurveyQ();}
-  else{
-    surveyResultScore=Math.round(surveyAnswers.reduce((a,b)=>a+b,0)/surveyAnswers.length*20);
-    const d=get();const u=d.users.find(x=>x.id===d.cur);
-    if(!u.mindSurveys)u.mindSurveys=[];
-    u.mindSurveys.push({id:uid(),type:surveyType,answers:[...surveyAnswers],date:today()});
-    save(d);
-    renderSurveyResult();show('s-survey-result');
-  }
-};
-function renderSurveyResult(){
-  const dim=MindDims[surveyType];
-  const sc=surveyResultScore;
-  const tier=sc<=40?'low':sc<=70?'mid':'high';
-  const tips=MindTips[surveyType][tier];
-  $e('sresult-inner').innerHTML=`
-    <div class="mind-hub-score" style="border-color:${dim.color}">
-      <div class="mind-hub-num" style="color:${dim.color}">${sc}</div>
-      <div style="font-size:.66rem;color:var(--muted);">/100</div>
-    </div>
-    <div style="font-size:1.1rem;font-weight:bold;margin-bottom:4px;">${dim.icon} ${dim.name}</div>
-    <div style="font-size:.83rem;color:var(--muted);margin-bottom:20px;">${sc>=71?'マスターレベル':sc>=41?'成長中':'伸び代あり'}</div>
-    <div class="card" style="text-align:left;">
-      <div class="sec-title" style="margin-top:0;">🤖 AIアドバイス</div>
-      ${tips.map((t,i)=>`<div style="display:flex;gap:10px;margin-bottom:10px;font-size:.85rem;line-height:1.65;"><span style="color:${dim.color};flex-shrink:0">${i+1}.</span><span>${t}</span></div>`).join('')}
-    </div>
-    <button class="btn btn-primary btn-full" style="margin-top:16px;" id="sresult-done">マインドハブへ戻る</button>`;
-  tap($e('sresult-done'),()=>{renderMind();show('s-mind');navActive('mind');});
+function renderPage(id){
+  const fns={
+    dashboard:renderDashboard,deals:renderDeals,customers:renderCustomers,
+    activities:renderActivities,goals:renderGoals,'ai-analysis':renderAiAnalysis,
+    forecast:renderForecast,'mind-diagnosis':renderMindDiagnosis,
+    'diagnosis-results':renderDiagnosisResults,strengths:renderStrengths,
+    condition:renderCondition,training:renderTraining,content:renderContent,
+    coaching:renderCoaching,feedback:renderFeedback,kpi:renderKpi,
+    'ai-coach':renderAiCoach,ranking:renderRanking,settings:renderSettings,
+  };
+  if(fns[id])fns[id]();
+  updateTopbar();
 }
 
-let journalMood=3;
-tap($e('journal-back'),()=>{renderMind();show('s-mind');navActive('mind');});
-function renderJournal(){
-  journalMood=3;
-  const u=me();if(!u)return;
-  const moodLabels=['最悪','つらい','普通','良い','最高'];
-  const moodEmojis=['😞','😕','😐','😊','🥳'];
-  const journals=[...(u.journals||[])].reverse().slice(0,5);
-  $e('journal-inner').innerHTML=`
-    <div class="card" style="margin-bottom:16px;">
-      <div class="sec-title" style="margin-top:0;">今日の気分</div>
-      <div class="mood-row">
-        ${moodEmojis.map((em,i)=>`<button class="mood-btn${i+1===journalMood?' sel':''}" id="mood${i+1}" onclick="window.setMood(${i+1})">
-          <div class="mood-emoji">${em}</div><div>${moodLabels[i]}</div>
-        </button>`).join('')}
+function updateTopbar(){
+  document.getElementById('topbar-title').textContent=PageTitles[currentPage]||'';
+  const dt=new Date();
+  document.getElementById('topbar-date').textContent=dt.getFullYear()+'年'+(dt.getMonth()+1)+'月'+dt.getDate()+'日';
+  const u=me();
+  if(u)document.getElementById('topbar-user').innerHTML=`${av(u.name,32)}<div style="line-height:1.2"><div style="font-size:.8rem;font-weight:600">${esc(u.name)}</div><div style="font-size:.68rem;color:var(--muted)">${esc(u.team)}</div></div>`;
+}
+
+function sumKpi(daily,key){return (daily||[]).reduce((a,b)=>a+(b[key]||0),0);}
+
+/* ===== DASHBOARD ===== */
+function renderDashboard(){
+  const u=me(),d=get();
+  const calls=sumKpi(u.kpiDaily,'calls'),apo=sumKpi(u.kpiDaily,'apo'),orders=sumKpi(u.kpiDaily,'orders');
+  const wonSales=d.deals.filter(x=>x.salesperson===u.id&&x.phase==='受注').reduce((a,b)=>a+b.amount,0);
+  const activeDeals=d.deals.filter(x=>x.salesperson===u.id&&!['受注','失注'].includes(x.phase)).length;
+  const pt=PersonalityTypes[u.personalityType];
+  const mindAvg=Math.round(Object.values(u.mindScores).reduce((a,b)=>a+b,0)/5);
+  const maxC=Math.max(...u.kpiDaily.map(x=>x.calls),1);
+  const ranks=teamRanking('sales');
+  const html=`
+  <div class="page-header"><div><div class="page-title">ダッシュボード</div><div class="page-subtitle">${esc(u.name)}さん、おかえりなさい。今日も一件、勝ちにいきましょう。</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">📞 架電数(今月)</div><div class="kpi-value">${calls}</div><div class="kpi-meta">目標 160 / 達成 ${pct(calls,160)}%</div></div>
+    <div class="kpi-card"><div class="kpi-label">📅 アポ獲得</div><div class="kpi-value">${apo}</div><div class="kpi-meta">アポ率 ${pct(apo,calls)}%</div></div>
+    <div class="kpi-card"><div class="kpi-label">📋 進行案件</div><div class="kpi-value">${activeDeals}</div><div class="kpi-meta">パイプライン稼働中</div></div>
+    <div class="kpi-card"><div class="kpi-label">🏆 受注(件)</div><div class="kpi-value">${orders}</div><div class="kpi-meta">今月の成約数</div></div>
+    <div class="kpi-card"><div class="kpi-label">💰 売上</div><div class="kpi-value">${fmM(wonSales)}</div><div class="kpi-meta">目標 ${fmM(u.kpiGoals.sales)} / ${pct(wonSales,u.kpiGoals.sales)}%</div></div>
+  </div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="section-title">売上・活動の推移</div>
+      <div class="bar-chart">
+        ${u.kpiDaily.map(x=>`<div class="bar-col"><div class="bar" style="height:${x.calls/maxC*100}%"></div><div class="bar-label">${x.date.slice(5)}</div></div>`).join('')}
       </div>
-      <div class="form-group"><label class="form-label">良かったこと</label>
-        <textarea class="form-input" id="j-good" placeholder="今日うまくいったこと"></textarea></div>
-      <div class="form-group"><label class="form-label">難しかったこと</label>
-        <textarea class="form-input" id="j-hard" placeholder="課題に感じたこと"></textarea></div>
-      <div class="form-group"><label class="form-label">学んだこと</label>
-        <textarea class="form-input" id="j-learned" placeholder="気づきや学び"></textarea></div>
-      <button class="btn btn-primary btn-full" id="j-submit">記録する</button>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:8px;text-align:center">日別架電数 (直近${u.kpiDaily.length}日)</div>
     </div>
-    <div class="sec-title">過去の日誌（最新5件）</div>
-    ${journals.length?journals.map(j=>`<div class="journal-item">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:1.2rem;">${moodEmojis[(j.mood||3)-1]}</span>
-        <span style="font-size:.72rem;color:var(--muted);">${fd(j.date)}</span>
+    <div class="card">
+      <div class="section-title">マインド・コンディション</div>
+      <div class="mind-score-big"><div class="mind-score-num">${mindAvg}</div><div style="font-size:.6rem;color:var(--muted)">/100</div></div>
+      ${Object.keys(MindDims).map(k=>`<div class="mind-dim-row"><span class="mind-dim-name">${MindDims[k].name}</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${u.mindScores[k]}%;background:${MindDims[k].color}"></div></div><span style="font-size:.72rem;font-weight:700;width:28px;text-align:right">${u.mindScores[k]}</span></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="section-title">最新の診断結果</div>
+      <div style="text-align:center;padding:8px 0">
+        <div style="font-size:2.4rem">${pt.badge}</div>
+        <div class="badge badge-blue" style="margin:6px 0">${pt.label}</div>
+        <div style="font-size:1.05rem;font-weight:700;color:${pt.color}">${pt.name}</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic">「${pt.catch}」</div>
+        <div style="font-size:.78rem;color:var(--text);margin-top:10px;line-height:1.6;text-align:left">${pt.desc}</div>
+        <div style="margin-top:10px">${pt.strengths.map(s=>`<span class="chip badge-green">${s}</span>`).join('')}</div>
       </div>
-      ${j.good?`<div style="font-size:.8rem;margin-bottom:3px;"><span style="color:var(--green);">✅</span> ${j.good}</div>`:''}
-      ${j.hard?`<div style="font-size:.8rem;margin-bottom:3px;"><span style="color:var(--yellow);">⚡</span> ${j.hard}</div>`:''}
-      ${j.learned?`<div style="font-size:.8rem;"><span style="color:var(--blue);">💡</span> ${j.learned}</div>`:''}
-    </div>`).join(''):'<p style="color:var(--muted);font-size:.83rem;">日誌がまだありません</p>'}`;
-  tap($e('j-submit'),()=>{
-    const good=$e('j-good').value.trim();
-    const hard=$e('j-hard').value.trim();
-    const learned=$e('j-learned').value.trim();
-    if(!good&&!hard&&!learned){toast('⚠️ 何か一つ入力してください');return;}
-    const d=get();const u=d.users.find(x=>x.id===d.cur);
-    if(!u.journals)u.journals=[];
-    u.journals.push({id:uid(),mood:journalMood,good,hard,learned,date:today()});
-    save(d);
-    toast('✅ 日誌を記録しました');
-    renderJournal();
-  });
-}
-window.setMood=function(v){
-  journalMood=v;
-  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===v));
-};
-
-tap($e('coach-back'),()=>{renderMind();show('s-mind');navActive('mind');});
-function renderCoach(){
-  const u=me();if(!u)return;
-  const scores=calcMindScores(u);
-  const weakKey=Object.keys(scores).reduce((a,b)=>scores[a]<=scores[b]?a:b);
-  const dim=MindDims[weakKey];
-  const sc=scores[weakKey];
-  const tier=sc<=40?'low':sc<=70?'mid':'high';
-  const tips=MindTips[weakKey][tier];
-  $e('coach-inner').innerHTML=`
-    <div class="ai-box" style="margin-bottom:20px;">
-      <div style="font-size:.88rem;font-weight:bold;margin-bottom:8px;">🤖 AIコーチからのメッセージ</div>
-      <div style="font-size:.83rem;line-height:1.75;">${dim.icon}「${dim.name}」が現在最も伸び代のある軸です（スコア：${sc}）。以下の3つのアクションに取り組んでみましょう。</div>
     </div>
-    <div style="font-size:.88rem;font-weight:bold;color:#c4b5fd;margin-bottom:12px;">${dim.icon} ${dim.name} — 今週のアクション</div>
-    ${tips.map((t,i)=>`<div class="card" style="margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;">
-      <div style="width:28px;height:28px;border-radius:50%;background:${dim.color}22;border:1px solid ${dim.color}55;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:bold;color:${dim.color};flex-shrink:0;">${i+1}</div>
-      <div style="font-size:.85rem;line-height:1.7;">${t}</div>
-    </div>`).join('')}`;
+  </div>
+  <div class="grid-3b">
+    <div class="card">
+      <div class="section-title">🏆 チームランキング (売上)</div>
+      ${ranks.slice(0,5).map((r,i)=>`<div class="rank-row"><span class="rank-num">${i+1}</span>${av(r.name,28)}<span class="rank-name">${esc(r.name)}</span><span class="rank-score">${fmM(r.value)}</span></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="section-title">🌱 おすすめ育成プラン</div>
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:6px">クロージング強化プログラム</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:60%;background:var(--success)"></div></div>
+      <div style="font-size:.7rem;color:var(--muted);margin:4px 0 12px">進捗 60% (3/5 ステップ完了)</div>
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:6px">ヒアリング深化トレーニング</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:30%;background:var(--primary)"></div></div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:4px">進捗 30% (1.5/5 ステップ完了)</div>
+    </div>
+    <div class="card" style="background:linear-gradient(135deg,#eff6ff,#faf5ff)">
+      <div class="section-title">🤖 AIコーチからのアドバイス</div>
+      <div style="font-size:.84rem;line-height:1.7">${esc(u.name)}さん、今週は架電数が目標を上回るペースです。一方でアポからの商談化が課題。提案フェーズの案件が${d.deals.filter(x=>x.salesperson===u.id&&x.phase==='提案').length}件停滞しています。次回は<b>「決裁者の同席」</b>を依頼してみましょう。</div>
+      <button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="navigate('ai-coach')">詳しく見る →</button>
+    </div>
+  </div>`;
+  document.getElementById('page-dashboard').innerHTML=html;
 }
 
-/* ─── INIT ─── */
-(function(){
-  loadData();
+function teamRanking(metric){
   const d=get();
-  if(d.cur){renderDash();show('s-dashboard');navActive('dashboard');}
-  else{show('s-home');}
-})();
+  return d.users.map(u=>{
+    let value=0;
+    if(metric==='sales')value=d.deals.filter(x=>x.salesperson===u.id&&x.phase==='受注').reduce((a,b)=>a+b.amount,0);
+    else if(metric==='calls')value=sumKpi(u.kpiDaily,'calls');
+    else if(metric==='apo')value=sumKpi(u.kpiDaily,'apo');
+    else if(metric==='mind')value=Math.round(Object.values(u.mindScores).reduce((a,b)=>a+b,0)/5);
+    return {id:u.id,name:u.name,value};
+  }).sort((a,b)=>b.value-a.value);
+}
+
+/* ===== DEALS ===== */
+function renderDeals(){
+  const d=get();
+  const cols=PHASES.map(ph=>{
+    const list=d.deals.filter(x=>x.phase===ph);
+    return `<div class="kanban-col"><div class="kanban-col-header"><span class="kanban-col-title">${ph}</span><span class="kanban-col-count">${list.length}</span></div>
+      ${list.map(x=>`<div class="kanban-card" onclick="openDealModal('${x.id}')">
+        <div class="kanban-card-company">${esc(x.company)}</div>
+        <div class="kanban-card-amount">${fmM(x.amount)}円</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:.7rem;color:var(--muted)">${esc(x.contact)}</span>
+          <span class="badge ${x.probability>=70?'badge-green':x.probability>=40?'badge-yellow':'badge-red'}">${x.probability}%</span>
+        </div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:5px">${av(uname(x.salesperson),22)}<span style="font-size:.68rem;color:var(--muted)">${esc(uname(x.salesperson))}</span></div>
+      </div>`).join('')||'<div style="font-size:.72rem;color:#cbd5e1;text-align:center;padding:10px">案件なし</div>'}
+    </div>`;
+  }).join('');
+  document.getElementById('page-deals').innerHTML=`
+  <div class="page-header"><div><div class="page-title">案件管理</div><div class="page-subtitle">パイプライン全体: ${d.deals.length}件 / 合計 ${fmM(d.deals.reduce((a,b)=>a+b.amount,0))}円</div></div>
+    <button class="btn btn-primary" onclick="openDealModal()">＋ 案件追加</button></div>
+  <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:.78rem;color:var(--muted)">フィルター:</span>
+    <select class="form-input" style="width:auto" onchange="filterDeals(this.value)">
+      <option value="">全担当者</option>${d.users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}
+    </select>
+    <span style="font-size:.78rem;color:var(--muted)">受注見込: <b style="color:var(--success)">${fmM(d.deals.reduce((a,b)=>a+b.amount*b.probability/100,0))}円</b></span>
+  </div>
+  <div class="kanban" id="kanban-board">${cols}</div>`;
+}
+function filterDeals(uid){
+  document.querySelectorAll('.kanban-card').forEach(c=>{
+    const id=c.getAttribute('onclick').match(/'([^']+)'/)[1];
+    const deal=get().deals.find(x=>x.id===id);
+    c.style.display=(!uid||deal.salesperson===uid)?'':'none';
+  });
+}
+
+/* ===== CUSTOMERS ===== */
+function renderCustomers(){
+  const d=get();
+  document.getElementById('page-customers').innerHTML=`
+  <div class="page-header"><div><div class="page-title">顧客管理</div><div class="page-subtitle">登録顧客: ${d.customers.length}社</div></div>
+    <button class="btn btn-primary" onclick="openCustomerModal()">＋ 顧客追加</button></div>
+  <div class="card" style="margin-bottom:16px"><input class="form-input" id="cust-search" placeholder="🔍 会社名・担当者名で検索..." oninput="searchCust(this.value)"></div>
+  <div class="card" style="padding:0;overflow-x:auto">
+    <table class="table" id="cust-table"><thead><tr><th>会社名</th><th>担当者</th><th>電話</th><th>メール</th><th>ステータス</th><th>担当営業</th><th>最終接触</th></tr></thead>
+    <tbody>${d.customers.map(c=>custRow(c)).join('')}</tbody></table>
+  </div>`;
+}
+function custRow(c){
+  const sc={'受注':'badge-green','クロージング':'badge-blue','商談中':'badge-yellow','提案':'badge-purple','ヒアリング':'badge-yellow','初回接触':'badge-red'}[c.status]||'badge-blue';
+  return `<tr data-name="${esc(c.company+c.contact)}"><td><b>${esc(c.company)}</b></td><td>${esc(c.contact)}</td><td>${esc(c.phone)}</td><td>${esc(c.email)}</td><td><span class="badge ${sc}">${esc(c.status)}</span></td><td>${esc(uname(c.salesperson))}</td><td>${fd(c.lastContact)}</td></tr>`;
+}
+function searchCust(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('#cust-table tbody tr').forEach(tr=>{
+    tr.style.display=tr.getAttribute('data-name').toLowerCase().includes(q)?'':'none';
+  });
+}
+
+/* ===== ACTIVITIES ===== */
+function renderActivities(){
+  const d=get();
+  const icons={'架電':{e:'📞',c:'#eff6ff'},'メール':{e:'✉️',c:'#faf5ff'},'商談':{e:'🤝',c:'#f0fdf4'},'フォロー':{e:'🔄',c:'#fffbeb'}};
+  const tl=d.activities.map(a=>{
+    const ic=icons[a.type]||{e:'📌',c:'#f1f5f9'};
+    return `<div class="activity-item" data-type="${a.type}"><div class="activity-icon" style="background:${ic.c}">${ic.e}</div>
+      <div class="activity-body"><div style="display:flex;justify-content:space-between"><div><b>${esc(a.company)}</b> <span class="badge badge-blue">${a.type}</span></div><span style="font-size:.72rem;color:var(--muted)">${esc(a.date)}</span></div>
+      <div style="font-size:.82rem;margin-top:4px">${esc(a.memo)}</div>
+      <div class="activity-meta">担当: ${esc(a.contact)} ／ 営業: ${esc(uname(a.salesperson))}</div></div></div>`;
+  }).join('');
+  document.getElementById('page-activities').innerHTML=`
+  <div class="page-header"><div><div class="page-title">活動管理</div><div class="page-subtitle">活動記録: ${d.activities.length}件</div></div>
+    <button class="btn btn-primary" onclick="openActivityModal()">＋ 活動記録</button></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="filterAct(this,'')">すべて</button>
+    <button class="tab-btn" onclick="filterAct(this,'架電')">📞 架電</button>
+    <button class="tab-btn" onclick="filterAct(this,'メール')">✉️ メール</button>
+    <button class="tab-btn" onclick="filterAct(this,'商談')">🤝 商談</button>
+    <button class="tab-btn" onclick="filterAct(this,'フォロー')">🔄 フォロー</button>
+  </div>
+  <div class="card">${tl}</div>`;
+}
+function filterAct(btn,type){
+  document.querySelectorAll('#page-activities .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#page-activities .activity-item').forEach(it=>{
+    it.style.display=(!type||it.getAttribute('data-type')===type)?'':'none';
+  });
+}
+
+/* ===== GOALS ===== */
+function renderGoals(){
+  const d=get(),u=me();
+  const won=d.deals.filter(x=>x.phase==='受注'&&x.salesperson===u.id).reduce((a,b)=>a+b.amount,0);
+  const cards=[
+    {l:'💰 売上',v:won,g:u.kpiGoals.sales,fmt:fmM,c:'var(--success)'},
+    {l:'📅 アポ',v:sumKpi(u.kpiDaily,'apo'),g:u.kpiGoals.apo,fmt:String,c:'var(--primary)'},
+    {l:'📋 商談',v:sumKpi(u.kpiDaily,'deals'),g:u.kpiGoals.deals,fmt:String,c:'var(--warning)'},
+    {l:'🏆 受注',v:sumKpi(u.kpiDaily,'orders'),g:u.kpiGoals.orders,fmt:String,c:'var(--purple)'},
+  ];
+  document.getElementById('page-goals').innerHTML=`
+  <div class="page-header"><div><div class="page-title">目標・実績管理</div><div class="page-subtitle">今月の目標達成状況</div></div></div>
+  <div class="grid-2" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+    ${cards.map(c=>`<div class="card"><div class="kpi-label">${c.l}</div><div class="kpi-value">${c.fmt(c.v)}</div>
+      <div style="font-size:.7rem;color:var(--muted);margin:6px 0">目標: ${c.fmt(c.g)}</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,pct(c.v,c.g))}%;background:${c.c}"></div></div>
+      <div style="font-size:.78rem;font-weight:700;color:${c.c};margin-top:4px">${pct(c.v,c.g)}%</div></div>`).join('')}
+  </div>
+  <div class="card">
+    <div class="section-title">メンバー別 目標達成状況</div>
+    <table class="table"><thead><tr><th>メンバー</th><th>売上目標</th><th>実績</th><th>達成率</th><th>進捗</th></tr></thead>
+    <tbody>${d.users.map(m=>{const w=d.deals.filter(x=>x.phase==='受注'&&x.salesperson===m.id).reduce((a,b)=>a+b.amount,0);const p=pct(w,m.kpiGoals.sales);return `<tr><td style="display:flex;align-items:center;gap:8px">${av(m.name,28)}${esc(m.name)}</td><td>${fmM(m.kpiGoals.sales)}円</td><td>${fmM(w)}円</td><td><b style="color:${p>=100?'var(--success)':p>=50?'var(--warning)':'var(--danger)'}">${p}%</b></td><td style="width:160px"><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,p)}%;background:${p>=100?'var(--success)':'var(--primary)'}"></div></div></td></tr>`;}).join('')}</tbody></table>
+  </div>`;
+}
+
+/* ===== AI ANALYSIS ===== */
+let aiAnalyzed=false;
+function renderAiAnalysis(){
+  document.getElementById('page-ai-analysis').innerHTML=`
+  <div class="page-header"><div><div class="page-title">商談AI分析</div><div class="page-subtitle">商談の録音をアップロードしてAIが文字起こし・分析します</div></div></div>
+  <div class="card">
+    <div class="upload-area">
+      <div style="font-size:2.4rem">🎙</div>
+      <div style="margin:8px 0">録音ファイルをドラッグ＆ドロップ または クリックして選択</div>
+      <div style="font-size:.72rem">対応形式: MP3, WAV, M4A (最大100MB)</div>
+    </div>
+    <div style="text-align:center"><button class="btn btn-primary" onclick="runAiAnalysis()">🤖 デモ商談を分析する</button></div>
+  </div>
+  <div id="ai-results" style="margin-top:20px"></div>`;
+  if(aiAnalyzed)showAiResults();
+}
+function runAiAnalysis(){
+  aiAnalyzed=true;toast('AI分析を実行中...');
+  setTimeout(()=>{showAiResults();toast('分析が完了しました');},800);
+}
+let aiTab='summary';
+function showAiResults(){
+  const transcript=`<div style="font-size:.85rem;line-height:1.9">
+    <p><b style="color:var(--primary)">営業:</b> 本日はお時間いただきありがとうございます。御社の業務効率化について伺えればと。</p>
+    <p><b style="color:var(--success)">顧客:</b> はい。実は手作業の集計に毎月かなり工数を取られていまして。</p>
+    <p><b style="color:var(--primary)">営業:</b> 具体的にどのくらいの時間が…？</p>
+    <p><b style="color:var(--success)">顧客:</b> 担当2名で月40時間ほどです。</p>
+    <p><b style="color:var(--primary)">営業:</b> 弊社ツールなら自動化で約8割削減が見込めます。費用感は月15万円です。</p>
+    <p><b style="color:var(--success)">顧客:</b> なるほど。社内で予算を確認します。</p></div>`;
+  const summary=`<ul style="font-size:.86rem;line-height:1.9;padding-left:18px">
+    <li>顧客は月次集計業務で月40時間の工数課題を抱えている</li>
+    <li>自動化により約80%の工数削減を提案</li>
+    <li>提示価格は月額15万円</li>
+    <li>次のアクション: 顧客側で予算確認 → 提案書を再送付</li></ul>`;
+  const needs=`<div style="display:flex;flex-wrap:wrap;gap:8px">
+    <span class="chip badge-blue">業務効率化</span><span class="chip badge-green">コスト削減</span>
+    <span class="chip badge-yellow">工数削減(40h/月)</span><span class="chip badge-purple">自動化</span>
+    <span class="chip badge-red">予算確認が必要</span></div>
+    <div style="margin-top:14px;font-size:.85rem;line-height:1.8"><b>潜在ニーズ:</b> 単なる工数削減だけでなく、削減した時間を本来のコア業務に充てたいという意図が読み取れます。ROIを軸にした提案が有効です。</div>`;
+  const skills=`
+    ${['ヒアリング力','課題深掘り','提案力','クロージング','傾聴'].map((s,i)=>{const v=[85,70,78,55,82][i];return `<div class="mind-dim-row"><span class="mind-dim-name" style="width:90px">${s}</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${v}%;background:var(--primary)"></div></div><span style="font-size:.72rem;font-weight:700;width:30px;text-align:right">${v}</span></div>`;}).join('')}
+    <div style="margin-top:14px;font-size:.85rem;background:#fffbeb;padding:12px;border-radius:8px"><b>💡 改善ポイント:</b> クロージングが弱め。「予算確認」で終わらず、次回打合せの日程をその場で確定させましょう。</div>`;
+  const content={summary,transcript,needs,skills};
+  document.getElementById('ai-results').innerHTML=`
+  <div class="card">
+    <div class="tab-bar">
+      ${[['summary','📝 要約'],['transcript','📄 文字起こし'],['needs','🎯 ニーズ抽出'],['skills','💪 スキル評価']].map(t=>`<button class="tab-btn ${aiTab===t[0]?'active':''}" onclick="aiTab='${t[0]}';showAiResults()">${t[1]}</button>`).join('')}
+    </div>
+    <div>${content[aiTab]}</div>
+  </div>`;
+}
+
+/* ===== FORECAST ===== */
+function renderForecast(){
+  const d=get();
+  const stages=PHASES.filter(p=>p!=='失注').map(ph=>{
+    const list=d.deals.filter(x=>x.phase===ph);
+    return {ph,count:list.length,amount:list.reduce((a,b)=>a+b.amount,0),weighted:list.reduce((a,b)=>a+b.amount*b.probability/100,0)};
+  });
+  const maxW=Math.max(...stages.map(s=>s.weighted),1);
+  const total=d.deals.filter(x=>!['失注'].includes(x.phase)).reduce((a,b)=>a+b.amount,0);
+  const weighted=d.deals.filter(x=>!['失注'].includes(x.phase)).reduce((a,b)=>a+b.amount*b.probability/100,0);
+  document.getElementById('page-forecast').innerHTML=`
+  <div class="page-header"><div><div class="page-title">売上予測</div><div class="page-subtitle">確度を加味した受注見込みの予測</div></div></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card"><div class="kpi-label">📊 パイプライン総額</div><div class="kpi-value">${fmM(total)}円</div><div class="kpi-meta">全進行案件の合計</div></div>
+    <div class="kpi-card"><div class="kpi-label">🎯 確度加重予測</div><div class="kpi-value" style="color:var(--success)">${fmM(weighted)}円</div><div class="kpi-meta">確度を掛け合わせた見込</div></div>
+    <div class="kpi-card"><div class="kpi-label">📈 着地予測達成率</div><div class="kpi-value">${pct(weighted,15000000)}%</div><div class="kpi-meta">月間目標 1,500万円 比</div></div>
+  </div>
+  <div class="card">
+    <div class="section-title">フェーズ別 確度加重予測</div>
+    <table class="table"><thead><tr><th>フェーズ</th><th>件数</th><th>総額</th><th>加重予測</th><th>分布</th></tr></thead>
+    <tbody>${stages.map(s=>`<tr><td><b>${s.ph}</b></td><td>${s.count}件</td><td>${fmM(s.amount)}円</td><td><b style="color:var(--success)">${fmM(s.weighted)}円</b></td><td style="width:200px"><div class="progress-bar"><div class="progress-fill" style="width:${s.weighted/maxW*100}%;background:var(--primary)"></div></div></td></tr>`).join('')}</tbody></table>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="section-title">月次着地予測 (シミュレーション)</div>
+    <div class="bar-chart" style="height:140px">
+      ${[['4月',9.2],['5月',11.8],['6月予測',14.3],['7月予測',16.0]].map((m,i)=>`<div class="bar-col"><div style="font-size:.7rem;font-weight:700;color:var(--primary)">${m[1]}M</div><div class="bar" style="height:${m[1]/16*100}%;background:${i>=2?'var(--success)':'var(--primary)'}"></div><div class="bar-label">${m[0]}</div></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* ===== MIND DIAGNOSIS ===== */
+function renderMindDiagnosis(){
+  const u=me(),pt=PersonalityTypes[u.personalityType];
+  document.getElementById('page-mind-diagnosis').innerHTML=`
+  <div class="page-header"><div><div class="page-title">性格・マインド診断</div><div class="page-subtitle">あなたの営業スタイルとマインドセットを可視化</div></div>
+    <button class="btn btn-primary" onclick="startQuiz()">🧠 性格診断を受ける</button></div>
+  <div class="card" style="margin-bottom:20px;border-left:5px solid ${pt.color}">
+    <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="font-size:3.4rem">${pt.badge}</div>
+      <div style="flex:1;min-width:200px">
+        <span class="badge badge-blue">${pt.label}</span>
+        <div style="font-size:1.4rem;font-weight:700;color:${pt.color};margin:6px 0">${pt.name}</div>
+        <div style="font-style:italic;color:var(--muted)">「${pt.catch}」</div>
+        <div style="font-size:.85rem;margin-top:8px;line-height:1.7">${pt.desc}</div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:16px">
+      <div><div class="section-title">💪 強み</div>${pt.strengths.map(s=>`<span class="chip badge-green">${s}</span>`).join('')}</div>
+      <div><div class="section-title">📈 伸びしろ</div>${pt.challenges.map(s=>`<span class="chip badge-yellow">${s}</span>`).join('')}</div>
+    </div>
+  </div>
+  <div class="page-header"><div class="page-title" style="font-size:1.1rem">マインドセット 5次元診断</div>
+    <button class="btn btn-secondary" onclick="startSurvey()">📝 マインドサーベイを受ける</button></div>
+  <div class="grid-2" style="grid-template-columns:repeat(5,1fr)">
+    ${Object.keys(MindDims).map(k=>{const m=MindDims[k],v=u.mindScores[k];return `<div class="card" style="text-align:center">
+      <div style="font-size:1.8rem">${m.icon}</div>
+      <div class="score-circle" style="border-color:${m.color};margin:10px auto"><span class="score-num" style="color:${m.color}">${v}</span></div>
+      <div style="font-size:.82rem;font-weight:700;margin-top:8px">${m.name}</div>
+    </div>`;}).join('')}
+  </div>`;
+}
+
+/* ===== DIAGNOSIS RESULTS ===== */
+function renderDiagnosisResults(){
+  const u=me();
+  const rows=u.mindSurveys.length?u.mindSurveys.map(s=>`<tr><td>${fd(s.date)}</td><td>${MindDims[s.type].icon} ${MindDims[s.type].name}</td><td><b style="color:${MindDims[s.type].color}">${s.score}</b>/100</td><td>${s.answers.join(' / ')}</td></tr>`).join(''):'<tr><td colspan="4" style="text-align:center;color:var(--muted)">診断履歴がありません</td></tr>';
+  document.getElementById('page-diagnosis-results').innerHTML=`
+  <div class="page-header"><div><div class="page-title">診断結果一覧</div><div class="page-subtitle">過去のマインドサーベイ履歴と総合評価</div></div></div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card"><div class="section-title">マインド総合プロファイル</div>
+      ${Object.keys(MindDims).map(k=>`<div class="mind-dim-row"><span class="mind-dim-name">${MindDims[k].name}</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${u.mindScores[k]}%;background:${MindDims[k].color}"></div></div><span style="font-size:.75rem;font-weight:700;width:30px;text-align:right">${u.mindScores[k]}</span></div>`).join('')}
+    </div>
+    <div class="card"><div class="section-title">総合スコア</div>
+      <div class="mind-score-big" style="margin-top:10px"><div class="mind-score-num">${Math.round(Object.values(u.mindScores).reduce((a,b)=>a+b,0)/5)}</div><div style="font-size:.6rem;color:var(--muted)">/100</div></div>
+      <div style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:10px">バランス良好。自己効力感が特に高く、挑戦的な目標設定に向いています。</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">サーベイ履歴</div>
+    <table class="table"><thead><tr><th>実施日</th><th>診断項目</th><th>スコア</th><th>各設問回答</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>`;
+}
+
+/* ===== STRENGTHS ===== */
+function renderStrengths(){
+  const u=me(),pt=PersonalityTypes[u.personalityType];
+  const recs=['提案前の競合リサーチを習慣化する','商談後24時間以内のフォローアップを徹底','週次でロールプレイを実施しクロージング力を磨く','顧客の決裁プロセスを早期に把握する'];
+  document.getElementById('page-strengths').innerHTML=`
+  <div class="page-header"><div><div class="page-title">強み・課題分析</div><div class="page-subtitle">AIが診断データと活動実績から導き出した分析</div></div></div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card"><div class="section-title">💪 あなたの強み</div>
+      ${pt.strengths.map((s,i)=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div class="avatar" style="background:var(--success)">${i+1}</div><div><div style="font-weight:700;font-size:.9rem">${s}</div><div style="font-size:.74rem;color:var(--muted)">高いパフォーマンスを発揮しています</div></div></div>`).join('')}
+    </div>
+    <div class="card"><div class="section-title">📈 克服すべき課題</div>
+      ${pt.challenges.map((s,i)=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div class="avatar" style="background:var(--warning)">${i+1}</div><div><div style="font-weight:700;font-size:.9rem">${s}</div><div style="font-size:.74rem;color:var(--muted)">育成プランで強化を推奨</div></div></div>`).join('')}
+    </div>
+  </div>
+  <div class="card"><div class="section-title">🎯 AIからの推奨アクション</div>
+    ${recs.map(r=>`<div style="display:flex;gap:8px;padding:8px 0;font-size:.86rem"><span style="color:var(--primary)">✔</span>${r}</div>`).join('')}
+  </div>`;
+}
+
+/* ===== CONDITION ===== */
+function renderCondition(){
+  const u=me();
+  const burnout=Math.max(0,100-Math.round(Object.values(u.mindScores).reduce((a,b)=>a+b,0)/5));
+  const trend=[3,4,3,5,4,4];
+  const maxT=5;
+  document.getElementById('page-condition').innerHTML=`
+  <div class="page-header"><div><div class="page-title">コンディションチェック</div><div class="page-subtitle">今日の心身の状態を記録しましょう</div></div></div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card"><div class="section-title">今日の気分は？</div>
+      <div style="display:flex;justify-content:space-around;font-size:2rem;margin:10px 0">
+        ${['😫','😟','😐','🙂','😄'].map((e,i)=>`<span style="cursor:pointer" onclick="recordMood(${i+1})">${e}</span>`).join('')}
+      </div>
+      <div style="text-align:center;font-size:.74rem;color:var(--muted)">アイコンをタップして今日の気分を記録</div>
+      <textarea class="form-input" id="cond-note" placeholder="今日の振り返り・気づきを記入..." style="margin-top:12px"></textarea>
+      <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="toast('コンディションを記録しました')">記録する</button>
+    </div>
+    <div class="card"><div class="section-title">⚠️ バーンアウト・離職リスク</div>
+      <div style="text-align:center;margin:10px 0">
+        <div style="font-size:2rem;font-weight:700;color:${burnout>50?'var(--danger)':burnout>30?'var(--warning)':'var(--success)'}">${burnout}%</div>
+        <div style="font-size:.74rem;color:var(--muted)">リスクレベル</div>
+      </div>
+      <div class="gauge"><div class="gauge-fill" style="width:${burnout}%;background:${burnout>50?'var(--danger)':burnout>30?'var(--warning)':'var(--success)'}"></div></div>
+      <div style="font-size:.82rem;margin-top:12px;line-height:1.6">${burnout>50?'注意が必要です。上司との1on1を推奨します。':burnout>30?'やや疲労の兆候。適度な休息を。':'良好なコンディションです。この調子を維持しましょう。'}</div>
+    </div>
+  </div>
+  <div class="card"><div class="section-title">気分の推移 (直近6回)</div>
+    <div class="bar-chart">${trend.map((t,i)=>`<div class="bar-col"><div class="bar" style="height:${t/maxT*100}%;background:${t>=4?'var(--success)':t>=3?'var(--warning)':'var(--danger)'}"></div><div class="bar-label">${i+1}回前</div></div>`).join('')}</div>
+  </div>`;
+}
+function recordMood(n){toast('気分レベル '+n+' を記録しました');}
+
+/* ===== TRAINING ===== */
+function renderTraining(){
+  const steps=[
+    {t:'基礎理論の習得',d:'クロージングの心理学を学ぶ動画を視聴',done:true},
+    {t:'トークスクリプト作成',d:'自分の言葉でクロージングトークを作成',done:true},
+    {t:'ロールプレイ実践',d:'AIコーチと5回のロールプレイ',done:true},
+    {t:'実商談での実践',d:'実際の商談でクロージングを試す',done:false},
+    {t:'振り返りと改善',d:'録音をAI分析しフィードバックを得る',done:false},
+  ];
+  const doneN=steps.filter(s=>s.done).length;
+  document.getElementById('page-training').innerHTML=`
+  <div class="page-header"><div><div class="page-title">育成プラン</div><div class="page-subtitle">あなた専用のパーソナライズド育成プログラム</div></div></div>
+  <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,#f0fdf4,#eff6ff)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div><div style="font-size:1.1rem;font-weight:700">🎯 クロージング強化プログラム</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-top:4px">あなたの課題「クロージング力」を集中的に強化する5ステップ</div></div>
+      <div style="text-align:center"><div style="font-size:1.6rem;font-weight:700;color:var(--success)">${pct(doneN,5)}%</div><div style="font-size:.7rem;color:var(--muted)">完了</div></div>
+    </div>
+    <div class="progress-bar" style="margin-top:12px"><div class="progress-fill" style="width:${pct(doneN,5)}%;background:var(--success)"></div></div>
+  </div>
+  <div class="card"><div class="section-title">ステップトラッカー</div>
+    ${steps.map((s,i)=>`<div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div class="avatar" style="background:${s.done?'var(--success)':'#cbd5e1'}">${s.done?'✓':i+1}</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:.9rem;${s.done?'text-decoration:line-through;color:var(--muted)':''}">${s.t}</div><div style="font-size:.78rem;color:var(--muted)">${s.d}</div></div>
+      ${s.done?'<span class="badge badge-green">完了</span>':'<button class="btn btn-secondary btn-sm" onclick="toast(\'ステップを開始しました\')">開始</button>'}
+    </div>`).join('')}
+  </div>`;
+}
+
+/* ===== CONTENT ===== */
+function renderContent(){
+  const items=[
+    {e:'🎬',t:'クロージングの極意',cat:'動画',c:'badge-red',bg:'#fef2f2',dur:'18分',tag:'クロージング'},
+    {e:'📄',t:'ヒアリングフレームワーク',cat:'記事',c:'badge-blue',bg:'#eff6ff',dur:'10分',tag:'ヒアリング'},
+    {e:'🎬',t:'反論処理トレーニング',cat:'動画',c:'badge-red',bg:'#fef2f2',dur:'24分',tag:'交渉'},
+    {e:'📄',t:'BtoB営業の鉄則 10選',cat:'記事',c:'badge-blue',bg:'#eff6ff',dur:'15分',tag:'基礎'},
+    {e:'🎬',t:'信頼関係の築き方',cat:'動画',c:'badge-red',bg:'#fef2f2',dur:'12分',tag:'関係構築'},
+    {e:'📄',t:'メンタルマネジメント術',cat:'記事',c:'badge-blue',bg:'#eff6ff',dur:'8分',tag:'マインド'},
+  ];
+  document.getElementById('page-content').innerHTML=`
+  <div class="page-header"><div><div class="page-title">研修コンテンツ</div><div class="page-subtitle">スキルアップのための動画・記事ライブラリ</div></div></div>
+  <div class="grid-3b">${items.map(it=>`<div class="content-card" onclick="toast('コンテンツを開きます: ${it.t}')">
+    <div class="content-thumb" style="background:${it.bg}">${it.e}</div>
+    <div style="padding:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="badge ${it.c}">${it.cat}</span><span style="font-size:.7rem;color:var(--muted)">⏱ ${it.dur}</span></div>
+    <div style="font-weight:700;font-size:.92rem">${it.t}</div>
+    <div style="margin-top:8px"><span class="chip badge-purple">#${it.tag}</span></div></div>
+  </div>`).join('')}</div>`;
+}
+
+/* ===== COACHING ===== */
+function renderCoaching(){
+  const sessions=[
+    {date:'2024-05-28',coach:'マネージャー 高橋',topic:'クロージング改善',note:'価格提示後の沈黙を恐れないこと。相手の検討を待つ姿勢が大切。',rating:4},
+    {date:'2024-05-14',coach:'マネージャー 高橋',topic:'パイプライン管理',note:'案件の停滞期間を可視化し、停滞案件には必ずネクストアクションを設定する。',rating:5},
+    {date:'2024-04-30',coach:'シニア 佐藤',topic:'ヒアリングの深掘り',note:'「なぜ」を3回繰り返すことで真の課題に到達できる。',rating:4},
+  ];
+  document.getElementById('page-coaching').innerHTML=`
+  <div class="page-header"><div><div class="page-title">コーチング記録</div><div class="page-subtitle">1on1・コーチングセッションの記録</div></div></div>
+  <div class="grid-2"><div>
+    <div class="card"><div class="section-title">過去のセッション</div>
+      ${sessions.map(s=>`<div class="activity-item"><div class="activity-icon" style="background:#faf5ff">🤝</div>
+      <div class="activity-body"><div style="display:flex;justify-content:space-between"><b>${s.topic}</b><span style="font-size:.72rem;color:var(--muted)">${fd(s.date)}</span></div>
+      <div style="font-size:.82rem;margin-top:4px">${s.note}</div>
+      <div class="activity-meta">コーチ: ${s.coach} ／ 満足度: ${'⭐'.repeat(s.rating)}</div></div></div>`).join('')}
+    </div></div>
+    <div><div class="card"><div class="section-title">新規セッションを記録</div>
+      <div class="form-group"><label class="form-label">テーマ</label><input class="form-input" id="cs-topic" placeholder="例: クロージング改善"></div>
+      <div class="form-group"><label class="form-label">コーチ</label><input class="form-input" id="cs-coach" placeholder="例: マネージャー 高橋"></div>
+      <div class="form-group"><label class="form-label">メモ・学び</label><textarea class="form-input" id="cs-note" placeholder="セッションの内容を記入..."></textarea></div>
+      <button class="btn btn-primary" onclick="toast('コーチング記録を保存しました')">保存する</button>
+    </div></div>
+  </div>`;
+}
+
+/* ===== FEEDBACK ===== */
+function renderFeedback(){
+  const u=me();
+  document.getElementById('page-feedback').innerHTML=`
+  <div class="page-header"><div><div class="page-title">フィードバック</div><div class="page-subtitle">受け取った/送ったフィードバック</div></div></div>
+  <div class="grid-3b" style="margin-bottom:20px">
+    <div class="card"><div class="section-title">📥 受け取ったFB</div>
+      ${(u.fb||[]).map(f=>`<div style="padding:10px 0;border-bottom:1px solid var(--border)"><div style="font-size:.85rem">${esc(f.txt)}</div><div class="activity-meta">${esc(f.from)} ／ ${fd(f.date)}</div></div>`).join('')||'<div style="color:var(--muted);font-size:.8rem">まだありません</div>'}
+    </div>
+    <div class="card"><div class="section-title">⭐ ポジティブFB</div>
+      ${(u.positiveFb||[]).map(f=>`<div style="background:#f0fdf4;border-radius:8px;margin-bottom:6px;padding:10px"><div style="font-size:.85rem">「${esc(f.txt)}」</div><div class="activity-meta">${esc(f.from)} ／ ${fd(f.date)}</div></div>`).join('')||'<div style="color:var(--muted);font-size:.8rem">まだありません</div>'}
+    </div>
+    <div class="card"><div class="section-title">✍️ FBを送る</div>
+      <div class="form-group"><label class="form-label">宛先</label><select class="form-input" id="fb-to">${get().users.filter(x=>x.id!==u.id).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select></div>
+      <div class="form-group"><label class="form-label">メッセージ</label><textarea class="form-input" id="fb-msg" placeholder="ポジティブなフィードバックを..."></textarea></div>
+      <button class="btn btn-primary" onclick="sendFb()">送信する</button>
+    </div>
+  </div>`;
+}
+function sendFb(){
+  const d=get(),u=me();
+  const to=document.getElementById('fb-to').value;
+  const msg=document.getElementById('fb-msg').value.trim();
+  if(!msg){toast('メッセージを入力してください');return;}
+  const tgt=d.users.find(x=>x.id===to);
+  tgt.positiveFb=tgt.positiveFb||[];
+  tgt.positiveFb.unshift({from:u.name,txt:msg,date:today()});
+  save(d);toast('フィードバックを送信しました');renderFeedback();
+}
+
+/* ===== KPI ===== */
+function renderKpi(){
+  const u=me();
+  const maxC=Math.max(...u.kpiDaily.map(x=>x.calls),1);
+  const totalCalls=sumKpi(u.kpiDaily,'calls'),totalApo=sumKpi(u.kpiDaily,'apo'),totalOrders=sumKpi(u.kpiDaily,'orders');
+  document.getElementById('page-kpi').innerHTML=`
+  <div class="page-header"><div><div class="page-title">架電・アポ管理</div><div class="page-subtitle">日々の行動量を記録し、KPIを管理</div></div></div>
+  <div class="grid-2" style="grid-template-columns:1fr 2fr">
+    <div class="card"><div class="section-title">📝 今日の活動を入力</div>
+      ${[['calls','架電数'],['apo','アポ獲得'],['deals','商談数'],['proposals','提案数'],['orders','受注数'],['followups','フォロー数']].map(f=>`<div class="form-group"><label class="form-label">${f[1]}</label><input class="form-input" type="number" id="kpi-${f[0]}" value="0" min="0"></div>`).join('')}
+      <button class="btn btn-primary" onclick="saveKpi()">記録する</button>
+    </div>
+    <div><div class="card" style="margin-bottom:16px"><div class="section-title">日別架電数の推移</div>
+      <div class="bar-chart">${u.kpiDaily.map(x=>`<div class="bar-col"><div style="font-size:.62rem;font-weight:700;color:var(--primary)">${x.calls}</div><div class="bar" style="height:${x.calls/maxC*100}%"></div><div class="bar-label">${x.date.slice(5)}</div></div>`).join('')}</div>
+    </div>
+    <div class="card"><div class="section-title">月間進捗</div>
+      ${[['架電',totalCalls,160],['アポ',totalApo,u.kpiGoals.apo],['受注',totalOrders,u.kpiGoals.orders]].map(m=>`<div class="mind-dim-row"><span class="mind-dim-name" style="width:50px">${m[0]}</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${Math.min(100,pct(m[1],m[2]))}%;background:var(--primary)"></div></div><span style="font-size:.74rem;font-weight:700;width:80px;text-align:right">${m[1]} / ${m[2]}</span></div>`).join('')}
+      <div style="font-size:.78rem;color:var(--muted);margin-top:12px">アポ率: <b>${pct(totalApo,totalCalls)}%</b> ／ 受注率(対アポ): <b>${pct(totalOrders,totalApo)}%</b></div>
+    </div></div>
+  </div>`;
+}
+function saveKpi(){
+  const d=get(),u=d.users.find(x=>x.id===d.cur);
+  const rec={date:today()};
+  ['calls','apo','deals','proposals','orders','followups'].forEach(f=>rec[f]=Number(document.getElementById('kpi-'+f).value)||0);
+  u.kpiDaily.push(rec);
+  if(u.kpiDaily.length>10)u.kpiDaily=u.kpiDaily.slice(-10);
+  save(d);toast('KPIを記録しました');renderKpi();
+}
+
+/* ===== AI COACH ===== */
+function renderAiCoach(){
+  const u=me();
+  const goals=[{t:'架電 100件',done:true},{t:'新規アポ 8件',done:true},{t:'提案 5件',done:false},{t:'受注 2件',done:false}];
+  const top=teamRanking('sales')[0];
+  const topCallsUser=get().users.find(x=>x.id===teamRanking('calls')[0].id);
+  document.getElementById('page-ai-coach').innerHTML=`
+  <div class="page-header"><div><div class="page-title">AIコーチ</div><div class="page-subtitle">あなた専属のAI営業コーチ</div></div></div>
+  <div class="card" style="margin-bottom:16px;background:linear-gradient(135deg,#eff6ff,#faf5ff)">
+    <div style="display:flex;gap:14px;align-items:flex-start"><div style="font-size:2.4rem">🤖</div>
+    <div><div style="font-weight:700;margin-bottom:6px">AIコーチからのメッセージ</div>
+    <div style="font-size:.88rem;line-height:1.7">${esc(u.name)}さん、こんにちは。今週の行動量は素晴らしいです！ただ、提案フェーズでの転換率に伸びしろがあります。トップ営業の${esc(top.name)}さんは「提案前に必ず決裁者を確認」しています。次の商談で実践してみましょう。応援しています！💪</div></div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="section-title">📋 今週の目標チェックリスト</div>
+      ${goals.map(g=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)"><input type="checkbox" ${g.done?'checked':''} onchange="toast('目標を更新しました')" style="width:18px;height:18px"><span style="font-size:.88rem;${g.done?'text-decoration:line-through;color:var(--muted)':''}">${g.t}</span></div>`).join('')}
+    </div>
+    <div class="card"><div class="section-title">🎭 ロールプレイ</div>
+      <div style="font-size:.85rem;line-height:1.6;margin-bottom:12px">AIが顧客役となり、商談シミュレーションを行います。実践的なトレーニングで本番に備えましょう。</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-secondary" onclick="toast('ロールプレイ開始: 新規アポ獲得')">📞 新規アポ獲得シナリオ</button>
+        <button class="btn btn-secondary" onclick="toast('ロールプレイ開始: 価格交渉')">💰 価格交渉シナリオ</button>
+        <button class="btn btn-secondary" onclick="toast('ロールプレイ開始: クロージング')">🤝 クロージングシナリオ</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="section-title">🏆 トップパフォーマーとの比較</div>
+    <table class="table"><thead><tr><th>指標</th><th>あなた</th><th>トップ営業</th><th>差分</th></tr></thead>
+    <tbody>
+      <tr><td>月間架電数</td><td>${sumKpi(u.kpiDaily,'calls')}</td><td>${sumKpi(topCallsUser.kpiDaily,'calls')}</td><td><span class="badge badge-yellow">改善余地</span></td></tr>
+      <tr><td>アポ率</td><td>${pct(sumKpi(u.kpiDaily,'apo'),sumKpi(u.kpiDaily,'calls'))}%</td><td>22%</td><td><span class="badge badge-green">良好</span></td></tr>
+      <tr><td>受注率</td><td>${pct(sumKpi(u.kpiDaily,'orders'),sumKpi(u.kpiDaily,'deals'))}%</td><td>35%</td><td><span class="badge badge-red">要強化</span></td></tr>
+    </tbody></table>
+  </div>`;
+}
+
+/* ===== RANKING ===== */
+let rankMetric='sales';
+function renderRanking(){
+  const ranks=teamRanking(rankMetric);
+  const fmt=rankMetric==='sales'?(v=>fmM(v)+'円'):(rankMetric==='mind'?(v=>v+'点'):(v=>v+'件'));
+  const top3=ranks.slice(0,3);
+  const podiumOrder=[top3[1],top3[0],top3[2]].filter(Boolean);
+  const heights=[100,140,80];
+  document.getElementById('page-ranking').innerHTML=`
+  <div class="page-header"><div><div class="page-title">ランキング</div><div class="page-subtitle">チームメンバーの成績ランキング</div></div></div>
+  <div class="tab-bar">
+    ${[['sales','💰 売上'],['calls','📞 架電数'],['apo','📅 アポ獲得'],['mind','🧠 マインド']].map(t=>`<button class="tab-btn ${rankMetric===t[0]?'active':''}" onclick="rankMetric='${t[0]}';renderRanking()">${t[1]}</button>`).join('')}
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="podium">
+      ${podiumOrder.map((r,i)=>{const rank=r===top3[0]?1:r===top3[1]?2:3;const medal=['🥇','🥈','🥉'][rank-1];return `<div class="podium-col">${av(r.name,48)}<div style="font-size:.85rem;font-weight:700">${esc(r.name)}</div><div style="font-size:.78rem;color:var(--primary);font-weight:700">${fmt(r.value)}</div><div class="podium-block" style="height:${heights[i]}px;background:${rank===1?'linear-gradient(180deg,#fbbf24,#f59e0b)':'linear-gradient(180deg,#3b82f6,#2563eb)'}">${medal}</div></div>`;}).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">全メンバー</div>
+    <table class="table"><thead><tr><th>順位</th><th>メンバー</th><th>チーム</th><th>スコア</th><th>分布</th></tr></thead>
+    <tbody>${ranks.map((r,i)=>{const u=get().users.find(x=>x.id===r.id);const max=ranks[0].value||1;return `<tr><td><b>${i+1}</b></td><td style="display:flex;align-items:center;gap:8px">${av(r.name,28)}${esc(r.name)}</td><td>${esc(u.team)}</td><td><b style="color:var(--primary)">${fmt(r.value)}</b></td><td style="width:160px"><div class="progress-bar"><div class="progress-fill" style="width:${r.value/max*100}%;background:${i===0?'var(--warning)':'var(--primary)'}"></div></div></td></tr>`;}).join('')}</tbody></table>
+  </div>`;
+}
+
+/* ===== SETTINGS ===== */
+function renderSettings(){
+  const u=me();
+  const integrations=[['Slack','💬',true],['Salesforce','☁️',true],['Google Calendar','📅',false],['Zoom','📹',true],['Microsoft Teams','👥',false]];
+  document.getElementById('page-settings').innerHTML=`
+  <div class="page-header"><div><div class="page-title">システム設定</div><div class="page-subtitle">プロフィール・通知・連携の管理</div></div></div>
+  <div class="grid-2">
+    <div class="card"><div class="section-title">👤 プロフィール</div>
+      <div class="form-group"><label class="form-label">氏名</label><input class="form-input" id="set-name" value="${esc(u.name)}"></div>
+      <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" id="set-email" value="${esc(u.email)}"></div>
+      <div class="form-group"><label class="form-label">チーム</label><input class="form-input" id="set-team" value="${esc(u.team)}"></div>
+      <div class="form-group"><label class="form-label">役割</label><input class="form-input" id="set-role" value="${esc(u.role)}"></div>
+      <button class="btn btn-primary" onclick="saveProfile()">保存する</button>
+    </div>
+    <div><div class="card" style="margin-bottom:16px"><div class="section-title">🔔 通知設定</div>
+      ${[['新規案件の通知',true],['目標達成アラート',true],['コーチングリマインド',false],['週次レポート',true]].map(n=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><span style="font-size:.86rem">${n[0]}</span><div class="toggle ${n[1]?'on':''}" onclick="this.classList.toggle('on');toast('設定を更新しました')"></div></div>`).join('')}
+    </div>
+    <div class="card"><div class="section-title">🔗 外部連携</div>
+      ${integrations.map(it=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><span style="font-size:.86rem">${it[1]} ${it[0]}</span>${it[2]?'<span class="badge badge-green">連携済み</span>':'<button class="btn btn-secondary btn-sm" onclick="toast(\''+it[0]+'と連携しました\')">連携する</button>'}</div>`).join('')}
+    </div></div>
+  </div>`;
+}
+function saveProfile(){
+  const d=get(),u=d.users.find(x=>x.id===d.cur);
+  u.name=document.getElementById('set-name').value;
+  u.email=document.getElementById('set-email').value;
+  u.team=document.getElementById('set-team').value;
+  u.role=document.getElementById('set-role').value;
+  save(d);toast('プロフィールを保存しました');updateTopbar();
+}
+
+/* ===== MODALS ===== */
+function showModal(html){
+  const o=document.getElementById('modal-overlay');
+  o.className='modal-overlay';o.style.display='flex';
+  o.innerHTML=`<div class="modal-box" onclick="event.stopPropagation()">${html}</div>`;
+  o.onclick=closeModal;
+}
+function closeModal(){const o=document.getElementById('modal-overlay');o.style.display='none';o.innerHTML='';}
+
+function openDealModal(id){
+  const d=get();const deal=id?d.deals.find(x=>x.id===id):null;
+  showModal(`<button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">${deal?'案件を編集':'案件を追加'}</div>
+    <div class="form-group"><label class="form-label">会社名</label><input class="form-input" id="dm-company" value="${deal?esc(deal.company):''}"></div>
+    <div class="form-group"><label class="form-label">担当者名</label><input class="form-input" id="dm-contact" value="${deal?esc(deal.contact):''}"></div>
+    <div class="form-group"><label class="form-label">金額(円)</label><input class="form-input" type="number" id="dm-amount" value="${deal?deal.amount:''}"></div>
+    <div class="form-group"><label class="form-label">フェーズ</label><select class="form-input" id="dm-phase">${PHASES.map(p=>`<option ${deal&&deal.phase===p?'selected':''}>${p}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">確度(%)</label><input class="form-input" type="number" id="dm-prob" value="${deal?deal.probability:50}" min="0" max="100"></div>
+    <div class="form-group"><label class="form-label">担当営業</label><select class="form-input" id="dm-sp">${d.users.map(u=>`<option value="${u.id}" ${deal&&deal.salesperson===u.id?'selected':''}>${esc(u.name)}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">メモ</label><textarea class="form-input" id="dm-memo">${deal?esc(deal.memo):''}</textarea></div>
+    <div class="form-group"><label class="form-label">日付</label><input class="form-input" type="date" id="dm-date" value="${deal?deal.date:today()}"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">${deal?`<button class="btn btn-danger" onclick="deleteDeal('${deal.id}')">削除</button>`:''}<button class="btn btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn btn-primary" onclick="saveDeal('${id||''}')">保存</button></div>`);
+}
+function saveDeal(id){
+  const d=get();
+  const obj={company:document.getElementById('dm-company').value,contact:document.getElementById('dm-contact').value,
+    amount:Number(document.getElementById('dm-amount').value)||0,phase:document.getElementById('dm-phase').value,
+    probability:Number(document.getElementById('dm-prob').value)||0,salesperson:document.getElementById('dm-sp').value,
+    memo:document.getElementById('dm-memo').value,date:document.getElementById('dm-date').value};
+  if(!obj.company){toast('会社名を入力してください');return;}
+  if(id){Object.assign(d.deals.find(x=>x.id===id),obj);}else{obj.id=uid();d.deals.push(obj);}
+  save(d);closeModal();toast('案件を保存しました');renderDeals();
+}
+function deleteDeal(id){const d=get();d.deals=d.deals.filter(x=>x.id!==id);save(d);closeModal();toast('案件を削除しました');renderDeals();}
+
+function openCustomerModal(){
+  const d=get();
+  showModal(`<button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">顧客を追加</div>
+    <div class="form-group"><label class="form-label">会社名</label><input class="form-input" id="cm-company"></div>
+    <div class="form-group"><label class="form-label">担当者名</label><input class="form-input" id="cm-contact"></div>
+    <div class="form-group"><label class="form-label">電話</label><input class="form-input" id="cm-phone"></div>
+    <div class="form-group"><label class="form-label">メール</label><input class="form-input" id="cm-email"></div>
+    <div class="form-group"><label class="form-label">ステータス</label><select class="form-input" id="cm-status">${['初回接触','ヒアリング','商談中','提案','クロージング','受注'].map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">担当営業</label><select class="form-input" id="cm-sp">${d.users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">メモ</label><textarea class="form-input" id="cm-notes"></textarea></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn btn-primary" onclick="saveCustomer()">保存</button></div>`);
+}
+function saveCustomer(){
+  const d=get();
+  const obj={id:uid(),company:document.getElementById('cm-company').value,contact:document.getElementById('cm-contact').value,
+    phone:document.getElementById('cm-phone').value,email:document.getElementById('cm-email').value,
+    status:document.getElementById('cm-status').value,salesperson:document.getElementById('cm-sp').value,
+    notes:document.getElementById('cm-notes').value,lastContact:today()};
+  if(!obj.company){toast('会社名を入力してください');return;}
+  d.customers.push(obj);save(d);closeModal();toast('顧客を保存しました');renderCustomers();
+}
+
+function openActivityModal(){
+  const d=get();
+  showModal(`<button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">活動を記録</div>
+    <div class="form-group"><label class="form-label">種別</label><select class="form-input" id="am-type">${['架電','メール','商談','フォロー'].map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">会社名</label><input class="form-input" id="am-company"></div>
+    <div class="form-group"><label class="form-label">担当者</label><input class="form-input" id="am-contact"></div>
+    <div class="form-group"><label class="form-label">内容/メモ</label><textarea class="form-input" id="am-memo"></textarea></div>
+    <div class="form-group"><label class="form-label">日時</label><input class="form-input" id="am-date" value="${today()} 12:00"></div>
+    <div class="form-group"><label class="form-label">担当営業</label><select class="form-input" id="am-sp">${d.users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn btn-primary" onclick="saveActivity()">保存</button></div>`);
+}
+function saveActivity(){
+  const d=get();
+  const obj={id:uid(),type:document.getElementById('am-type').value,company:document.getElementById('am-company').value,
+    contact:document.getElementById('am-contact').value,memo:document.getElementById('am-memo').value,
+    date:document.getElementById('am-date').value,salesperson:document.getElementById('am-sp').value};
+  if(!obj.company){toast('会社名を入力してください');return;}
+  d.activities.unshift(obj);save(d);closeModal();toast('活動を記録しました');renderActivities();
+}
+
+function openTaskModal(){
+  const d=get();
+  showModal(`<button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">タスクを追加</div>
+    <div class="form-group"><label class="form-label">タスク名</label><input class="form-input" id="tm-title"></div>
+    <div class="form-group"><label class="form-label">会社名</label><input class="form-input" id="tm-company"></div>
+    <div class="form-group"><label class="form-label">期限</label><input class="form-input" type="date" id="tm-due" value="${today()}"></div>
+    <div class="form-group"><label class="form-label">優先度</label><select class="form-input" id="tm-pri">${['高','中','低'].map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">担当営業</label><select class="form-input" id="tm-sp">${d.users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn btn-primary" onclick="saveTask()">保存</button></div>`);
+}
+function saveTask(){
+  const d=get();
+  const obj={id:uid(),title:document.getElementById('tm-title').value,company:document.getElementById('tm-company').value,
+    dueDate:document.getElementById('tm-due').value,priority:document.getElementById('tm-pri').value,
+    salesperson:document.getElementById('tm-sp').value,done:false};
+  if(!obj.title){toast('タスク名を入力してください');return;}
+  d.tasks.push(obj);save(d);closeModal();toast('タスクを保存しました');
+}
+
+/* ===== QUIZ ===== */
+let quizState={i:0,scores:{achieve:0,empathy:0,logic:0,steady:0}};
+function startQuiz(){
+  quizState={i:0,scores:{achieve:0,empathy:0,logic:0,steady:0}};
+  document.getElementById('quiz-overlay').style.display='flex';
+  document.getElementById('quiz-overlay').className='quiz-overlay';
+  renderQuiz();
+}
+function renderQuiz(){
+  const q=QuizQs[quizState.i];
+  const prog=Math.round(quizState.i/QuizQs.length*100);
+  document.getElementById('quiz-overlay').innerHTML=`<div class="quiz-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:.78rem;color:var(--muted)">${quizState.i+1} / ${QuizQs.length}</span><button class="modal-close" style="position:static" onclick="closeQuiz()">×</button></div>
+    <div class="progress-bar" style="margin-bottom:18px"><div class="progress-fill" style="width:${prog}%;background:var(--primary)"></div></div>
+    <div style="font-size:.78rem;color:var(--primary);font-weight:700;margin-bottom:6px">${q.c}</div>
+    <div style="font-size:1.05rem;font-weight:700;margin-bottom:18px">${q.t}</div>
+    ${q.o.map((o,idx)=>`<div class="quiz-opt" onclick="answerQuiz(${idx})"><div class="quiz-opt-key">${o.k}</div><div style="font-size:.88rem">${o.t}</div></div>`).join('')}
+  </div>`;
+}
+function answerQuiz(idx){
+  const sc=QuizQs[quizState.i].o[idx].sc;
+  for(const k in sc)quizState.scores[k]+=sc[k];
+  quizState.i++;
+  if(quizState.i<QuizQs.length)renderQuiz();else finishQuiz();
+}
+function finishQuiz(){
+  const s=quizState.scores;
+  let type='achieve',max=-1;
+  for(const k in s)if(s[k]>max){max=s[k];type=k;}
+  const d=get(),u=d.users.find(x=>x.id===d.cur);
+  u.personalityType=type;u.personalityScores=s;save(d);
+  const pt=PersonalityTypes[type];
+  document.getElementById('quiz-overlay').innerHTML=`<div class="quiz-box" style="text-align:center">
+    <div style="font-size:.78rem;color:var(--muted)">診断完了！あなたのタイプは...</div>
+    <div style="font-size:3.6rem;margin:14px 0">${pt.badge}</div>
+    <span class="badge badge-blue">${pt.label}</span>
+    <div style="font-size:1.5rem;font-weight:700;color:${pt.color};margin:8px 0">${pt.name}</div>
+    <div style="font-style:italic;color:var(--muted);margin-bottom:12px">「${pt.catch}」</div>
+    <div style="font-size:.88rem;line-height:1.7;text-align:left;margin-bottom:16px">${pt.desc}</div>
+    <div style="text-align:left"><div class="section-title">強み</div>${pt.strengths.map(x=>`<span class="chip badge-green">${x}</span>`).join('')}</div>
+    <button class="btn btn-primary" style="margin-top:20px;width:100%;justify-content:center" onclick="closeQuiz()">結果を確認する</button>
+  </div>`;
+}
+function closeQuiz(){document.getElementById('quiz-overlay').style.display='none';if(currentPage==='mind-diagnosis')renderMindDiagnosis();}
+
+/* ===== SURVEY ===== */
+let surveyState={type:'growth',i:0,answers:[]};
+const surveyTypes=Object.keys(MindDims);
+let surveyTypeIdx=0;
+function startSurvey(){
+  surveyTypeIdx=0;
+  surveyState={type:surveyTypes[0],i:0,answers:[]};
+  document.getElementById('survey-overlay').style.display='flex';
+  document.getElementById('survey-overlay').className='quiz-overlay';
+  renderSurvey();
+}
+function renderSurvey(){
+  const type=surveyState.type;const qs=SurveyQs[type];const q=qs[surveyState.i];
+  const m=MindDims[type];
+  const totalQ=qs.length;
+  const prog=Math.round(surveyState.i/totalQ*100);
+  document.getElementById('survey-overlay').innerHTML=`<div class="quiz-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:.78rem;color:var(--muted)">${m.icon} ${m.name} ｜ ${surveyState.i+1}/${totalQ}</span><button class="modal-close" style="position:static" onclick="closeSurvey()">×</button></div>
+    <div class="progress-bar" style="margin-bottom:18px"><div class="progress-fill" style="width:${prog}%;background:${m.color}"></div></div>
+    <div style="font-size:1.05rem;font-weight:700;margin-bottom:8px;text-align:center">${q}</div>
+    <div style="font-size:.74rem;color:var(--muted);text-align:center;margin-bottom:16px">どの程度当てはまりますか？(1:全く当てはまらない 〜 5:非常に当てはまる)</div>
+    <div style="display:flex;gap:8px">${[1,2,3,4,5].map(n=>`<button class="scale-btn" onclick="answerSurvey(${n})">${n}</button>`).join('')}</div>
+  </div>`;
+}
+function answerSurvey(n){
+  surveyState.answers.push(n);
+  surveyState.i++;
+  if(surveyState.i<SurveyQs[surveyState.type].length){renderSurvey();return;}
+  const score=Math.round(surveyState.answers.reduce((a,b)=>a+b,0)/(surveyState.answers.length*5)*100);
+  const d=get(),u=d.users.find(x=>x.id===d.cur);
+  u.mindScores[surveyState.type]=score;
+  u.mindSurveys=u.mindSurveys||[];
+  u.mindSurveys.unshift({id:uid(),date:today(),type:surveyState.type,answers:surveyState.answers.slice(),score});
+  save(d);
+  surveyTypeIdx++;
+  if(surveyTypeIdx<surveyTypes.length){
+    surveyState={type:surveyTypes[surveyTypeIdx],i:0,answers:[]};
+    renderSurvey();
+  }else{
+    finishSurvey();
+  }
+}
+function finishSurvey(){
+  const u=me();
+  const avg=Math.round(Object.values(u.mindScores).reduce((a,b)=>a+b,0)/5);
+  document.getElementById('survey-overlay').innerHTML=`<div class="quiz-box" style="text-align:center">
+    <div style="font-size:.78rem;color:var(--muted)">マインドサーベイ完了！</div>
+    <div class="mind-score-big" style="margin:18px auto"><div class="mind-score-num">${avg}</div><div style="font-size:.6rem;color:var(--muted)">/100</div></div>
+    <div style="font-weight:700;font-size:1.1rem;margin-bottom:14px">総合マインドスコア</div>
+    <div style="text-align:left">${Object.keys(MindDims).map(k=>`<div class="mind-dim-row"><span class="mind-dim-name">${MindDims[k].name}</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${u.mindScores[k]}%;background:${MindDims[k].color}"></div></div><span style="font-size:.74rem;font-weight:700;width:30px;text-align:right">${u.mindScores[k]}</span></div>`).join('')}</div>
+    <button class="btn btn-primary" style="margin-top:20px;width:100%;justify-content:center" onclick="closeSurvey()">結果を確認する</button>
+  </div>`;
+}
+function closeSurvey(){document.getElementById('survey-overlay').style.display='none';if(currentPage==='mind-diagnosis')renderMindDiagnosis();if(currentPage==='diagnosis-results')renderDiagnosisResults();}
+
+/* ===== AUTH & INIT ===== */
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pw=document.getElementById('login-pw').value;
+  const d=get();
+  const u=d.users.find(x=>x.email===email);
+  if(!u||u.pw!==btoa(pw)){toast('メールアドレスまたはパスワードが違います');return;}
+  d.cur=u.id;save(d);
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-screen').style.display='block';
+  navigate('dashboard');
+}
+function doLogout(){
+  const d=get();d.cur=null;save(d);
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  tap(document.getElementById('login-btn'),doLogin);
+  document.getElementById('login-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  document.querySelectorAll('.nav-item[data-page]').forEach(n=>tap(n,()=>navigate(n.dataset.page)));
+  tap(document.getElementById('nav-logout'),doLogout);
+  tap(document.getElementById('hamburger'),()=>{
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('visible');
+  });
+  tap(document.getElementById('sidebar-overlay'),()=>{
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('visible');
+  });
+  const d=get();
+  if(d.cur){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app-screen').style.display='block';
+    navigate('dashboard');
+  }
+});
 </script>
 </body>
 </html>
